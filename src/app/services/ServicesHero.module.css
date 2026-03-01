@@ -1,0 +1,166 @@
+/* ===============================
+   HERO WRAPPER (controls spacing)
+================================= */
+
+.heroWrapper {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  height: calc(80vh - 80px);
+  padding-top: 64px;   
+  padding-bottom: 0; 
+}
+
+/* .hero {
+  position: relative;
+  height: calc(100vh - 80px);   
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin-bottom: 96px;         
+} */
+/* ===============================
+   CONTAINER
+================================= */
+
+.heroContainer {
+  max-width: 890px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===============================
+   EYEBROW
+================================= */
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #316960;
+}
+
+/* ===============================
+   HEADING
+================================= */
+
+.heading {
+  margin: 16px 0 0 0;
+  padding-bottom: 0;
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #121214;
+}
+
+/* Second line (40px gap) */
+.secondLine {
+  display: block;
+  margin-top: 16px;  /* EXACT gap between lines */
+}
+
+/* Color controls */
+
+.blackText {
+  color: #121214;
+  font-weight: 400;
+}
+
+.greenText {
+  color: #316960;
+  font-weight: 600;
+}
+
+/* ===============================
+   DESCRIPTION
+================================= */
+
+.description {
+  margin: 24px auto 0; 
+  max-width: 640px;
+
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: #4e4e54;
+}
+/* .heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1400px; 
+
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: url("/gradients/hero-gradient.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.heroBackground::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    #ffffff
+  );
+} */
+
+/* Initial state */
+.eyebrow,
+.heading,
+.secondLine span,
+.description {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+/* Animate when visible */
+.animate .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.animate .heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.animate .secondLine span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate .secondLine span:nth-child(1) {
+  transition-delay: 0.5s;
+}
+.animate .secondLine span:nth-child(2) {
+  transition-delay: 0.6s;
+}
+.animate .secondLine span:nth-child(3) {
+  transition-delay: 0.7s;
+}
+.animate .secondLine span:nth-child(4) {
+  transition-delay: 0.8s;
+}
+
+.animate .description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}

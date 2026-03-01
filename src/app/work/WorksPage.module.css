@@ -1,0 +1,109 @@
+/* HERO SECTION */
+
+.hero {
+  padding: 120px 20px 80px;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #111;
+}
+
+.heading span {
+  color: #1f5c4c;
+}
+
+.subtext {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #6b7280;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CASE STUDIES SECTION */
+
+.caseSection {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin: 60px 0;
+}
+
+/* CARD */
+
+/* .card {
+  background: #f3f4f6;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+} */
+.card {
+  background: #f3f4f6;
+  border-radius: 12px;
+  overflow: hidden;
+  will-change: transform, opacity;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.04),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.08),
+    0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.full {
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+.imagePlaceholder {
+  height: 300px;
+  background: #d1d5db;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cardContent {
+  padding: 24px;
+}
+
+.cardContent h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.cardContent p {
+  font-size: 14px;
+  color: #6b7280;
+}

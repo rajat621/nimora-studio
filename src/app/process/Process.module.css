@@ -1,0 +1,245 @@
+/* ===============================
+   HERO WRAPPER (match services)
+================================= */
+
+.heroWrapper {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  height: calc(80vh - 80px);
+  padding-top: 64px;
+  padding-bottom: 0;
+}
+
+/* ===============================
+   CONTAINER (same as services)
+================================= */
+
+.heroContainer {
+  max-width: 890px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===============================
+   EYEBROW
+================================= */
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #316960;
+}
+
+/* ===============================
+   HEADING
+================================= */
+
+.heading {
+  margin: 16px 0 0 0;
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #121214;
+}
+
+/* Second line (16px gap) */
+.secondLine {
+  display: block;
+  margin-top: 16px;
+  font-weight: 400;
+  color: #121214;
+}
+
+/* Third line (16px gap) */
+.thirdLine {
+  display: block;
+  margin-top: 16px;
+  font-weight: 600;
+  color: #316960;
+}
+
+/* ===============================
+   DESCRIPTION
+================================= */
+
+.description {
+  margin: 24px auto 0;
+  max-width: 640px;
+
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: #4e4e54;
+}
+
+/* ===============================
+   ANIMATION (match services)
+================================= */
+
+.eyebrow,
+.heading,
+.secondLine,
+.thirdLine,
+.description {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.animate .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.animate .heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.animate .secondLine {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.animate .thirdLine {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.animate .description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}
+
+/* ===============================
+   WHAT YOU CAN EXPECT SECTION
+================================= */
+
+.expectSection {
+  background: #000;
+  padding: 160px 24px 180px;
+  text-align: center;
+}
+
+.expectContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.expectTitle {
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 120px;
+}
+
+/* ---------- TOP ROW (3 items) ---------- */
+
+.expectRowTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ---------- BOTTOM ROW (2 centered items) ---------- */
+
+.expectRowBottom {
+  display: flex;
+  justify-content: center;
+  gap: 220px;
+  margin-top: 140px;
+}
+
+/* ---------- ITEM ---------- */
+
+.expectItem {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.6;
+  color: #e6e6e6;
+  text-align: center;
+  max-width: 240px;
+}
+
+.expectItem p {
+  margin: 0;
+}
+
+/* ---------- ICON ---------- */
+
+.expectIcon {
+  font-size: 64px !important;
+  color: #ffffff;
+  margin-bottom: 28px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 1024px) {
+  .expectRowTop {
+    justify-content: center;
+    gap: 80px;
+  }
+
+  .expectRowBottom {
+    gap: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .expectRowTop,
+  .expectRowBottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .expectRowBottom {
+    margin-top: 80px;
+  }
+
+  .expectTitle {
+    font-size: 44px;
+  }
+}
+
+/* ===============================
+   PROCESS INTRO (GRAY SECTION)
+================================= */
+
+.processIntroSection {
+  width: 100%;
+  background: #f3f3f3;
+  padding: 140px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.processIntroContainer {
+  max-width: 891px;
+  text-align: center;
+}
+
+.processIntroText {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 2%;
+  color: #1c1c1e;
+}

@@ -1,0 +1,199 @@
+/* =========================
+   SECTION
+   ========================= */
+
+.work {
+  padding: 120px 0; /* 👈 slightly more breathing space */
+  background: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* =========================
+   WORK SECTION – INTRO
+   ========================= */
+
+.workIntro {
+  max-width: 890px;
+  margin: 0 auto 96px; /* 👈 increased gap before cards */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 64px; /* 👈 slightly more balanced spacing */
+  align-items: start;
+}
+
+/* =========================
+   HEADING
+   ========================= */
+
+.workHeading {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: #121214;
+}
+
+/* “Our” – italic */
+.headingItalic {
+  font-style: italic;
+  font-weight: 400;
+  color: #316960;
+}
+
+/* “Latest” – medium */
+.headingNormal {
+  font-weight: 500;
+}
+
+/* “Work” – stronger */
+.headingBold {
+  font-weight: 500;
+}
+
+/* =========================
+   DESCRIPTION
+   ========================= */
+
+.workDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: #4E4E54;
+}
+
+.workDescription p + p {
+  margin-top: 24px;
+}
+
+/* =========================
+   WORK CARDS SECTION
+   ========================= */
+
+.workCards {
+  max-width: 1120px;
+  margin: 0 auto; /* 👈 removed old 64px margin-top */
+
+  display: grid;
+  grid-template-columns: repeat(3, 357px);
+  gap: 32px; /* 👈 slightly more refined spacing */
+  justify-content: space-between;
+}
+
+/* =========================
+   CARD
+   ========================= */
+
+.workCard {
+  width: 357px;
+  height: 464px;
+  background: #ffffff;
+
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+  border-radius: 8px;
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.04),
+    0 0 6px rgba(18, 18, 20, 0.10);
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================
+   IMAGE
+   ========================= */
+
+.workCardImage {
+  width: 357px;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.workCardContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.workCardTitle {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+  color: #121214;
+}
+
+.workCardDescription {
+  margin: 12px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #4e4e54;
+}
+
+.workCardButton {
+  margin: 40px 0 0 0;
+  height: 40px;
+  padding: 0 24px;
+  align-self: flex-start;
+
+  background: rgba(49, 105, 96, 0.1);
+  border: 1px solid #316960;
+  border-radius: 999px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: #316960;
+  cursor: pointer;
+}
+
+/* =========================
+   CTA
+   ========================= */
+
+.cta {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.primaryBtn {
+  height: 44px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: #2f6f63;
+  color: #ffffff;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   PERFORMANCE
+   ========================= */
+
+.workHeading,
+.workDescription,
+.workCard {
+  overflow: hidden;
+  will-change: transform, opacity;
+}

@@ -1,0 +1,123 @@
+/* ===============================
+   HERO WRAPPER (match services)
+================================= */
+
+.heroWrapper {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  height: calc(80vh - 80px);
+  padding-top: 64px;
+  padding-bottom: 0;
+}
+
+/* ===============================
+   CONTAINER (same as services)
+================================= */
+
+.heroContainer {
+  max-width: 890px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===============================
+   EYEBROW
+================================= */
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #316960;
+}
+
+/* ===============================
+   HEADING
+================================= */
+
+.heading {
+  margin: 16px 0 0 0;
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #121214;
+}
+
+/* Second line (16px gap) */
+.secondLine {
+  display: block;
+  margin-top: 16px;
+  font-weight: 400;
+  color: #121214;
+}
+
+/* Third line (16px gap) */
+.thirdLine {
+  display: block;
+  margin-top: 16px;
+  font-weight: 600;
+  color: #316960;
+}
+
+/* ===============================
+   DESCRIPTION
+================================= */
+
+.description {
+  margin: 24px auto 0;
+  max-width: 640px;
+
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: #4e4e54;
+}
+
+/* ===============================
+   ANIMATION (match services)
+================================= */
+
+.eyebrow,
+.heading,
+.secondLine,
+.thirdLine,
+.description {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.animate .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.animate .heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.animate .secondLine {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.animate .thirdLine {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.animate .description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}

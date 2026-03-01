@@ -1,0 +1,185 @@
+/* .hero {
+  position: relative;        
+  min-height: 100vh;
+  padding: 40px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;          
+} */
+.hero {
+  position: relative;
+  height: calc(100vh - 80px);   /* account for navbar */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin-bottom: 96px;         /* 👈 this controls gap after video */
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 0 40px;
+  text-align: center;
+  will-change: transform, opacity;
+  max-width: 1200px;
+}
+/* .content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  will-change: transform, opacity;
+} */
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 96px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin: 0;
+}
+
+.lineMask {
+  display: block;
+  overflow: hidden;
+}
+
+.line {
+  display: inline-block;
+}
+
+.splitWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;          
+}
+.textLeft,
+.textRight {
+  display: inline-block;
+  will-change: transform;
+}
+.textRight{
+  color: #316960;
+  font-weight: 600;
+}
+.textLeft{
+  color: #1A1A1E;
+  font-weight: 300;
+}
+
+.videoWrapper {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: left, top, width, height;
+
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.videoBlock {
+  width: 100%;
+  height: 100%;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.textFrom,
+.textComplex {
+  font-weight: 600;
+  color: #316960;
+}
+
+.textDirection {
+  display: block;
+  /* margin-top: 24px; */
+  font-weight: 600;
+  color: #316960;
+}
+
+.subtitle {
+  margin: 40px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: #4E4E54;
+}
+
+.actions {
+  margin: 24px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.primaryBtn {
+  display: inline-flex;          /* FIX anchor behavior */
+  align-items: center;           /* vertical centering */
+  justify-content: center;
+  gap: 10px;                     /* spacing between text & arrow */
+
+  height: 50px;
+  padding: 0 32px;
+
+  background-color: #316960;
+  color: #FAFAFF;
+
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.primaryBtn:hover {
+  background-color: #274f48;
+  opacity: 0.9;
+
+}
+
+.primaryArrow {
+  font-size: 20px !important;   /* visually matches your screenshot */
+}
+
+
+
+.secondaryBtn {
+  height: 50px;
+  padding: 0 32px;
+  background: rgba(49, 105, 96, 0.06);
+  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  color: #1A1A1E;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+  border: 1.5px solid rgba(49, 105, 96, 0.4);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.secondaryBtn:hover {
+  background-color: #f5f9f7;
+  opacity: 0.9;
+
+}
+
+
+.lineMask + .lineMask {
+  margin-top: 24px;
+}

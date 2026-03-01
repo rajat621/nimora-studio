@@ -1,0 +1,84 @@
+.ctaSection {
+  max-width: 890px;
+  margin: 144px auto;
+}
+
+.ctaBox {
+  background-color: #1f4b45;
+  border-radius: 4px;
+  padding: 96px 64px;
+  text-align: center;
+}
+
+/* =========================
+   Heading
+   ========================= */
+
+.heading {
+  margin-top: 0px;
+  margin-bottom: 24px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 44px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* =========================
+   Description
+   ========================= */
+
+.description {
+  margin: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #e6ecea;
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+/* =========================
+   Button
+   ========================= */
+
+.ctaButton {
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 32px;
+  text-decoration: none;
+
+  border-radius: 999px;
+  border: 1.5px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.arrowIcon {
+  font-size: 20px !important;
+}
+
+/* =========================
+   Scroll Reveal Animation
+   ========================= */
+
+.hidden {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}

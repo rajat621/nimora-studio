@@ -1,0 +1,239 @@
+/* =========================
+   SECTION
+   ========================= */
+
+.industries {
+  padding: 96px 0;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+  max-width: 890px;
+  margin: 0 auto 64px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* =========================
+   HEADING (LEFT)
+   ========================= */
+
+.heading {
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  font-size: 64px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: #121214;
+}
+
+/* “Industries” – medium */
+.headingItalic {
+  font-style: italic;
+  font-weight: 400;
+  color: #316960;
+}
+
+/* “We Serve” – medium */
+.headingNormal {
+  font-weight: 500;
+}
+
+/* =========================
+   DESCRIPTION (RIGHT)
+   ========================= */
+
+.description1 {
+  font-family: var(--font-body); /* Open Sans */
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: #4E4E54;
+}
+
+
+/* =========================
+   CARD
+   ========================= */
+
+/* .card {
+  width: 472px;
+  height: 520px;
+
+  background-color: #f1f3f3;
+  border-radius: 12px;
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.04),
+    0 0 6px rgba(18, 18, 20, 0.10);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+} */
+.card {
+  width: 472px;
+  height: 520px;
+
+  background-color: #f1f3f3;
+  border-radius: 12px;
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.04),
+    0 0 6px rgba(18, 18, 20, 0.10);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* =========================
+   DETAIL SECTION
+   ========================= */
+
+/* .content {
+  padding: 32px 24px;
+} */
+.content {
+  padding: 32px 24px 0 24px; /* 👈 removed bottom padding */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 👈 controlled spacing */
+  flex: 1;   /* 👈 fills available space cleanly */
+}
+/* Eyebrow */
+/* .label {
+  font-family: var(--font-body); 
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #316960;
+} */
+.label {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #316960;
+  margin: 0;
+}
+/* Heading */
+/* .title {
+  margin-top: 24px;
+  font-family: var(--font-heading); 
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #121214;
+} */
+.title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #121214;
+  margin: 0; /* 👈 removed margin-top */
+}
+/* Description */
+/* .description {
+  margin-top: 12px;
+  font-family: var(--font-body); 
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #4e4e54;
+} */
+.description {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #4e4e54;
+  margin: 0; /* 👈 removed margin-top */
+}
+
+/* =========================
+   IMAGE SECTION
+   ========================= */
+
+/* .imageWrapper {
+  width: 472px;
+  height: 264px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+} */
+.imageWrapper {
+  width: 472px;
+  height: 264px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0; /* 👈 prevents flex distortion */
+}
+
+.image {
+  object-fit: cover;
+}
+/* =========================
+   INTERACTION (SUBTLE)
+   ========================= */
+
+.card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+}
+
+.industries {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+}

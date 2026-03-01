@@ -1,0 +1,279 @@
+/* =========================
+   GLOBAL WRAPPER
+   ========================= */
+
+.wrapper {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* =========================
+   HERO SECTION
+   ========================= */
+
+.hero {
+  padding: 40px 0 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.heroInner {
+  max-width: 890px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* CLARITY CONVERSATION */
+.eyebrow {
+  margin: 0;
+  display: block;
+  font-family: var(--font-body); /* Open Sans */
+  font-size: 18px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #316960;
+  font-weight: 500;
+  
+}
+
+/* Get clarity on what to build next */
+.heading {
+  margin: 8px 0 0 0;
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #121214;
+  letter-spacing: 0.02em;
+}
+
+/* This isn’t a sales pitch... */
+.description {
+  margin: 40px auto 0;
+  font-family: var(--font-body); /* Open Sans */
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: #4e4e54;
+  max-width: 700px;
+  
+}
+
+/* =========================
+   FORM SECTION
+   ========================= */
+
+.formSection {
+  padding: 96px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.formContainer {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #F1F3F3;
+  padding : 40px 64px;
+  border-radius: 8px;
+  border: 1px solid #e4e7ec;
+}
+
+/* Form Heading */
+.cardTitle {
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  text-align: center;
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+
+/* Rows */
+.row {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+}
+
+.singleRow {
+  margin-bottom: 24px;
+}
+
+/* Field */
+.field {
+  margin-bottom: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.field label {
+  font-family: var(--font-body); /* Open Sans */
+  font-size: 14px;
+  color: #1A1A1E;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.field label span {
+  color: red;
+  margin-left: 0px;
+}
+
+/* Inputs */
+.field input,
+.field textarea {
+  font-family: var(--font-body); /* Open Sans */
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #C2C3C5;
+  background: #ECEEEF;
+  font-size: 14px;
+  color: #A1A2A2;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field textarea {
+  min-height: 160px;
+  resize: none;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #316960;
+}
+
+/* File Upload */
+.fileBox {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #C2C3C5;
+  padding: 4px;
+  border-radius: 8px;
+  background: #ECEEEF;
+}
+
+.chooseBtn {
+  font-family: var(--font-body); /* Open Sans */
+  background: #316960;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.fileHint {
+  font-family: var(--font-body); /* Open Sans */
+  color: #A1A2A2;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* Button */
+.submitWrap {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.submitBtn {
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  background: #316960;
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submitBtn:hover {
+  background: #24594d;
+}
+
+/* Errors */
+.errorInput {
+  border-color: red !important;
+}
+
+.errorText {
+  font-family: var(--font-body);
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1024px) {
+  .heading {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0 60px;
+  }
+
+  .heading {
+    font-size: 40px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .card {
+    padding: 32px 20px;
+  }
+}
+
+/* =========================
+   HERO TEXT ANIMATION
+   ========================= */
+
+.fadeUp {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUpAnimation 0.9s ease forwards;
+}
+
+.delay1 {
+  animation-delay: 0.2s;
+}
+
+.delay2 {
+  animation-delay: 0.4s;
+}
+
+.delay3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeUpAnimation {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

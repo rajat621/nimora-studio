@@ -1,0 +1,593 @@
+/* ============================= */
+/* GLOBAL SECTION SYSTEM */
+/* ============================= */
+
+.section {
+  padding: 120px 20px;
+}
+
+.lightSection {
+  background: #f6f7f7;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* HERO */
+/* ============================= */
+
+.hero {
+  background: #eef0ef;
+  padding: 200px 20px 150px;
+  text-align: center;
+}
+
+.heroInner {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+  color: #111111;
+  margin-bottom: 42px;
+}
+
+.highlight {
+  color: #316960;
+  font-weight: 400;
+}
+
+.heroSubtitle {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.65;
+  color: #6b6f72;
+  max-width: 720px;
+  margin: 0 auto;
+}
+/* ============================= */
+/* INTRO WRAPPER */
+/* ============================= */
+
+.introWrapper {
+  background: #eef0ef;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* Outer side spacing = 275px like Figma */
+.introContainer {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* TOP IMAGE */
+/* ============================= */
+
+.visualBlock {
+  margin-bottom: 64px;
+}
+
+.visualBlock img {
+  width: 100%;
+  display: block;
+}
+
+/* ============================= */
+/* DESCRIPTION */
+/* ============================= */
+
+.introDescription {
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  color: #2b2b2b;
+}
+
+/* ============================= */
+/* META ROW */
+/* ============================= */
+
+.metaRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #d8dbdc;
+}
+
+.metaRow span {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.metaRow p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin: 4px 0;
+  color: #111111;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1100px) {
+  .introContainer {
+    padding: 0 40px;
+  }
+
+  .metaRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .introWrapper {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .introDescription {
+    font-size: 18px;
+  }
+
+  .metaRow {
+    grid-template-columns: 1fr;
+  }
+}
+/* ============================= */
+/* PROCESS SECTION */
+/* ============================= */
+
+.processWrapper {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: #ffffff;
+}
+
+.processContainer {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* INTRO ROW */
+/* ============================= */
+
+.processIntro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 64px;
+}
+
+.processLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-style: italic;
+  color: #316960;
+  margin-bottom: 8px;
+}
+
+.processTitle {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.processRight p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: #4b5563;
+}
+
+/* ============================= */
+/* IMAGE */
+/* ============================= */
+
+.processImage {
+  margin-bottom: 64px;
+}
+
+.processImage img {
+  width: 100%;
+  display: block;
+}
+
+/* ============================= */
+/* STEPS */
+/* ============================= */
+
+.stepsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.stepRow {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 60px;
+}
+
+.stepTitle {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.stepContent {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 900px) {
+  .processIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .stepRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================= */
+/* BRANDING SECTION */
+/* ============================= */
+
+.brandingWrapper {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: #f5f6f6;
+}
+
+.brandingContainer {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* TEXT */
+/* ============================= */
+
+.brandingText {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.brandingEyebrow {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #316960;
+  margin-bottom: 20px;
+}
+
+.brandingDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.75;
+  max-width: 760px;
+  margin: 0 auto;
+  color: #2b2b2b;
+}
+
+/* ============================= */
+/* IMAGE ROWS */
+/* ============================= */
+
+.brandRowTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.brandRowTwo img {
+  width: 100%;
+  /* height: 380px ; */
+  display: block;
+}
+
+.brandRowFull {
+  margin-bottom: 24px;
+}
+
+.brandRowFull img {
+  width: 100%;
+  height: 380px;
+  display: block;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 900px) {
+  .brandRowTwo {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================= */
+/* DESIGN SYSTEM SECTION */
+/* ============================= */
+
+.dsWrapper {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: #f5f6f6;
+}
+
+.dsContainer {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* CENTER TEXT BLOCK */
+
+.dsTextCenter {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.dsEyebrow {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #316960;
+  margin-bottom: 20px;
+}
+
+.dsParagraph {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.75;
+  max-width: 760px;
+  margin: 0 auto;
+  color: #2b2b2b;
+}
+
+/* IMAGE */
+
+.dsImage {
+  margin-bottom: 80px;
+}
+
+.dsImage img {
+  width: 100%;
+  display: block;
+}
+
+/* TYPOGRAPHY BLOCK */
+
+.typographyBlock {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 60px;
+  margin-bottom: 80px;
+}
+
+.typographyLeft h3 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.typographyRight {
+  font-family: var(--font-body);
+}
+
+.fontName {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.fontDescription {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+.fontVariants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 14px;
+}
+
+/* COLOR */
+
+.colorBlock h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.colorImage img {
+  width: 100%;
+  display: block;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .typographyBlock {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================= */
+/* VISUALS SECTION */
+/* ============================= */
+
+.visualsWrapper {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  background: #f5f6f6;
+}
+
+/* Center text block */
+
+.visualsText {
+  text-align: center;
+  max-width: 890px;
+  margin: 0 auto 80px;
+}
+
+.visualsEyebrow {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #316960;
+  margin-bottom: 20px;
+}
+
+.visualsDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.75;
+  color: #2b2b2b;
+}
+
+/* FULL WIDTH IMAGE AREA */
+/* Designed for 1440px with 160px padding */
+
+.visualsImage {
+  padding-left: 160px;
+  padding-right: 160px;
+  margin-bottom: 120px;
+}
+
+.visualsImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================= */
+/* OUR ROLE */
+/* ============================= */
+
+.roleWrapper {
+  max-width: 1120px;
+  margin: 0 auto 120px;
+}
+
+.roleHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 60px;
+}
+
+.roleHeader h3 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.roleHeader p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+}
+
+.roleGrid h4 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.roleGrid p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #4b5563;
+}
+
+/* ============================= */
+/* CONCLUSION */
+/* ============================= */
+
+.conclusion {
+  text-align: center;
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1400px) {
+  .visualsImage {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .visualsImage {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .roleHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .roleGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .visualsWrapper {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .visualsImage {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

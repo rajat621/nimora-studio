@@ -1,0 +1,121 @@
+/* ============================================================
+   LegalPage.module.css
+   Shared styles for Terms & Conditions and Privacy Policy pages
+   ============================================================ */
+
+/* PAGE WRAPPER */
+.page {
+  background-color: #ffffff;
+}
+
+/* ── HERO ── */
+.hero {
+  overflow: hidden;
+  padding: 24px 275px;
+}
+
+
+.heroContent {
+  width: 100%;
+  max-width: 890px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── HERO TYPOGRAPHY ── */
+.title {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1a1a1e;
+  margin-bottom: 16px;
+}
+
+.date {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  color: #4E4E54;
+  margin-bottom: 40px;
+}
+
+.intro {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  max-width: 890px;
+  margin: 0px;
+}
+
+/* ── CONTENT SECTION ── */
+.contentSection {
+  padding: 24px 275px 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+
+/* ── SECTION HEADING ── */
+.section h3 {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  margin-Top: 40px;
+  margin-bottom: 16px;
+  color: #1a1a1e;
+}
+
+/* ── PARAGRAPHS ── */
+.section p {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  margin-bottom: 10px;
+}
+
+/* ── BULLET LIST ── */
+.section ul {
+  margin: 8px 0 12px 24px;
+  list-style: disc;
+}
+
+.section li {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  margin-bottom: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1280px) {
+  .hero,
+  .contentSection {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .contentSection {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+}

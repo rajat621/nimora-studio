@@ -1,0 +1,281 @@
+/* ─── WRAPPER — UNCHANGED ──────────────────────────────────── */
+.wrapper {
+  background: #ffffff;
+  padding-top: 120px;
+  position: relative;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── TOGGLE — UNCHANGED ──────────────────────────────────── */
+.toggleWrapper {
+  position: sticky;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: 0px;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  width: 100%;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid #8a8a94;
+  background: #ffffff;
+  width: fit-content;
+}
+
+.pill {
+  padding: 4px 24px;
+  height: 32px;
+  width: fit-content;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 12px;
+  font-family: var(--font-heading);
+  color: #4E4E54;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.active {
+  background: #316960;
+  color: #ffffff;
+}
+
+/* ─── INTRO — UNCHANGED ───────────────────────────────────── */
+.introBox {
+  margin-bottom: 0px;
+}
+
+.sectionTopLabel {
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 1%;
+  color: #316960;
+  margin-bottom: 8px;
+  font-family: var(--font-heading);
+}
+
+.mainHeading {
+  text-align: center;
+  margin-top: 0;
+  font-size: 56px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  line-height: 100%;
+  letter-spacing: 2%;
+  color: #1A1A1E;
+  font-family: var(--font-heading);
+}
+
+.mainHeading span {
+  display: block;
+}
+
+.subDescription {
+  max-width: 750px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  font-family: var(--font-body);
+}
+
+/* ─── STACK SECTION — UNCHANGED ──────────────────────────── */
+.stackSection {
+  position: relative;
+  z-index: 10;
+  background: #ffffff;
+}
+
+.stepWrapper {
+  position: relative;
+  height: auto;
+}
+
+/* ─── STEP STRIP — UNCHANGED ────────────────────────────── */
+.stepStrip {
+  position: relative;
+  z-index: 20;
+  padding-top: 24px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 80px;
+  background: #ffffff;
+  will-change: opacity, transform;
+}
+
+@media (max-width: 767px) {
+  .stepStrip {
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+}
+
+/* ─── LEFT BLOCK
+   gap changed to 8px (was 20px) to match spec: SVG↔title = 8px   */
+.leftBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;           /* ← CHANGED: was 20px, now 8px per spec */
+  flex-shrink: 0;
+}
+
+/* stepIcon class no longer used (replaced by next/image inline) — kept
+   for safety in case any other usage references it                    */
+.stepIcon {
+  height: 52px;
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .stepIcon {
+    height: 64px;
+  }
+}
+
+/* bigTitle — UNCHANGED except we keep it on one line next to SVG */
+.bigTitle {
+  font-size: 80px;
+  font-weight: 500;
+  color: #1A1A1E;
+  margin: 0;
+  line-height: 1;
+  font-family: var(--font-heading);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .bigTitle {
+    font-size: 64px;
+  }
+}
+
+/* ─── DESCRIPTION — UNCHANGED ───────────────────────────── */
+.stepDescription {
+  font-size: 18px;
+  line-height: 1.65;
+  color: #4E4E54;
+  margin: 0;
+  font-family: var(--font-body);
+  max-width: 412px;
+}
+
+@media (max-width: 767px) {
+  .stepDescription {
+    max-width: 100%;
+    padding-top: 0;
+  }
+}
+
+/* ─── STEP BODY ──────────────────────────────────────────────
+   Gap between header container and stepBody = 64px           */
+.stepBody {
+  position: relative;
+  padding-top: 40px;    
+  padding-bottom: 120px;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+
+.stepBody::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50vw;
+  width: 200vw;
+  height: 100%;
+  background: #ffffff;
+  z-index: -1;
+}
+
+/* ─── LABELS ─────────────────────────────────────────────────
+   "What We Do" label sits above cards with 16px gap below it  */
+.label {
+  display: block;
+  font-size: 18px;
+  color: #1A1A1E;
+  font-weight: 500;
+  font-family: var(--font-heading);
+  margin-bottom: 16px;  /* ← CHANGED: was 16px already — confirmed correct */
+}
+
+/* ─── CARD GRID ──────────────────────────────────────────────
+   Gap 24px both axes per spec                                 */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;            /* ← CHANGED: was 20px, now 24px per spec */
+  margin-bottom: 40px;  /* ← CHANGED: was 48px, now 40px (cards→expect gap) */
+}
+
+@media (min-width: 640px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+/* ─── CARD — UNCHANGED ───────────────────────────────────── */
+.card {
+  background: #F1F3F3;
+  border: 1px solid #DCDEDE;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: #1A1A1E;
+  font-family: var(--font-heading);
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4E4E54;
+  margin: 0;
+  font-family: var(--font-body);
+}
+
+/* ─── EXPECT ─────────────────────────────────────────────────
+   "What You Can Expect" label: 16px gap to paragraph below    */
+.expect p {
+  max-width: 850px;
+  font-size: 16px;
+  color: #4E4E54;
+  line-height: 1.6;
+  margin: 0;
+  font-family: var(--font-body);
+}

@@ -1,0 +1,134 @@
+
+
+/* HERO */
+
+.hero{
+  overflow:hidden;
+  padding:60px 275px;
+}
+
+.heroContent{
+  width:100%;
+  max-width:890px;
+  margin:0 auto;
+  position:relative;
+  z-index:2;
+}
+
+/* PAGE TITLE */
+
+.title{
+  font-family:var(--font-heading);
+  font-size:56px;
+  font-weight:400;
+  line-height:1.2;
+  color:#1A1A1E;
+  margin-bottom:20px;
+}
+
+/* EFFECTIVE DATE */
+
+.date{
+  font-family:var(--font-body);
+  font-size:14px;
+  font-weight:400;
+  color:#6b7280;
+  margin-bottom:20px;
+}
+
+/* INTRO TEXT */
+
+.intro{
+  font-family:var(--font-body);
+  font-size:18px;
+  line-height:1.7;
+  color:#6b7280;
+  max-width:890px;
+}
+
+/* POLICY CONTENT */
+
+.termsSection{
+  padding-top:60px;
+  padding-left:275px;
+  padding-right:275px;
+}
+
+.container{
+  width:100%;
+  max-width:890px;
+  margin:0 auto;
+}
+
+/* SECTION BLOCK */
+
+.term{
+  margin-bottom:36px;
+}
+
+/* SECTION TITLE */
+
+.term h3{
+  font-family:var(--font-heading);
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:12px;
+  color:#1A1A1E;
+}
+
+/* PARAGRAPHS */
+
+.term p{
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.7;
+  color:#6b7280;
+  margin-bottom:10px;
+}
+
+/* BULLET LIST */
+
+.term ul{
+  margin:10px 0 10px 20px;
+}
+
+.term li{
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.7;
+  color:#6b7280;
+  margin-bottom:6px;
+}
+/* LOCAL HERO BACKGROUND */
+
+.termsHeroBackground{
+  position:absolute;
+  top:-10vh;
+  left:0;
+  width:100%;
+  height:75vh;
+
+  pointer-events:none;
+  z-index:0;
+
+  background-image:url("/gradients/hero-gradient.svg");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center top;
+}
+
+.termsHeroBackground::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:40vh;
+
+  background:linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.6) 60%,
+    #ffffff 100%
+  );
+}

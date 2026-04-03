@@ -1,0 +1,229 @@
+/* ============================================================
+   ServicePage.module.css
+   Shared styles for all 5 service detail pages.
+   ============================================================ */
+
+/* ── PAGE WRAPPER ── */
+.page {
+  background-color: #ffffff;
+}
+
+/* ── HERO ── */
+.hero {
+  overflow: hidden;
+  padding: 8px;
+  margin: 0px;
+}
+
+.heroBackground {
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  width: 100%;
+  height: 75vh;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("/gradients/hero-gradient.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.7; /* added */
+}
+
+.heroBackground::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 60%,
+    #ffffff 100%
+  );
+}
+
+/* ── TAB NAV ── */
+.tabNav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+/* Outer pill container */
+.tabList {
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+  backdrop-filter: blur(6px);
+}
+
+/* Individual tab */
+.tabBtn {
+  height: 36px;
+  padding: 0 20px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #4E4E54;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Active tab */
+.tabActive {
+  background-color: #316960;
+  color: #ffffff;
+}
+
+.tabActive:hover {
+  background-color: #244f49;
+}
+
+/* ── HERO CONTENT ── */
+.heroContent {
+  width: 100%;
+  max-width: 890px;
+  padding: 0px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: 2%;
+  color: #1A1A1E;
+  padding: 0px;
+  margin:0 0 24px 0 ;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.introParagraph {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  margin-bottom: 14px;
+  max-width: 890px;
+}
+
+.introParagraph strong {
+  color: #1a1a1e;
+  font-weight: 600;
+}
+
+/* ── CONTENT SECTION ── */
+.contentSection {
+  padding: 64px 275px 120px;
+}
+
+.container {
+  width: 100%;
+  max-width: 890px; /* updated */
+  margin: 0 auto;
+}
+
+/* ── FOCUS ON ── */
+.focusHeading {
+  font-family: var(--font-body);
+  font-size: 24px; /* updated */
+  font-weight: 600;
+  color: #316960;
+  margin-bottom: 24px; /* updated */
+  letter-spacing: 0.01em;
+}
+
+/* ── FOCUS ITEM ── */
+.focusItem {
+  margin-bottom: 40px; /* updated */
+}
+
+.focusItemHeading {
+  font-family: var(--font-heading);
+  font-size: 18px; /* updated */
+  font-weight: 600;
+  color: #1A1A1E;
+  padding: 0px;
+  margin-bottom: 12px; 
+  -webkit-font-smoothing: antialiased; /* added */
+  text-rendering: optimizeLegibility; /* added */
+}
+
+.focusItemDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  padding: 0px;
+  margin: 0px; 
+  line-height: 1.75; /* updated */
+  color: #4E4E54;
+}
+
+/* ── THE OUTCOME ── */
+.outcomeHeading {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  color: #316960;
+  margin-top: 56px; /* updated */
+  margin-bottom: 24px; /* updated */
+}
+
+.outcomeParagraph {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1280px) {
+  .hero,
+  .contentSection {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+}
+
+@media (max-width: 900px) {
+  .tabList {
+    flex-wrap: wrap;
+    border-radius: 16px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .contentSection {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .introParagraph {
+    font-size: 15px;
+  }
+}

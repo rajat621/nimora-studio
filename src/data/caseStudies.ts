@@ -1,134 +1,135 @@
 export const caseStudies = [
   {
     slug: "go-ride",
-hero: {
-  title:
-    "Go Ride brings cycle rentals, route discovery, and community rides – All in one app.",
-  subtitle:
-    "Users get quick access to bikes.\nThe business improves asset usage and reduces manual operations.",
+    hero: {
+      title:
+        "Go Ride brings cycle rentals, route discovery, and community rides – All in one app.",
+      subtitle:
+        "Users get quick access to bikes.\nThe business improves asset usage and reduces manual operations.",
       highlight: ["cycle", "rentals", "route", "discovery", "community", "rides"],
     },
 
-intro: {
-  containerMaxWidth: 890, // optional if you want control
+    intro: {
+      containerMaxWidth: 890,
 
-  visualImage: "/images/Casestudy/GoRide/image 1.png", 
-  // This is ONE combined image (logo + phones exactly like design)
+      visualImage: "/images/Casestudy/GoRide/Image 1.png",
 
-  description:
-    "The client is a mid-size urban mobility company operating cycle rentals in metro cities. The project started due to low app usage and high support costs. If nothing changed, bike idle time and customer drop-offs would increase.",
+      description:
+        "The client is a mid-size urban mobility company operating cycle rentals in metro cities. The project started due to low app usage and high support costs. If nothing changed, bike idle time and customer drop-offs would increase.",
 
-  meta: {
-    client: "Go - Ride",
-    industry: "E-Commerce / Mobility",
-    services: [
-      "UX Strategy",
-      "Brand Experience",
-      "Product Design",
-    ],
-    timeline: "08 weeks",
-    location: "India",
-  },
-},
-
-processSection: {
-  intro: {
-    eyebrow: "Design",
-    title: "Process Used",
-    description:
-      "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk.\n\nThe problem space was broad, with multiple user types. This approach helped separate real issues from assumptions before design decisions.",
-  },
-
-  image: "/images/Casestudy/GoRide/Image 2.png",
-
-  steps: [
-    {
-      title: "DISCOVER",
-      content:
-        "Users struggled to find available cycles and understand pricing before arrival. Operators relied on manual tracking, leading to wrong availability and disputes. Users lost trust due to failed pickups and unclear rules. For the business, this caused cancellations, support overload, and lost revenue.",
+      meta: {
+        client: "Go - Ride",
+        industry: "E-Commerce / Mobility",
+        services: [
+          "UX Strategy",
+          "Brand Experience",
+          "Product Design",
+        ],
+        timeline: "08 weeks",
+        location: "India",
+      },
     },
-    {
-      title: "DEFINE",
-      content:
-        "The core problem was unreliable access to cycle rentals at the moment of need. Target users were daily commuters, tourists, and short-distance urban riders. The key pain point was uncertainty—availability, pricing, and pickup flow.",
+
+    processSection: {
+      intro: {
+        eyebrow: "Design",
+        title: "Process Used",
+        description:
+          "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk.\n\nThe problem space was broad, with multiple user types. This approach helped separate real issues from assumptions before design decisions.",
+      },
+
+      image: "/images/Casestudy/GoRide/Image 2.png",
+
+      steps: [
+        {
+          title: "DISCOVER",
+          content:
+            "Users struggled to find available cycles and understand pricing before arrival. Operators relied on manual tracking, leading to wrong availability and disputes. Users lost trust due to failed pickups and unclear rules. For the business, this caused cancellations, support overload, and lost revenue.",
+        },
+        {
+          title: "DEFINE",
+          content:
+            "The core problem was unreliable access to cycle rentals at the moment of need. Target users were daily commuters, tourists, and short-distance urban riders. The key pain point was uncertainty—availability, pricing, and pickup flow.",
+        },
+        {
+          title: "DESIGN",
+          content:
+            "The design focused on clarity, speed, and trust over visual complexity. Rules were set: no hidden steps, no unclear pricing, no manual confirmation loops.",
+        },
+        {
+          title: "SOLUTION FOUND",
+          content:
+            "A mobile app was designed to show real-time cycle availability and fixed booking flows. Users could locate, reserve, unlock, and return cycles without staff involvement. Operators gained a single system for inventory, bookings, and usage tracking.",
+        },
+      ],
     },
-    {
-      title: "DESIGN",
-      content:
-        "The design focused on clarity, speed, and trust over visual complexity. Rules were set: no hidden steps, no unclear pricing, no manual confirmation loops.",
+
+    brandingSection: {
+      eyebrow: "LOGO DESIGN",
+
+      description:
+        "Every logo starts with understanding before aesthetics. We begin by defining the brand's purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
+
+      visuals: {
+        singleImage: "/images/Casestudy/GoRide/Image 3.png",
+      },
     },
-    {
-      title: "SOLUTION FOUND",
-      content:
-        "A mobile app was designed to show real-time cycle availability and fixed booking flows. Users could locate, reserve, unlock, and return cycles without staff involvement. Operators gained a single system for inventory, bookings, and usage tracking.",
+
+    designSystemSection: {
+      ideation: {
+        eyebrow: "IDEATION",
+        description:
+          "Multiple ideas were explored, including subscription models and gamification. These were dropped due to low business readiness and high tech effort. The final solution focused on core renting, not feature overload.",
+        image: "/images/Casestudy/GoRide/Image 4.png",
+      },
+
+      designSystem: {
+        eyebrow: "DESIGN SYSTEM",
+        description:
+          "The Go Ride design system was built to ensure clarity, consistency, and ease of use across the product. It defines typography, colour, components, and interactions that scale seamlessly while keeping the experience intuitive and accessible.",
+      },
+
+      typography: {
+        title: "Typography",
+        image: "/images/Casestudy/GoRide/Image 5.png",
+      },
+
+      colorPaletteImage: "/images/Casestudy/GoRide/Image 6.png",
     },
-  ],
-},
 
-  brandingSection: {
-  eyebrow: "LOGO DESIGN",
-
-  description:
-    "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
-
-  visuals: {
-    singleImage: "/images/Casestudy/GoRide/Image 3.png",
-  },
-},
-designSystemSection: {
-  ideation: {
-    eyebrow: "IDEATION",
-    description:
-      "Multiple ideas were explored, including subscription models and gamification. These were dropped due to low business readiness and high tech effort. The final solution focused on core renting, not feature overload.",
-    image: "/images/Casestudy/GoRide/Image 4.png",
-  },
-
-  designSystem: {
-    eyebrow: "DESIGN SYSTEM",
-    description:
-      "The Go Ride design system was built to ensure clarity, consistency, and ease of use across the product. It defines typography, colour, components, and interactions that scale seamlessly while keeping the experience intuitive and accessible.",
-  },
-
-  typography: {
-    title: "Typography",
-    image: "/images/Casestudy/GoRide/Image 5.png",
-  },
-
-  colorPaletteImage: "/images/Casestudy/GoRide/Image 6.png",
-},
-visualsSection: {
-  eyebrow: "VISUALS",
-  description:
-    "Instead of designing another feed or card layout, we envisioned Scenes as a navigable world, one where event discovery becomes simpler and distinctly interactive.",
-  image: "/images/Casestudy/GoRide/Image 7.png",
-},
-
-roleSection: {
-  title: "Our Role",
-  description:
-    "Our responsibility covered user research, Branding strategy, UX architecture, Design systems, Interaction Design and UI execution.",
-
-  columns: [
-    {
-      title: "UX Strategy",
-      items: ["Market Research", "Emerging Trends", "UX research"],
+    visualsSection: {
+      eyebrow: "VISUALS",
+      description:
+        "Instead of designing another feed or card layout, we envisioned Scenes as a navigable world, one where event discovery becomes simpler and distinctly interactive.",
+      image: "/images/Casestudy/GoRide/Image 7.png",
     },
-    {
-      title: "Brand Experience",
-      items: ["Branding Strategy & Positioning", "Illustration & Iconography"],
-    },
-    {
-      title: "Product Design",
-      items: ["User Experience Design", "Interface Design",  "Interaction Design", "Design Systems", "Prototyping and usability testing"],
-    },
-  ],
-},
 
-conclusionSection: {
-  eyebrow: "CONCLUSION",
-  description:
-    "This project solved a real access and operations problem, not just a UI issue. It connected user trust directly to business efficiency. The system is scalable across cities and fleet sizes.",
-},
+    roleSection: {
+      title: "Our Role",
+      description:
+        "Our responsibility covered user research, Branding strategy, UX architecture, Design systems, Interaction Design and UI execution.",
+
+      columns: [
+        {
+          title: "UX Strategy",
+          items: ["Market Research", "Emerging Trends", "UX research"],
+        },
+        {
+          title: "Brand Experience",
+          items: ["Branding Strategy & Positioning", "Illustration & Iconography"],
+        },
+        {
+          title: "Product Design",
+          items: ["User Experience Design", "Interface Design", "Interaction Design", "Design Systems", "Prototyping and usability testing"],
+        },
+      ],
+    },
+
+    conclusionSection: {
+      eyebrow: "CONCLUSION",
+      description:
+        "This project solved a real access and operations problem, not just a UI issue. It connected user trust directly to business efficiency. The system is scalable across cities and fleet sizes.",
+    },
   },
 
 
@@ -144,12 +145,11 @@ conclusionSection: {
       highlight: ["plan", "prioritise", "academic", "work"],
     },
 
-
     intro: {
       containerMaxWidth: 890,
       visualImage: "/images/Casestudy/Time Management/Image 1.png",
       description:
-        "Ibtidaa — a mid-stage EdTech company building productivity tools for secondary and higher-education students.Highly competitive student productivity market with low long-term retention and feature saturation.",
+        "Ibtidaa — a mid-stage EdTech company building productivity tools for secondary and higher-education students. Highly competitive student productivity market with low long-term retention and feature saturation.",
       meta: {
         client: "Ibtidaa",
         industry: "EdTech",
@@ -168,7 +168,7 @@ conclusionSection: {
         eyebrow: "Design",
         title: "Process Used",
         description:
-          "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk.\n This approach allowed the team to separate assumptions from evidence, align product decisions with business outcomes, and reduce the risk of building features that looked useful but failed in real-world student routines.",
+          "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk. This approach allowed the team to separate assumptions from evidence, align product decisions with business outcomes, and reduce the risk of building features that looked useful but failed in real-world student routines.",
       },
 
       image: "/images/Casestudy/Time Management/Image 2.png",
@@ -177,23 +177,65 @@ conclusionSection: {
         {
           title: "DISCOVER",
           content:
-            "Students frequently created schedules but abandoned them within days. Students tracked tasks but struggled to decide what to do next.Students used multiple disconnected tools (notes app, calendar, reminders). Most competing apps optimised for professionals, not academic workflows.",
+            "Students frequently created schedules but abandoned them within days. Students tracked tasks but struggled to decide what to do next. Students used multiple disconnected tools (notes app, calendar, reminders). Most competing apps optimised for professionals, not academic workflows.",
         },
         {
           title: "DEFINE",
           content:
-            "Students don’t fail to plan—they fail to sustain execution because planning systems demand too many decisions upfront. Cognitive overload caused by unclear priorities and unrealistic schedules.",
+            "Students don't fail to plan—they fail to sustain execution because planning systems demand too many decisions upfront. Cognitive overload caused by unclear priorities and unrealistic schedules.",
         },
         {
           title: "DESIGN",
           content:
-            "The product shifted from being a task container to a decision-reducing system. The interface priorities “what matters now” over showing everything at once. Students receive default frameworks before customisation options.",
+            "The product shifted from being a task container to a decision-reducing system. The interface priorities \u201cwhat matters now\u201d over showing everything at once. Students receive default frameworks before customisation options.",
         },
         {
           title: "SOLUTION FOUND",
-          //place to format to bullet points 
-          content:
-            "A guided academic planning system combining: Task input with automatic time-slot suggestions. Daily priority limits to prevent overload. Visual separation between “must-do” and “optional” tasks. How It Solves the Problem Converts vague intentions into executable plans Reduces daily planning effort Encourages consistent engagement through achievable workloads Why This Solution Was Chosen Alternative concepts (gamification, social accountability, streaks) were deprioritized because they increased engagement without solving execution failure.",
+          // Structured content array — render each block by its type:
+          //   "text"    → plain paragraph
+          //   "heading" → bold/label line  (e.g. "How It Solves the Problem")
+          //   "bullets" → bullet-point list
+          //   "spacer"  → empty line between sections
+          //
+          // To add a line break inside a "text" value use \n
+          // To add a blank line between two blocks use { type: "spacer" }
+          content: [
+            {
+              type: "text",
+              value: "A guided academic planning system combining:",
+            },
+            {
+              type: "bullets",
+              items: [
+                "Task input with automatic time-slot suggestions",
+                "Daily priority limits to prevent overload",
+                "Visual separation between \u201cmust-do\u201d and \u201coptional\u201d tasks",
+              ],
+            },
+            { type: "spacer" },
+            {
+              type: "heading",
+              value: "How It Solves the Problem",
+            },
+            {
+              type: "bullets",
+              items: [
+                "Converts vague intentions into executable plans",
+                "Reduces daily planning effort",
+                "Encourages consistent engagement through achievable workloads",
+              ],
+            },
+            { type: "spacer" },
+            {
+              type: "heading",
+              value: "Why This Solution Was Chosen",
+            },
+            {
+              type: "text",
+              value:
+                "Alternative concepts (gamification, social accountability, streaks) were deprioritized because they increased engagement without solving execution failure.",
+            },
+          ],
         },
       ],
     },
@@ -201,15 +243,16 @@ conclusionSection: {
     brandingSection: {
       eyebrow: "BRANDING",
       description:
-        "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
+        "Every logo starts with understanding before aesthetics. We begin by defining the brand's purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
       visuals: {
         singleImage: "/images/Casestudy/Time Management/Image 3.png",
       },
     },
+
     designSystemSection: {
       ideation: {
         eyebrow: "IDEATION",
-        description: "The team looked at AI schedules, group features, and rewards, but didn’t use them because they were hard to trust and added confusion. Instead, the focus stayed on one clear workflow using simple logic that works reliably.",
+        description: "The team looked at AI schedules, group features, and rewards, but didn't use them because they were hard to trust and added confusion. Instead, the focus stayed on one clear workflow using simple logic that works reliably.",
         image: "/images/Casestudy/Time Management/Image 4.png",
       },
 
@@ -226,6 +269,7 @@ conclusionSection: {
 
       colorPaletteImage: "/images/Casestudy/Time Management/Image 6.png",
     },
+
     visualsSection: {
       eyebrow: "VISUALS",
       description:
@@ -263,6 +307,7 @@ conclusionSection: {
 
 
 
+
   {
     slug: "feasto",
     hero: {
@@ -273,12 +318,11 @@ conclusionSection: {
       highlight: ["eliminates", "queue", "anxiety", "Plan", "order", "receive"],
     },
 
-
     intro: {
       containerMaxWidth: 890,
       visualImage: "/images/Casestudy/Feasto/Image 1.png",
       description:
-        "Cinema Chains & Theatre Operations  managing high density audience flow during short movie intervals. Highly time constrained service environment with peak congestion, queue dependency, and frequent experience breakdowns.",
+        "Cinema Chains & Theatre Operations managing high density audience flow during short movie intervals. Highly time constrained service environment with peak congestion, queue dependency, and frequent experience breakdowns.",
       meta: {
         client: "Feasto",
         industry: "Entertainment / Cinema",
@@ -319,20 +363,59 @@ conclusionSection: {
             "The focus shifts from improving interfaces to removing queue dependency. The system prioritizes fast interaction, minimal decisions, and allowing users to return to their seats immediately.",
         },
         {
-          title: "SOLUTION FOUND",
-          content:
-            "A kiosk-based ordering system with in-seat delivery. Key FeaturesSelf-service kiosks Visual, fast menu selection Seat-based delivery Order confirmation How It Solves Removes queues Reduces decision time Lets users return to their seats quicklyWhy This  Other solutions still rely on time and attention. This approach works within the interval constraint.",
-        },
+  title: "SOLUTION FOUND",
+  content: [
+    {
+      type: "text",
+      value: "A kiosk-based ordering system with in-seat delivery.",
+    },
+    {
+      type: "heading",
+      value: "Key Features",
+    },
+    {
+      type: "bullets",
+      items: [
+        "Self-service kiosks",
+        "Visual, fast menu selection",
+        "Seat-based delivery",
+        "Order confirmation",
+      ],
+    },
+    {
+      type: "heading",
+      value: "How It Solves",
+    },
+    {
+      type: "bullets",
+      items: [
+        "Removes queues",
+        "Reduces decision time",
+        "Lets users return to their seats quickly",
+      ],
+    },
+    {
+      type: "heading",
+      value: "Why This",
+    },
+    {
+      type: "text",
+      value:
+        "Other solutions still rely on time and attention. This approach works within the interval constraint.",
+    },
+  ] ,
+},
       ],
     },
 
     brandingSection: {
       eyebrow: "BRANDING",
-      description: "The Feasto logo is designed to communicate speed and simplicity in a high-pressure environment. Built for quick recognition, the identity avoids visual complexity and works effectively in crowded cinema spaces where attention is limited. The design reflects the product’s core purpose enabling fast, frictionless snack ordering without delay or confusion.",
+      description: "The Feasto logo is designed to communicate speed and simplicity in a high-pressure environment. Built for quick recognition, the identity avoids visual complexity and works effectively in crowded cinema spaces where attention is limited. The design reflects the product's core purpose enabling fast, frictionless snack ordering without delay or confusion.",
       visuals: {
         singleImage: "/images/Casestudy/Feasto/Image 3.png",
       },
     },
+
     designSystemSection: {
       ideation: {
         eyebrow: "IDEATION",
@@ -352,6 +435,7 @@ conclusionSection: {
 
       colorPaletteImage: "/images/Casestudy/Feasto/Image 6.png",
     },
+
     visualsSection: {
       eyebrow: "VISUALS",
       description: "The visuals are clean and minimal to help users focus on tasks and time blocks. Clear spacing and soft colors reduce stress and make schedules easy to scan.",
@@ -363,10 +447,10 @@ conclusionSection: {
       description:
         "We led the UX and service design for Feasto, defining the core experience, user flows, and system interactions. The focus was on aligning user needs with real-world cinema constraints to create a fast, reliable, and scalable snack-ordering experience.",
 
-     columns: [
+      columns: [
         {
           title: "UX Strategy",
-          items: ["Business Goals", "Emerging Trends", "User needs","Technical and operational constraints"],
+          items: ["Business Goals", "Emerging Trends", "User needs", "Technical and operational constraints"],
         },
         {
           title: "Brand Experience",
@@ -389,7 +473,6 @@ conclusionSection: {
 
 
 
-
   {
     slug: "resturent-dashboard",
     hero: {
@@ -400,12 +483,11 @@ conclusionSection: {
       highlight: ["track", "orders", "sales", "operations", "real-time"],
     },
 
-    
     intro: {
       containerMaxWidth: 890,
       visualImage: "/images/Casestudy/Resturent dashboard/Image 1.png",
       description:
-        "The project was done for a mid-sized restaurant chain operating multiple outlets. The dashboard was started to  improve daily control and reporting. Without change, errors, delays, and revenue loss would continue.",
+        "The project was done for a mid-sized restaurant chain operating multiple outlets. The dashboard was started to improve daily control and reporting. Without change, errors, delays, and revenue loss would continue.",
       meta: {
         client: "Plate - Fork",
         industry: "E-Commerce",
@@ -455,11 +537,12 @@ conclusionSection: {
     brandingSection: {
       eyebrow: "BRANDING",
       description:
-        "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
+        "Every logo starts with understanding before aesthetics. We begin by defining the brand's purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
       visuals: {
         singleImage: "/images/Casestudy/Resturent dashboard/Image 3.png",
       },
     },
+
     designSystemSection: {
       ideation: {
         eyebrow: "IDEATION",
@@ -481,6 +564,7 @@ conclusionSection: {
 
       colorPaletteImage: "/images/Casestudy/Resturent dashboard/Image 6.png",
     },
+
     visualsSection: {
       eyebrow: "VISUALS",
       description:
@@ -493,10 +577,10 @@ conclusionSection: {
       description:
         "Our responsibility covered user research, Branding strategy, UX architecture, Design systems, Interaction Design and UI execution.",
 
-     columns: [
+      columns: [
         {
           title: "UX Strategy",
-          items: ["Business Goals", "Emerging Trends", "User needs","Technical and operational constraints"],
+          items: ["Business Goals", "Emerging Trends", "User needs", "Technical and operational constraints"],
         },
         {
           title: "Brand Experience",
@@ -515,6 +599,4 @@ conclusionSection: {
         "This project solved a real operational problem for restaurants. It improved visibility, control, and daily decision-making. The dashboard is scalable across outlets and teams.",
     },
   },
-
-
 ];

@@ -20,7 +20,7 @@ export default function Testimonial() {
       name: "Syed Zeeshan Hussain Naqvi ",
       position: "CEO - SaaS",
       image:
-        "images/Testimonials/Zeeshan.png",
+        "/images/Testimonials/Zeeshan.png",
     },
     // {
     //   company: "Another Company",

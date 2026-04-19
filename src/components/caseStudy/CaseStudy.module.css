@@ -271,6 +271,56 @@
   color: var(--cs-mid);
 }
 
+/* plain paragraph inside structured content */
+.stepText {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--cs-mid);
+  margin: 0 0 4px 0;
+}
+
+/* bold section label — e.g. "How It Solves the Problem" */
+.stepHeading {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--cs-charcoal);
+  margin: 0 0 4px 0;
+}
+
+/* bullet list */
+.stepBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stepBullets li {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--cs-mid);
+  padding-left: 16px;
+  position: relative;
+}
+
+.stepBullets li::before {
+  content: "·";
+  position: absolute;
+  left: 4px;
+  color: var(--cs-mid);
+}
+
+/* blank gap between sections */
+.stepSpacer {
+  height: 16px;
+}
+
 
 /* =========================
    BRANDING SECTION

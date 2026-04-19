@@ -1,3 +1,9 @@
+type ContentBlock =
+  | { type: "text"; value: string }
+  | { type: "heading"; value: string }
+  | { type: "bullets"; items: string[] }
+  | { type: "spacer" };
+
 export const caseStudies = [
   {
     slug: "go-ride",
@@ -235,7 +241,7 @@ export const caseStudies = [
               value:
                 "Alternative concepts (gamification, social accountability, streaks) were deprioritized because they increased engagement without solving execution failure.",
             },
-          ],
+          ] satisfies ContentBlock[],
         },
       ],
     },
@@ -403,7 +409,7 @@ export const caseStudies = [
       value:
         "Other solutions still rely on time and attention. This approach works within the interval constraint.",
     },
-  ] ,
+  ] satisfies ContentBlock[],
 },
       ],
     },

@@ -17,11 +17,13 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Nimora Studio — From Complex Ideas to Clear Direction",
+  title: "Nimora Studio",
   description:
     "Nimora Studio helps teams turn complex ideas into clear product direction through strategy, design, and execution.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo_N.svg",
+    shortcut: "/logo_N.svg",
+    apple: "/logo_N.svg",
   },
 };
 

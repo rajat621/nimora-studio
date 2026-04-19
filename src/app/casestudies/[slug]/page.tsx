@@ -10,7 +10,7 @@ import Industries from "@/components/industries/Industries";
 import Testimonial from "@/components/testimonial/Testimonial";
 import CTA from "@/components/cta/CTA";
 import { notFound } from "next/navigation";
-import { caseStudies } from "@/data/caseStudies";
+import { caseStudies } from "../../../data/caseStudies";
 import Footer from "@/components/footer/Footer";
 
 
@@ -22,9 +22,7 @@ export default async function CaseStudyPage({
 }) {
   const { slug } = await params;
 
-  const data = caseStudies.find(
-    (study) => study.slug === slug
-  );
+  const data = caseStudies.find((study) => study.slug === slug);
 
   if (!data) return notFound();
 

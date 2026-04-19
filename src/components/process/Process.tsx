@@ -52,6 +52,17 @@ export default function Process() {
   const [showFooter, setShowFooter] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
   const [activeBg, setActiveBg] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+useEffect(() => {
+  const onResize = () => {
+    setIsMobileView(window.innerWidth <= 412);
+  };
+
+  onResize();
+  window.addEventListener("resize", onResize);
+  return () => window.removeEventListener("resize", onResize);
+}, []);
 
 useEffect(() => {
   const handleScroll = () => {
@@ -168,10 +179,39 @@ setShowFooter(timelineFullyFilled);
           const isLeft = index % 2 === 0;
           const isVisible = visibleSteps.includes(index);
 
+          if (isMobileView) {
+            return (
+              <div
+                key={step.id}
+                ref={(el) => {
+                  stepRefs.current[index] = el;
+                }}
+                className={`${styles.step} ${styles.mobileStep} ${
+                  isVisible ? styles.visible : ""
+                }`}
+              >
+                <img
+                  src={`/process/${step.id}.svg`}
+                  className={styles.number}
+                  alt=""
+                />
+
+                <div
+                  className={`${styles.content} ${styles.mobileContent} ${
+                    isVisible ? styles.mobileContentVisible : ""
+                  }`}
+                >
+                  <h3>{step.title}</h3>
+                  <h6>{step.subtitle}</h6>
+                  <p>{step.description}</p>
+                </div>
+              </div>
+            );
+          }
+
           return (
             <div
               key={step.id}
-              // ref={(el) => (stepRefs.current[index] = el)}
               ref={(el) => {
                 stepRefs.current[index] = el;
               }}

@@ -294,3 +294,106 @@
   font-weight: 400;
   color: #FAFAFF;
 }
+
+@media (max-width: 412px) {
+  .services {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .services {
+    padding-top: 52px;
+    padding-bottom: 72px;
+  }
+
+  .intro {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .heading {
+    margin-top: 8px;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+
+  .description1 {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+
+  .pinSection {
+    padding-top: 18px;
+  }
+
+  .cards {
+    height: auto;
+    margin-top: 0;
+    overflow: visible;
+  }
+
+  .mobileCards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobileCard {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    min-height: 190px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+  }
+
+  .mobileCard .content {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .mobileCard .header {
+    gap: 10px;
+  }
+
+  .mobileCard .title {
+    font-size: 20px;
+    line-height: 1.25;
+  }
+
+  .mobileCard .arrowBtn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobileCard .description {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .mobileCard .tags {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .mobileCard .tag {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 11px;
+    border-radius: 28px;
+  }
+}

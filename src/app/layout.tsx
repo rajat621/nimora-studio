@@ -1,12 +1,6 @@
 import "./globals.css";
 import { Plus_Jakarta_Sans, Open_Sans } from "next/font/google";
-
-/**
- * Fonts
- * - Plus Jakarta Sans → Headings ONLY
- * - Open Sans → Body, buttons, UI text
- * Loaded via next/font for performance + no CLS
- */
+import ScrollToTop from "@/components/ScrollToTop";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -22,10 +16,6 @@ const openSans = Open_Sans({
   display: "swap",
 });
 
-/**
- * Global metadata
- * This is studio-grade, SEO-safe, and extensible later
- */
 export const metadata = {
   title: "Nimora Studio — From Complex Ideas to Clear Direction",
   description:
@@ -41,11 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${plusJakarta.variable} ${openSans.variable}`}
-    >
+    <html lang="en" className={`${plusJakarta.variable} ${openSans.variable}`}>
       <body>
+        <ScrollToTop />
         {children}
       </body>
     </html>

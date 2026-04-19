@@ -48,13 +48,10 @@ export default function VisualsSection({ data }: Props) {
       <div className={styles.contentWrap}>
 
       <div className={styles.visualGrid}>
-        <div className={styles.visualRow}>
-          <div className={styles.typographyLeft}>
-          <h3>{data.roleSection.title}</h3>
-        </div>
-            <div className={styles.typographyRight}>
-            {data.roleSection.description}
-</div>
+
+        <div className={`${styles.visualRow} ${styles.stepRow}`}>
+          <h3 className={styles.stepTitle}>{data.roleSection.title}</h3>
+            <p className={styles.stepContent}>{data.roleSection.description}</p>
         </div>
 
         <div className={styles.vRow}>

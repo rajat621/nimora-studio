@@ -134,10 +134,22 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import styles from "./Navigation.module.css";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 
 export default function Navigation() {
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -211,11 +223,17 @@ export default function Navigation() {
           })}
         </nav>
 
-        {/* CTA */}
-<Link href="/contactForm" className={styles.cta}>
-  <span>Let’s Talk</span>
-  <ArrowForwardIcon className={styles.ctaArrow} />
-</Link>
+        {/* CTA / Mobile menu */}
+        {isMobileView ? (
+          <button className={styles.mobileMenuButton} aria-label="Open menu">
+            <MenuRoundedIcon className={styles.mobileMenuIcon} />
+          </button>
+        ) : (
+          <Link href="/contactForm" className={styles.cta}>
+            <span>Let’s Talk</span>
+            <ArrowForwardIcon className={styles.ctaArrow} />
+          </Link>
+        )}
 
       </div>
     </header>

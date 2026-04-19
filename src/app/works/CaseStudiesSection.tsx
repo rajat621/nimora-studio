@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import styles from "./WorksPage.module.css";
 import gsap from "gsap";
@@ -10,45 +11,48 @@ type CaseStudy = {
   title: string;
   description: string;
   image: string;
+  slug: string;
 };
 
 const caseStudies: CaseStudy[] = [
   {
-    title: "Simplifying large-scale product discovery through design.",
-    description:
-      "BigBasket is India’s leading online grocery platform, known for fresh produce, trusted quality, and a seamless shopping experience.",
-    image: "/images/industries/image_1.png",
+    title: "Focused time management for academic work.",
+    description:"Plan better, avoid overload, meet deadlines consistently.",
+    image: "/images/Casestudy/Time Management/coverImage.png",
+    slug: "time-management",
   },
   {
-    title: "Designing intuitive fintech dashboards.",
-    description:
-      "We improved complex transaction flows and built trust-driven financial experiences.",
-    image: "/images/industries/image_2.png",
+    title: "All-in-one app for cycle rentals, routes, and rides.",
+    description: "Quick bike access, better utilization, less manual work.",
+    image: "/images/Casestudy/GoRide/coverImage.png",
+    slug: "go-ride",
   },
   {
-    title: "AI-powered analytics platform redesign.",
-    description:
-      "From dashboards to insights, we streamlined user workflows.",
-    image: "/images/industries/image_3.png",
-  },
-    {
-    title: "Enterprise workflow optimization.",
-    description:
-      "Rebuilt complex systems into simple usable flows.",
-    image: "/images/industries/image_5.png",
+    title: "Skip queues order snacks right from your seat.",
+    description: "Faster ordering, less waiting, no interval rush.",
+    image: "/images/Casestudy/Feasto/coverImage.png",
+    slug: "feasto",
   },
   {
-    title: "Scaling SaaS onboarding experiences.",
-    description:
-      "Improved adoption and reduced drop-offs with better UX.",
-    image: "/images/industries/image_4.png",
+    title: "Real-time restaurant operations in one dashboard. ",
+    description: "Save time, reduce chaos, make faster decisions.",
+    image: "/images/Casestudy/Resturent dashboard/coverImage.png",
+    slug: "restaurant-dashboard",
   },
-  {
-    title: "Enterprise workflow optimization.",
-    description:
-      "Rebuilt complex systems into simple usable flows.",
-    image: "/images/industries/image_5.png",
-  },
+  // {
+  //   title: "Scaling SaaS onboarding experiences.",
+  //   description:
+  //     "Improved adoption and reduced drop-offs with better UX.",
+  //   image: "/images/industries/image_4.png",
+  //   slug: "go-ride",
+  // },
+  // {
+  //   title: "Enterprise workflow optimization.",
+  //   description:
+  //     "Rebuilt complex systems into simple usable flows.",
+  //   image: "/images/industries/image_5.png",
+  //   slug: "go-ride",
+  // },
 ];
 
 function CaseCard({
@@ -58,12 +62,12 @@ function CaseCard({
   study: CaseStudy;
   full?: boolean;
 }) {
-  return (
+  const cardBody = (
     <div className={`${styles.card} ${full ? styles.full : ""}`}>
       <div
         className={styles.imagePlaceholder}
         style={{
-          backgroundImage: `url(${study.image})`,
+          backgroundImage: `url("${encodeURI(study.image)}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -73,6 +77,16 @@ function CaseCard({
         <p>{study.description}</p>
       </div>
     </div>
+  );
+
+  return (
+    <Link
+      href={`/casestudies/${study.slug}`}
+      className={styles.caseCardLink}
+      aria-label={`View case study: ${study.title}`}
+    >
+      {cardBody}
+    </Link>
   );
 }
 

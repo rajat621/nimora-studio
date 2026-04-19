@@ -3,6 +3,7 @@ import Footer from "@/components/footer/Footer";
 import HeroBackground from "@/components/hero/HeroBackground";
 import ProcessHero from "./ProcessHero";
 import Industries from "@/components/industries/Industries";
+import CursorReactiveBackground from "@/components/background/CursorReactiveBackground";
 import Testimonial from "@/components/testimonial/Testimonial";
 import CTA from "@/components/cta/CTA";
 import ProcessFlow from "./ProcessFlow";
@@ -18,8 +19,10 @@ export default function ProcessPage() {
       <main>
         <ProcessHero />
         <ProcessFlow />
-        <Processdescription /> {/* New section for process description */}
-        <ProcessExpect /> {/* New section for "What You Can Expect" */}
+        <CursorReactiveBackground>
+        <Processdescription /> 
+        </CursorReactiveBackground>
+        <ProcessExpect /> 
         <Industries />
         <Testimonial /> 
         <CTA />

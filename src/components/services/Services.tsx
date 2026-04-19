@@ -385,9 +385,27 @@ export default function Services({
   const pinRef     = useRef<HTMLDivElement | null>(null);
   const stRef      = useRef<ScrollTrigger | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current || !pinRef.current) return;
+
+    if (isMobileView) {
+      if (enableDarkMode) {
+        sectionRef.current.classList.add(styles.dark);
+      }
+      return;
+    }
 
     const count      = services.length;
     const total      = totalUnits(count);
@@ -476,11 +494,12 @@ export default function Services({
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [enableDarkMode]);
+  }, [enableDarkMode, isMobileView]);
 
   // ── Tab click ─────────────────────────────────────────────
   // Directly set window.scrollY — no GSAP animation that fights scrub
   const handleTabClick = (targetIdx: number) => {
+    if (isMobileView) return;
     const st = stRef.current;
     if (!st) return;
 
@@ -544,26 +563,28 @@ export default function Services({
 
       {/* ── PIN SECTION ── */}
       <div ref={pinRef} className={styles.pinSection}>
-        <div className={styles.tabsWrapper}>
-          <div className={styles.tabsContainer}>
-            {services.map((service, i) => (
-              <button
-                key={service.slug}
-                onClick={() => handleTabClick(i)}
-                className={`${styles.tab} ${activeIndex === i ? styles.active : ""}`}
-              >
-                {service.tabLabel}
-              </button>
-            ))}
+        {!isMobileView && (
+          <div className={styles.tabsWrapper}>
+            <div className={styles.tabsContainer}>
+              {services.map((service, i) => (
+                <button
+                  key={service.slug}
+                  onClick={() => handleTabClick(i)}
+                  className={`${styles.tab} ${activeIndex === i ? styles.active : ""}`}
+                >
+                  {service.tabLabel}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* overflow:hidden clips cards that are waiting below */}
-        <div className={styles.cards}>
+        <div className={`${styles.cards} ${isMobileView ? styles.mobileCards : ""}`}>
           {services.map((service) => (
             <ServiceCard
               key={service.slug}
-              className={styles.card}
+              className={isMobileView ? styles.mobileCard : styles.card}
               slug={service.slug}
               title={service.title}
               description={service.cardDescription}
@@ -576,3 +597,125 @@ export default function Services({
     </section>
   );
 }
+
+
+// import styles from "./Services.module.css";
+// import ServiceCard from "./ServiceCard";
+
+// export default function Services() {
+//   return (
+//     <section className={styles.services}>
+//       <div className={styles.intro}>
+//        <span className={styles.eyebrow}>
+//           OUR ROLE IS TO BRING STRUCTURE TO THAT MOMENT
+//        </span>
+
+//        <h2 className={styles.heading}>
+//           Big ideas don’t start clear. They start confusing.
+//        </h2>
+
+//        <p className={styles.description1}>
+//           Most products don’t fail because of bad execution. They fail because teams start <br></br>
+//           building before they’re clear on the problem. That early confusion isn’t a weakness it’s where <br></br>
+//           the real work begins.
+//        </p>
+
+// <div className={styles.tabsWrapper}>
+//   <div className={styles.tabsContainer}>
+//     <button className={`${styles.tab} ${styles.active}`}>
+//       UX Strategy
+//     </button>
+
+//     <button className={styles.tab}>
+//       Brand Experience
+//     </button>
+
+//     <button className={styles.tab}>
+//       Product Design
+//     </button>
+
+//     <button className={styles.tab}>
+//       Product Development
+//     </button>
+
+//     <button className={styles.tab}>
+//       Go-Live Support
+//     </button>
+//   </div>
+// </div>
+//       </div>
+
+//    <div className={styles.cards}>
+//         <ServiceCard
+//           title="UX Strategy & Product Direction"
+//           description="We help teams define the right product direction and reduce early-stage risk."
+//           image="/images/services/strategy.jpg"
+//           tags={[
+//             "Business goals",
+//             "Heuristic Analysis",
+//             "Emerging Trends",
+//             "User needs",
+//             "UI/UX Auditing",
+//             "AI Readiness & Experience Strategy",
+//             "Technical and operational constraints",
+//           ]}
+//         />
+
+//         <ServiceCard
+//           title="Brand Experience & Identity"
+//           description="Build a brand that feels clear, consistent, and credible across digital touchpoints."
+//           image="/images/services/brand.jpg"
+//           tags={[
+//             "Branding Strategy & Positioning",
+//             "Typography, Color, & Iconography",
+//             "Illustration and motion Design",
+//             "Brand Clarity & Trust Design",
+//           ]}
+//         />
+
+//         <ServiceCard
+//           title="Product Design (UX & UI)"
+//           description="Design usable, scalable products grounded in real user needs."
+//           image="/images/services/design.jpg"
+//           tags={[
+//             "User Experience Design",
+//             "Interface Design",
+//             "Interaction Design",
+//             "AI-Assisted Experience Design",
+//             "Design Systems",
+//             "Prototyping and usability testing",
+//             "Iterative Testing",
+//           ]}
+//         />
+
+//         <ServiceCard
+//           title="Product Development & Implementation"
+//           description="Build reliable, scalable products from validated designs."
+//           image="/images/services/development.jpg"
+//           tags={[
+//             "Web and application development",
+//             "SaaS platform implementation",
+//             "Frontend and backend engineering",
+//             "System integration and APIs",
+//             "Performance and scalability planning",
+//             "AI Integration & Product Automation",
+//           ]}
+//         />
+
+//         <ServiceCard
+//           title="Go-Live Support & Continuous Improvement"
+//           description="Ongoing support and improvements after launch."
+//           image="/images/services/support.jpg"
+//           tags={[
+//             "Performance and Stability Monitoring",
+//             "Ongoing Support and Optimization",
+//             "Bug Fixes & Issue Resolution",
+//             "Security Updates and Maintenance",
+//             "Iterative design and UX improvements",
+//             "Product Insights & Optimization",
+//           ]}
+//         />
+//       </div>
+//     </section>
+//   );
+// }

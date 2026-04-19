@@ -46,7 +46,7 @@ export default async function CaseStudyPage({
   }} />
         <Testimonial /> 
         <CTA />
-        <Industries />
+        {/* <Industries /> */}
 </main>
       <Footer />
 

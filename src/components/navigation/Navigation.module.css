@@ -152,3 +152,47 @@
 .dark .cta:hover {
   background-color: #f2f2f2;
 }
+
+.mobileMenuButton {
+  display: none;
+}
+
+@media (max-width: 412px) {
+  .nav {
+    height: 72px;
+  }
+
+  .inner {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 20px;
+  }
+
+  .logo img {
+    width: 116px;
+    height: auto;
+  }
+
+  .menu,
+  .cta {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 36px;
+    border-radius: 18px;
+    border: 1px solid #316960;
+    background: rgba(49, 105, 96, 0.12);
+    color: #316960;
+    justify-self: end;
+    cursor: pointer;
+  }
+
+  .mobileMenuIcon {
+    font-size: 22px !important;
+  }
+}
+

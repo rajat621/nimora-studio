@@ -82,3 +82,37 @@
   transform: translateY(0);
   transition: opacity 0.9s ease, transform 0.9s ease;
 }
+
+@media (max-width: 412px) {
+  .ctaSection {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ctaSection {
+    margin: 72px auto;
+    max-width: 100%;
+  }
+
+  .ctaBox {
+    padding: 44px 20px;
+  }
+
+  .heading {
+    margin-bottom: 12px;
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .description {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .ctaButton {
+    margin-top: 24px;
+    height: 38px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+}

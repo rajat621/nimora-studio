@@ -213,3 +213,62 @@
   display: flex;
   gap: 24px;
 }
+
+@media (max-width: 412px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .footer {
+    padding: 56px 0 24px;
+  }
+
+  .top {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .logoSection {
+    max-width: 100%;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .cta {
+    height: 34px;
+    padding: 0 14px;
+    font-size: 12px;
+  }
+
+  .linksSection {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .column h4,
+  .column a,
+  .bottomBar,
+  .bottomLinks a,
+  .email {
+    font-size: 12px;
+  }
+
+  .writeToUs {
+    margin-top: 20px;
+  }
+
+  .bottomBar {
+    margin-top: 28px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bottomLinks {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}

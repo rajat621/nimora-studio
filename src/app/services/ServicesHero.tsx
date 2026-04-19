@@ -1,3 +1,30 @@
+// import styles from "./ServicesHero.module.css";
+
+// export default function ServicesHero() {
+//   return (
+//     <section className={styles.hero}>
+//       <div className={styles.container}>
+//         <span className={styles.eyebrow}>HOW WE HELP</span>
+
+// <h1 className={styles.heading}>
+//   CLEAR DIRECTION
+//   <br />
+//   <span>
+//     <span className={styles.blackText}>FROM</span> IDEA{" "}
+//     <span className={styles.blackText}>TO</span> LAUNCH
+//   </span>
+// </h1>
+
+
+//         <p className={styles.description}>
+//           Each service supports a different stage of the 
+//           product journey all focused on reducing uncertainty and improving decision-making.
+//         </p>
+//       </div>
+//     </section>
+//   );
+// }
+
 "use client";
 import { useEffect, useRef, useState } from "react";
 import styles from "./ServicesHero.module.css";

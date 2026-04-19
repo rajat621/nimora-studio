@@ -5,9 +5,7 @@ type Props = {
     eyebrow: string;
     description: string;
     visuals: {
-      row1: string[];
-      row2: string;
-      row3: string[];
+      singleImage: string;
     };
   };
 };
@@ -27,23 +25,9 @@ export default function BrandingSection({ data }: Props) {
           </p>
         </div>
 
-        {/* Row 1 */}
-        <div className={styles.brandRowTwo}>
-          {data.visuals.row1.map((img, i) => (
-            <img key={i} src={img} alt="" />
-          ))}
-        </div>
-
-        {/* Row 2 */}
+        {/* Visuals */}
         <div className={styles.brandRowFull}>
-          <img src={data.visuals.row2} alt="" />
-        </div>
-
-        {/* Row 3 */}
-        <div className={styles.brandRowTwo}>
-          {data.visuals.row3.map((img, i) => (
-            <img key={i} src={img} alt="" />
-          ))}
+          <img src={data.visuals.singleImage} alt="" />
         </div>
       </div>
     </section>

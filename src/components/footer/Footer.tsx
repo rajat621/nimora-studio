@@ -1,92 +1,4 @@
-// import styles from "./Footer.module.css";
 
-// export default function Footer() {
-//   return (
-//     <footer className={styles.footer}>
-//       <div className={styles.container}>
-//         {/* ================= Top Section ================= */}
-//         <div className={styles.top}>
-//           {/* Logo Section */}
-//           <div className={styles.logoSection}>
-//             <div className={styles.logoRow}>
-//               <div className={styles.logoIcon} />
-//               <span className={styles.brandName}>Nimora Studio</span>
-//             </div>
-
-//             <p className={styles.description}>
-//               Designing digital experiences that work. We help businesses build
-//               clear, scalable products through strategy, design, and engineering.
-//             </p>
-
-//             <button className={styles.cta}>
-//               Clarify your product →
-//             </button>
-//           </div>
-
-//           {/* Links Section */}
-//           <div className={styles.linksSection}>
-//             {/* Quick Links */}
-//             <div className={styles.column}>
-//               <h4>Quick Links</h4>
-//               <ul>
-//                 <li>Home</li>
-//                 <li>Services</li>
-//                 <li>Process</li>
-//                 <li>Works</li>
-//                 <li>Clients</li>
-//                 <li>About Us</li>
-//               </ul>
-//             </div>
-
-//             {/* Services */}
-//             <div className={styles.column}>
-//               <h4>Services</h4>
-//               <ul>
-//                 <li>UX Strategy</li>
-//                 <li>Brand Experience</li>
-//                 <li>Product Design</li>
-//                 <li>Product Development</li>
-//                 <li>Go-Live Support</li>
-//               </ul>
-//             </div>
-
-//             {/* Company */}
-//             <div className={styles.column}>
-//               <h4>Company</h4>
-
-//               {/* Social icons */}
-//               <div className={styles.socials}>
-//                 <div className={styles.socialIcon}>in</div>
-//                 <div className={styles.socialIcon}>◎</div>
-//                 <div className={styles.socialIcon}>𝕏</div>
-//                 <div className={styles.socialIcon}>✈</div>
-//               </div>
-
-//               {/* Write to us */}
-//               <div className={styles.writeToUs}>
-//                 <h4>Write to us</h4>
-//                 <p>Info@nimorastudios.com</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* ================= Bottom Bar ================= */}
-//         <div className={styles.bottomBar}>
-//           <span>
-//             Copyright © 2026, Nimorastudios. All Rights Reserved.
-//           </span>
-
-//           <div className={styles.bottomLinks}>
-//             <span>Terms of Use</span>
-//             <span>Privacy Policy</span>
-//             <span>Support</span>
-//           </div>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// }
 "use client";
 
 import styles from "./Footer.module.css";
@@ -152,16 +64,26 @@ export default function Footer() {
 
               <div className={styles.socials}>
                 <div className={styles.socialIcon}>
+                                    <a href="https://www.linkedin.com/company/nimorastudios" target="_blank" rel="noopener noreferrer">
+
                   <Image src="/Icons/linkedin.svg" alt="LinkedIn" width={18} height={18} />
+</a>
                 </div>
                 <div className={styles.socialIcon}>
-                  <Image src="/Icons/instagram.svg" alt="Instagram" width={18} height={18} />
+                  <a href="https://www.instagram.com/nimorastudios_/" target="_blank" rel="noopener noreferrer">
+                    <Image src="/Icons/instagram.svg" alt="Instagram" width={18} height={18} />
+                  </a>
                 </div>
                 <div className={styles.socialIcon}>
+                                    <a href="https://x.com/NimoraStudios" target="_blank" rel="noopener noreferrer">
+
                   <Image src="/Icons/x.svg" alt="X" width={18} height={18} />
+                </a>
                 </div>
                 <div className={styles.socialIcon}>
+                <a href="https://www.instagram.com/nimorastudios_/" target="_blank" rel="noopener noreferrer">
                   <Image src="/Icons/dribble.svg" alt="Dribbble" width={18} height={18} />
+               </a>
                 </div>
               </div>
 

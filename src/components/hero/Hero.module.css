@@ -188,3 +188,78 @@
 .lineMask + .lineMask {
   margin-top: 24px;
 }
+
+.videoWrapperMobile,
+.mobileContent {
+  display: none;
+}
+
+@media (max-width: 412px) {
+  .hero {
+    height: auto;
+    display: block;
+    overflow: visible;
+    padding-top: 20px;
+  }
+
+  .mobileContent {
+    display: block;
+  }
+
+  .content {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 0.98;
+    letter-spacing: 0.01em;
+  }
+
+  .lineMask + .lineMask {
+    margin-top: 10px;
+  }
+
+  .subtitle {
+    margin: 22px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .actions {
+    margin-top: 18px;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    height: 36px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+
+  .primaryArrow {
+    font-size: 16px !important;
+  }
+
+  .videoWrapper {
+    display: none;
+  }
+
+  .videoWrapperMobile {
+    display: block;
+    position: relative;
+    width: calc(100% - 40px);
+    height: 220px;
+    margin: 22px auto 0;
+    border-radius: 0;
+    overflow: hidden;
+    opacity: 1;
+    pointer-events: auto;
+    background: #cbcbcb;
+  }
+}

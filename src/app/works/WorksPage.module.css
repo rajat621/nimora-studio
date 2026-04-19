@@ -3,7 +3,7 @@
 .hero {
   padding: 120px 20px 80px;
   text-align: center;
-  max-width: 1000px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
@@ -55,21 +55,27 @@
 .card {
   background: #F1F3F3;
   border-radius: 8px;
-  border: 1.5px solid rgba(18, 18, 20, 0.12);
+  border: 1px solid #D7D8D9;
   overflow: hidden;
   will-change: transform, opacity;
 
   box-shadow:
-    0 1px 4px rgba(18, 18, 20, 0.04),
-    0 0 6px rgba(18, 18, 20, 0.10);
+    0 1px 4px 0 rgba(18, 18, 20, 0.04),
+    0 0 5px 0 rgba(18, 18, 20, 0.10);
 
   transition: box-shadow 0.1s ease;
 }
 
 .card:hover {
   box-shadow:
-    0 2px 6px rgba(18, 18, 20, 0.08),
-    0 0px 8px rgba(18, 18, 20, 0.16);
+    0 2px 6px 0 rgba(18, 18, 20, 0.06),
+    0 0px 8px 0 rgba(18, 18, 20, 0.14);
+}
+
+.caseCardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .full {
@@ -78,24 +84,32 @@
 }
 
 .imagePlaceholder {
-  height: 300px;
+  height: 480px;
   background: #d1d5db;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
+.grid .imagePlaceholder {
+  height: 328px;
+}
 .cardContent {
-  padding: 24px;
+display: flex;
+padding: 32px 24px;
+flex-direction: column;
+align-items: flex-start;
+align-self: stretch;
 }
 
 .cardContent h3 {
   font-size: 20px;
-  margin-bottom: 12px;
+  margin: 0;
+  padding-bottom: 12px;
   color: #111;
 }
 
 .cardContent p {
   font-size: 14px;
+  margin: 0;
   color: #6b7280;
 }

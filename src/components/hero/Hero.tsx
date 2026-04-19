@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Container from "@/components/shared/Container";
@@ -15,8 +15,20 @@ export default function Hero() {
   const heroRef    = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const videoRef   = useRef<HTMLDivElement | null>(null);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobileView) return;
     if (!heroRef.current || !videoRef.current || !contentRef.current) return;
 
     /* ================================
@@ -133,20 +145,78 @@ export default function Hero() {
     }, heroRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobileView]);
 
   return (
     <section ref={heroRef} className={styles.hero}>
+      {isMobileView ? (
+        <>
+          <Container>
+            <div ref={contentRef} className={`${styles.content} ${styles.mobileContent}`}>
 
-      {/* VIDEO */}
-      <div ref={videoRef} className={styles.videoWrapper}>
-        <VideoBlock />
-      </div>
+              <h1 className={styles.title}>
 
-      <Container>
-        <div ref={contentRef} className={styles.content}>
+                {/* Line 1 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.textFrom}>FROM</span>{" "}
+                    <span className={styles.textComplex}>COMPLEX</span>
+                  </span>
+                </span>
 
-          <h1 className={styles.title}>
+                {/* Line 2 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.splitWrapper}>
+                      <span className={styles.textLeft}>IDEAS TO</span>
+                      <span className={styles.textRight}>CLEAR</span>
+                    </span>
+                  </span>
+                </span>
+
+                {/* Line 3 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.textDirection}>DIRECTION</span>
+                  </span>
+                </span>
+
+              </h1>
+
+              <p className={styles.subtitle}>
+                Unclear ideas lead to wasted time and wrong decisions.
+                <br />
+                We help teams define what to build and move forward with confidence.
+              </p>
+
+              <div className={styles.actions}>
+                <Link href="/contactForm" className={styles.primaryBtn}>
+                  <span>Clarify your product</span>
+                  <ArrowForwardIcon className={styles.primaryArrow} />
+                </Link>
+
+                <Link href="/process" className={styles.secondaryBtn}>
+                  See how we work
+                </Link>
+              </div>
+            </div>
+          </Container>
+
+          <div ref={videoRef} className={`${styles.videoWrapper} ${styles.videoWrapperMobile}`}>
+            <VideoBlock />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* VIDEO */}
+          <div ref={videoRef} className={styles.videoWrapper}>
+            <VideoBlock />
+          </div>
+
+          <Container>
+            <div ref={contentRef} className={styles.content}>
+
+              <h1 className={styles.title}>
 
             {/* Line 1 */}
             <span className={styles.lineMask}>
@@ -181,18 +251,20 @@ export default function Hero() {
             We help teams define what to build and move forward with confidence.
           </p>
 
-          <div className={styles.actions}>
-  <Link href="/contactForm" className={styles.primaryBtn}>
-    <span>Clarify your product</span>
-    <ArrowForwardIcon className={styles.primaryArrow} />
-  </Link>
+              <div className={styles.actions}>
+                <Link href="/contactForm" className={styles.primaryBtn}>
+                  <span>Clarify your product</span>
+                  <ArrowForwardIcon className={styles.primaryArrow} />
+                </Link>
 
-  <Link href="/process" className={styles.secondaryBtn}>
-    See how we work
-  </Link>
-</div>
-        </div>
-      </Container>
+                <Link href="/process" className={styles.secondaryBtn}>
+                  See how we work
+                </Link>
+              </div>
+            </div>
+          </Container>
+        </>
+      )}
     </section>
   );
 }

@@ -1,11 +1,5 @@
 import styles from "./CaseStudy.module.css";
 
-type Variant = {
-  label: string;
-  weight: number;
-  style?: React.CSSProperties["fontStyle"];
-};
-
 type Props = {
   data: {
     ideation: {
@@ -19,9 +13,7 @@ type Props = {
     };
     typography: {
       title: string;
-      fontFamily: string;
-      description: string;
-      variants: Variant[];
+      image: string;
     };
     colorPaletteImage: string;
   };
@@ -56,39 +48,14 @@ export default function DesignSystemSection({ data }: Props) {
         </div>
 
         {/* TYPOGRAPHY */}
-        
-<div className={styles.contentWrap}>
-  <div className={styles.typographyBlock}>
-    <div className={styles.typographyLeft}>
-      <h3>{data.typography.title}</h3>
-    </div>
-
-    <div className={styles.typographyRight}>
-      <p className={styles.fontName}>
-        Font Name – {data.typography.fontFamily}
-      </p>
-
-      <p className={styles.fontDescription}>
-        {data.typography.description}
-      </p>
-
-      <div className={styles.fontVariants}>
-        {data.typography.variants.map((v, i) => (
-          <span
-            key={i}
-            style={{
-              fontFamily: data.typography.fontFamily,
-              fontWeight: v.weight,
-              fontStyle: v.style || "normal",
-            }}
-          >
-            {v.label}
-          </span>
-        ))}
-      </div>
-    </div>
-  </div>
-</div>
+        <div className={styles.contentWrap}>
+          <div className={styles.typographyBlock}>
+            <h3 style={{ paddingBottom: '24px' }}>{data.typography.title}</h3>
+            <div className={styles.typographyImage}>
+              <img src={data.typography.image} alt="" />
+            </div>
+          </div>
+        </div>
 
         {/* COLOR */}
         <div className={styles.contentWrap}>

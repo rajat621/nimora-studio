@@ -1,23 +1,110 @@
 
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./WorkSection.module.css";
-import WorkCard from "./WorkCard";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Sample case study data with full structure
+const caseStudiesData = [
+  {
+    slug: "time-management",
+    tag: "EduTech",
+    title: "Focused time management for academic work.",
+    description: "Plan better, avoid overload, meet deadlines consistently.",
+    image: "images/Casestudy/Time Management/coverImage2.png",
+  },
+  {
+    slug: "go-ride",
+    tag: "E-Commerce / Mobility",
+    title: "All-in-one app for cycle rentals, routes, and rides.",
+    description: "Quick bike access, better utilization, less manual work.",
+    image: "images/Casestudy/GoRide/coverImage1.png",
+  },
+  {
+    slug: "feasto",
+    tag: "Entertainment / Cinema",
+    title: "Skip queues order snacks right from your seat.",
+    description: "Faster ordering, less waiting, no interval rush.",
+    image: "images/Casestudy/Feasto/coverImage4.png",
+  },
+   {
+    slug: "resturent-dashboard",
+    tag: "Saas / Operations",
+    title: "Real-time restaurant operations in one dashboard.",
+    description: "Save time, reduce chaos, make faster decisions.",
+    image: "images/Casestudy/Resturent Dashboard/coverImage3.png",
+  },
+];
 
 export default function WorkSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const descriptionRef = useRef<HTMLDivElement | null>(null);
+  const cardImageRef = useRef<HTMLDivElement | null>(null);
+  const cardContentRef = useRef<HTMLDivElement | null>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const currentCase = caseStudiesData[currentIndex];
+  const isFirstCard = currentIndex === 0;
+  const isLastCard = currentIndex === caseStudiesData.length - 1;
+
+  const handlePrevious = () => {
+    if (isAnimating || isFirstCard) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => prev - 1);
+    animateSlide("right");
+  };
+
+  const handleNext = () => {
+    if (isAnimating || isLastCard) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => prev + 1);
+    animateSlide("left");
+  };
+
+  const animateSlide = (direction: "left" | "right") => {
+    const fromX = direction === "left" ? 100 : -100;
+
+    // Fade out current
+    gsap.to([cardImageRef.current, cardContentRef.current], {
+      opacity: 0,
+      x: -fromX * 10,
+      duration: 0.4,
+      ease: "power2.inOut",
+    });
+
+    // Fade in new after brief delay
+    setTimeout(() => {
+      gsap.fromTo(
+        [cardImageRef.current, cardContentRef.current],
+        {
+          opacity: 0,
+          x: fromX * 10,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          onComplete: () => {
+            setIsAnimating(false);
+          },
+        }
+      );
+    }, 100);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
       // =========================
       // INTRO TIMELINE (Heading → Description)
       // =========================
@@ -45,55 +132,42 @@ export default function WorkSection() {
         }
       );
 
-introTl.fromTo(
-  descriptionRef.current,
-  {
-    y: 50,
-    opacity: 0,
-    clipPath: "inset(0 0 100% 0)",
-  },
-  {
-    y: 0,
-    opacity: 1,
-    clipPath: "inset(0 0 0% 0)",
-    duration: 0.8, // 👈 slightly faster
-    ease: "power3.out",
-  },
-  "-=0.4" // 👈 starts before heading fully finishes
-);
-
-
-      // =========================
-      // CARDS – WAVE ARRIVAL
-      // =========================
-      const cards = gsap.utils.toArray(`.${styles.workCard}`);
-
-      gsap.set(cards, {
-        y: (i) => 140 + i * 40,
-        opacity: 0,
-      });
-
-      const cardsTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: `.${styles.workCards}`,
-          start: "top 80%",
-          toggleActions: "play none none reset",
+      introTl.fromTo(
+        descriptionRef.current,
+        {
+          y: 50,
+          opacity: 0,
+          clipPath: "inset(0 0 100% 0)",
         },
-      });
+        {
+          y: 0,
+          opacity: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
 
-      cards.forEach((card: any, index: number) => {
-        cardsTl.to(
-          card,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1 + index * 0.2,
-            ease: "power3.out",
+      // Initial card animation
+      gsap.fromTo(
+        [cardImageRef.current, cardContentRef.current],
+        {
+          y: 140,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%",
+            toggleActions: "play none none reset",
           },
-          0
-        );
-      });
-
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -102,7 +176,6 @@ introTl.fromTo(
   return (
     <section className={styles.work} ref={sectionRef}>
       <div className={styles.container}>
-        
         <div className={styles.workIntro}>
           <h2 className={styles.workHeading} ref={headingRef}>
             <span className={styles.headingItalic}>Our</span>{" "}
@@ -125,32 +198,95 @@ introTl.fromTo(
           </div>
         </div>
 
-        <div className={styles.workCards}>
-          <WorkCard
-            image="/images/work/work-1.jpg"
-            title="A real time data analytical dashboard"
-            description="Design integrated AI based end to end platform"
-          />
-          <WorkCard
-            image="/images/work/work-2.jpg"
-            title="A real time data analytical dashboard"
-            description="Design integrated AI based end to end platform"
-          />
-          <WorkCard
-            image="/images/work/work-3.jpg"
-            title="A real time data analytical dashboard"
-            description="Design integrated AI based end to end platform"
-          />
+        {/* Carousel Section */}
+        <div className={styles.carouselSection}>
+          {/* Navigation Arrows - Above Card */}
+          <div className={styles.navigationArrows}>
+            <IconButton
+              onClick={handlePrevious}
+              disabled={isFirstCard}
+              className={styles.arrowButton}
+              sx={{
+                width: 40,
+                height: 40,
+                padding: 0,
+                color: "#1E4944",
+                border: `1px solid #1E4944`,
+                transition: "all 0.3s ease",
+                "&:hover:not(:disabled)": {
+                  backgroundColor: "rgba(30, 73, 68, 0.08)",
+                },
+                "&.Mui-disabled": {
+                  opacity: 0.5,
+                  color: "#1E4944",
+                  borderColor: "#1E4944",
+                  cursor: "not-allowed",
+                },
+                opacity: isFirstCard ? 0.5 : 1,
+              }}
+            >
+              <ChevronLeft fontSize="small" />
+            </IconButton>
+
+            <IconButton
+              onClick={handleNext}
+              disabled={isLastCard}
+              className={styles.arrowButton}
+              sx={{
+                width: 40,
+                height: 40,
+                padding: 0,
+                color: "#1E4944",
+                border: `1px solid #1E4944`,
+                transition: "all 0.3s ease",
+                "&:hover:not(:disabled)": {
+                  backgroundColor: "rgba(30, 73, 68, 0.08)",
+                },
+                "&.Mui-disabled": {
+                  opacity: 0.5,
+                  color: "#1E4944",
+                  borderColor: "#1E4944",
+                  cursor: "not-allowed",
+                },
+                opacity: isLastCard ? 0.5 : 1,
+              }}
+            >
+              <ChevronRight fontSize="small" />
+            </IconButton>
+          </div>
+
+          {/* Card Display */}
+          <div className={styles.workCard}>
+            <div className={styles.workCardImage} ref={cardImageRef}>
+              <img
+                src={currentCase.image}
+                alt={currentCase.title}
+                className={styles.workCardImageTag}
+              />
+            </div>
+
+            <div className={styles.workCardContent} ref={cardContentRef}>
+              <span className={styles.workCardTag}>{currentCase.tag}</span>
+              <h3 className={styles.workCardTitle}>{currentCase.title}</h3>
+              <p className={styles.workCardDescription}>
+                {currentCase.description}
+              </p>
+
+              <Link
+                href={`/casestudies/${currentCase.slug}`}
+                className={styles.workCardButton}
+              >
+                View Case Study
+              </Link>
+            </div>
+          </div>
         </div>
 
-      <div className={styles.cta}>
-        <Link href="/works">
-          <button className={styles.primaryBtn}>
-            See our work
-          </button>
-        </Link>
-      </div>
-
+        <div className={styles.cta}>
+          <Link href="/works">
+            <button className={styles.primaryBtn}>See our work</button>
+          </Link>
+        </div>
       </div>
     </section>
   );

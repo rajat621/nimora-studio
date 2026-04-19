@@ -368,7 +368,7 @@ gsap.to(descLine, {
           className={styles.video}
           
         >
-        <source src="/videos/hero.mp4" type="video/mp4" />
+        <source src="/videos/about.mp4" type="video/mp4" />
         </video>
       </section>
          <CursorReactiveBackground>

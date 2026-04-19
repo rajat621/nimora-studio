@@ -21,9 +21,26 @@ export const metadata = {
   description:
     "Nimora Studio helps teams turn complex ideas into clear product direction through strategy, design, and execution.",
   icons: {
-    icon: "/logo_N.svg",
+    icon: [
+      {
+        url: "/logo_N.svg",
+        type: "image/svg+xml",
+      },
+    ],
     shortcut: "/logo_N.svg",
     apple: "/logo_N.svg",
+  },
+  openGraph: {
+    title: "Nimora Studio",
+    description:
+      "Nimora Studio helps teams turn complex ideas into clear product direction through strategy, design, and execution.",
+    images: [
+      {
+        url: "/logo_N.svg",
+        width: 1200,
+        height: 1200,
+      },
+    ],
   },
 };
 

@@ -39,7 +39,7 @@ processSection: {
       "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk.\n\nThe problem space was broad, with multiple user types. This approach helped separate real issues from assumptions before design decisions.",
   },
 
-  image: "/images/Casestudy/GoRide/image 2.png",
+  image: "/images/Casestudy/GoRide/Image 2.png",
 
   steps: [
     {
@@ -72,7 +72,7 @@ processSection: {
     "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
 
   visuals: {
-    singleImage: "/images/Casestudy/GoRide/image 3.png",
+    singleImage: "/images/Casestudy/GoRide/Image 3.png",
   },
 },
 designSystemSection: {
@@ -80,7 +80,7 @@ designSystemSection: {
     eyebrow: "IDEATION",
     description:
       "Multiple ideas were explored, including subscription models and gamification. These were dropped due to low business readiness and high tech effort. The final solution focused on core renting, not feature overload.",
-    image: "/images/Casestudy/GoRide/image 4.png",
+    image: "/images/Casestudy/GoRide/Image 4.png",
   },
 
   designSystem: {
@@ -94,13 +94,13 @@ designSystemSection: {
     image: "/images/Casestudy/GoRide/Image 5.png",
   },
 
-  colorPaletteImage: "/images/Casestudy/GoRide/image 6.png",
+  colorPaletteImage: "/images/Casestudy/GoRide/Image 6.png",
 },
 visualsSection: {
   eyebrow: "VISUALS",
   description:
     "Instead of designing another feed or card layout, we envisioned Scenes as a navigable world, one where event discovery becomes simpler and distinctly interactive.",
-  image: "/images/Casestudy/GoRide/image 7.png",
+  image: "/images/Casestudy/GoRide/Image 7.png",
 },
 
 roleSection: {
@@ -147,7 +147,7 @@ conclusionSection: {
 
     intro: {
       containerMaxWidth: 890,
-      visualImage: "/images/Casestudy/Time Management/image 1.png",
+      visualImage: "/images/Casestudy/Time Management/Image 1.png",
       description:
         "Ibtidaa — a mid-stage EdTech company building productivity tools for secondary and higher-education students.Highly competitive student productivity market with low long-term retention and feature saturation.",
       meta: {
@@ -171,7 +171,7 @@ conclusionSection: {
           "The Double Diamond framework was used to manage uncertainty across user behavior, habit formation, and business retention risk.\n This approach allowed the team to separate assumptions from evidence, align product decisions with business outcomes, and reduce the risk of building features that looked useful but failed in real-world student routines.",
       },
 
-      image: "/images/Casestudy/Time Management/image 2.png",
+      image: "/images/Casestudy/Time Management/Image 2.png",
 
       steps: [
         {
@@ -203,14 +203,14 @@ conclusionSection: {
       description:
         "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
       visuals: {
-        singleImage: "/images/Casestudy/Time Management/image 3.png",
+        singleImage: "/images/Casestudy/Time Management/Image 3.png",
       },
     },
     designSystemSection: {
       ideation: {
         eyebrow: "IDEATION",
         description: "The team looked at AI schedules, group features, and rewards, but didn’t use them because they were hard to trust and added confusion. Instead, the focus stayed on one clear workflow using simple logic that works reliably.",
-        image: "/images/Casestudy/Time Management/image 4.png",
+        image: "/images/Casestudy/Time Management/Image 4.png",
       },
 
       designSystem: {
@@ -221,16 +221,16 @@ conclusionSection: {
 
       typography: {
         title: "Typography",
-        image: "/images/Casestudy/Time Management/image 5.png",
+        image: "/images/Casestudy/Time Management/Image 5.png",
       },
 
-      colorPaletteImage: "/images/Casestudy/Time Management/image 6.png",
+      colorPaletteImage: "/images/Casestudy/Time Management/Image 6.png",
     },
     visualsSection: {
       eyebrow: "VISUALS",
       description:
         "The visuals are clean and minimal to help users focus on tasks and time blocks. Clear spacing and soft colors reduce stress and make schedules easy to scan.",
-      image: "/images/Casestudy/Time Management/image 7.png",
+      image: "/images/Casestudy/Time Management/Image 7.png",
     },
 
     roleSection: {
@@ -276,7 +276,7 @@ conclusionSection: {
 
     intro: {
       containerMaxWidth: 890,
-      visualImage: "/images/Casestudy/Feasto/image 1.png",
+      visualImage: "/images/Casestudy/Feasto/Image 1.png",
       description:
         "Cinema Chains & Theatre Operations  managing high density audience flow during short movie intervals. Highly time constrained service environment with peak congestion, queue dependency, and frequent experience breakdowns.",
       meta: {
@@ -300,7 +300,7 @@ conclusionSection: {
           "Feasto was designed using a service-first approach, focusing on real user behaviour during high-pressure cinema intervals. The process examined how limited time, crowd movement, and queues slow down decision-making. This shifted the focus from improving interfaces to rethinking the entire ordering flow. Instead of optimising screens, the solution removes queue dependency allowing users to order quickly and return to their seats while the system manages preparation and delivery.",
       },
 
-      image: "/images/Casestudy/Feasto/image 2.png",
+      image: "/images/Casestudy/Feasto/Image 2.png",
 
       steps: [
         {
@@ -330,14 +330,14 @@ conclusionSection: {
       eyebrow: "BRANDING",
       description: "The Feasto logo is designed to communicate speed and simplicity in a high-pressure environment. Built for quick recognition, the identity avoids visual complexity and works effectively in crowded cinema spaces where attention is limited. The design reflects the product’s core purpose enabling fast, frictionless snack ordering without delay or confusion.",
       visuals: {
-        singleImage: "/images/Casestudy/Feasto/image 3.png",
+        singleImage: "/images/Casestudy/Feasto/Image 3.png",
       },
     },
     designSystemSection: {
       ideation: {
         eyebrow: "IDEATION",
         description: "Initial ideas explored mobile ordering, pre-booking, and staff-assisted delivery, but these approaches still depended on user attention, time, or existing queues. The focus shifted to a single, reliable workflow that reduces friction during the interval allowing users to order quickly without waiting or navigating complex steps.",
-        image: "/images/Casestudy/Feasto/image 4.png",
+        image: "/images/Casestudy/Feasto/Image 4.png",
       },
 
       designSystem: {
@@ -347,15 +347,15 @@ conclusionSection: {
 
       typography: {
         title: "Typography",
-        image: "/images/Casestudy/Feasto/image 5.png",
+        image: "/images/Casestudy/Feasto/Image 5.png",
       },
 
-      colorPaletteImage: "/images/Casestudy/Feasto/image 6.png",
+      colorPaletteImage: "/images/Casestudy/Feasto/Image 6.png",
     },
     visualsSection: {
       eyebrow: "VISUALS",
       description: "The visuals are clean and minimal to help users focus on tasks and time blocks. Clear spacing and soft colors reduce stress and make schedules easy to scan.",
-      image: "/images/Casestudy/Feasto/image 7.png",
+      image: "/images/Casestudy/Feasto/Image 7.png",
     },
 
     roleSection: {
@@ -403,7 +403,7 @@ conclusionSection: {
     
     intro: {
       containerMaxWidth: 890,
-      visualImage: "/images/Casestudy/Resturent dashboard/image 1.png",
+      visualImage: "/images/Casestudy/Resturent dashboard/Image 1.png",
       description:
         "The project was done for a mid-sized restaurant chain operating multiple outlets. The dashboard was started to  improve daily control and reporting. Without change, errors, delays, and revenue loss would continue.",
       meta: {
@@ -426,7 +426,7 @@ conclusionSection: {
         description: "The Double Diamond process was used to reduce risk before building anything. The problem involved many users, data sources, and business decisions. A structured approach helped avoid wrong assumptions and wasted effort.",
       },
 
-      image: "/images/Casestudy/Resturent dashboard/image 2.png",
+      image: "/images/Casestudy/Resturent dashboard/Image 2.png",
 
       steps: [
         {
@@ -457,7 +457,7 @@ conclusionSection: {
       description:
         "Every logo starts with understanding before aesthetics. We begin by defining the brand’s purpose and context, explore visual directions through sketching and iteration, and refine the mark through geometry, balance, and usability testing. The final logo is crafted to work seamlessly across screens, sizes, and real-world use.",
       visuals: {
-        singleImage: "/images/Casestudy/Resturent dashboard/image 3.png",
+        singleImage: "/images/Casestudy/Resturent dashboard/Image 3.png",
       },
     },
     designSystemSection: {
@@ -465,7 +465,7 @@ conclusionSection: {
         eyebrow: "IDEATION",
         description:
           "Advanced analytics and heavy customization were explored but dropped. They required more time and higher costs. The team focused on essentials that worked immediately.",
-        image: "/images/Casestudy/Resturent dashboard/image 4.png",
+        image: "/images/Casestudy/Resturent dashboard/Image 4.png",
       },
 
       designSystem: {
@@ -476,16 +476,16 @@ conclusionSection: {
 
       typography: {
         title: "Typography",
-        image: "/images/Casestudy/Resturent dashboard/image 5.png",
+        image: "/images/Casestudy/Resturent dashboard/Image 5.png",
       },
 
-      colorPaletteImage: "/images/Casestudy/Resturent dashboard/image 6.png",
+      colorPaletteImage: "/images/Casestudy/Resturent dashboard/Image 6.png",
     },
     visualsSection: {
       eyebrow: "VISUALS",
       description:
         "The visuals were designed to be clean, calm, and easy to read during busy hours. High-contrast colors highlight important data, while simple layouts reduce noise. The interface helps users scan information quickly without distraction or confusion.",
-      image: "/images/Casestudy/Resturent dashboard/image 7.png",
+      image: "/images/Casestudy/Resturent dashboard/Image 7.png",
     },
 
     roleSection: {

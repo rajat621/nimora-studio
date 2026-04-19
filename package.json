@@ -20,6 +20,7 @@
     "@mui/icons-material": "^7.3.8",
     "@mui/material": "^7.3.8",
     "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^20",
     "framer-motion": "^12.34.0",
     "gsap": "^3.14.2",
     "lucide-react": "^1.7.0",
@@ -27,16 +28,15 @@
     "nodemailer": "^8.0.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "split-type": "^0.3.4"
+    "split-type": "^0.3.4",
+    "typescript": "^5"
   },
   "devDependencies": {
-    "@types/node": "^20",
     "@types/nodemailer": "^7.0.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^10.0.0",
-    "eslint-config-next": "^0.2.4",
-    "typescript": "^5"
+    "eslint-config-next": "^0.2.4"
   }
 }

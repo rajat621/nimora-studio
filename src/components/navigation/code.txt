@@ -1,0 +1,5172 @@
+//./component/navigation/navigation.module.css
+
+/* ================= NAV BAR ================= */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 80px;
+
+  /* REAL transparency */
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(4px);
+
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+}
+
+/* ================= INNER ================= */
+
+.inner {
+  height: 100%;
+  padding: 0px 40px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+/* ================= LOGO ================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+/* ================= MENU ================= */
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* .menuLink {
+  height: 44px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #121214;
+  text-decoration: none;
+}
+
+.menuLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: var(--color-primary);
+  transition: width 0.25s ease;
+}
+
+.menuLink:hover::after {
+  width: 100%;
+} */
+.menuLink {
+  height: 44px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #121214;
+  text-decoration: none;
+}
+
+/* Base underline (hidden) */
+.menuLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 100%;
+  height: 1.5px;
+  background-color: #316960;
+  transition: transform 0.3s ease;
+}
+
+/* On hover (optional preview effect) */
+.menuLink:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Active state (clicked link stays active) */
+.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ================= CTA ================= */
+
+.cta {
+  height: 44px;
+  padding: 0 32px;
+
+  background-color: rgba(49, 105, 96, 0.9);
+  color: #fff;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+  text-decoration: none;
+
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cta:hover {
+  /* transform: translateY(-1px); */
+  background-color: rgba(40, 87, 80, 0.95);
+}
+.ctaArrow {
+  font-size: 20px !important;   /* Matches screenshot proportion */
+}
+
+
+
+/* ===== DARK TEXT MODE (ONLY TEXT + CTA CHANGES) ===== */
+
+.dark .menuLink {
+  color: #ffffff;
+}
+
+.dark .menuLink::after {
+  background-color: #ffffff;
+}
+
+.dark .cta {
+  background-color: #ffffff;
+  color: #111;
+}
+
+.dark .cta:hover {
+  background-color: #f2f2f2;
+}
+
+.mobileMenuButton {
+  display: none;
+}
+
+@media (max-width: 412px) {
+  .nav {
+    height: 72px;
+  }
+
+  .inner {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 20px;
+  }
+
+  .logo img {
+    width: 116px;
+    height: auto;
+  }
+
+  .menu,
+  .cta {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 36px;
+    border-radius: 18px;
+    border: 1px solid #316960;
+    background: rgba(49, 105, 96, 0.12);
+    color: #316960;
+    justify-self: end;
+    cursor: pointer;
+  }
+
+  .mobileMenuIcon {
+    font-size: 22px !important;
+  }
+}
+
+./component/navigation/navigation
+
+
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import styles from "./Navigation.module.css";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+
+export default function Navigation() {
+  const pathname = usePathname();
+  const [isDark, setIsDark] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const nav = document.querySelector("header");
+      const darkSections = document.querySelectorAll(".nav-dark");
+
+      if (!nav) return;
+
+      const navRect = nav.getBoundingClientRect();
+      let darkDetected = false;
+
+      darkSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+
+        const overlapping =
+          rect.top <= navRect.bottom &&
+          rect.bottom >= navRect.top;
+
+        if (overlapping) {
+          darkDetected = true;
+        }
+      });
+
+      setIsDark(darkDetected);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuItems = [
+    { label: "Service", href: "/services" },
+    { label: "Process", href: "/process" },
+    { label: "Work", href: "/works" },
+    { label: "About Us", href: "/about" },
+  ];
+
+  return (
+    <header className={`${styles.nav} ${isDark ? styles.dark : ""}`}>
+      <div className={styles.inner}>
+        
+        {/* LOGO */}
+        <Link href="/" className={styles.logo}>
+          <Image
+            src={isDark ? "/logo_dark.svg" : "/NIMORA_LOGO.svg"}
+            alt="Nimora Studio logo"
+            width={160}
+            height={40}
+            priority
+          />
+        </Link>
+
+        {/* MENU */}
+        <nav className={styles.menu}>
+          {menuItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.menuLink} ${
+                  isActive ? styles.active : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* CTA / Mobile menu */}
+        {isMobileView ? (
+          <button className={styles.mobileMenuButton} aria-label="Open menu">
+            <MenuRoundedIcon className={styles.mobileMenuIcon} />
+          </button>
+        ) : (
+          <Link href="/contactForm" className={styles.cta}>
+            <span>Let’s Talk</span>
+            <ArrowForwardIcon className={styles.ctaArrow} />
+          </Link>
+        )}
+
+      </div>
+    </header>
+  );
+}
+
+
+./component/hero/hero.module.css
+
+
+.hero {
+  position: relative;
+  height: calc(100vh - 80px);   /* account for navbar */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 0 40px;
+  text-align: center;
+  will-change: transform, opacity;
+  max-width: 1200px;
+}
+/* .content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  will-change: transform, opacity;
+} */
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 96px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin: 0;
+}
+
+.lineMask {
+  display: block;
+  overflow: hidden;
+}
+
+.line {
+  display: inline-block;
+}
+
+.splitWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;          
+}
+.textLeft,
+.textRight {
+  display: inline-block;
+  will-change: transform;
+}
+.textRight{
+  color: #316960;
+  font-weight: 600;
+}
+.textLeft{
+  color: #1A1A1E;
+  font-weight: 300;
+}
+
+.videoWrapper {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: left, top, width, height;
+
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.videoBlock {
+  width: 100%;
+  height: 100%;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.textFrom,
+.textComplex {
+  font-weight: 600;
+  color: #316960;
+}
+
+.textDirection {
+  display: block;
+  /* margin-top: 24px; */
+  font-weight: 600;
+  color: #316960;
+}
+
+.subtitle {
+  margin: 40px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: #4E4E54;
+}
+
+.actions {
+  margin: 24px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.primaryBtn {
+  display: inline-flex;          /* FIX anchor behavior */
+  align-items: center;           /* vertical centering */
+  justify-content: center;
+  gap: 10px;                     /* spacing between text & arrow */
+
+  height: 50px;
+  padding: 0 32px;
+
+  background-color: #316960;
+  color: #FAFAFF;
+
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.primaryBtn:hover {
+  background-color: #274f48;
+  opacity: 0.9;
+
+}
+
+.primaryArrow {
+  font-size: 20px !important;   /* visually matches your screenshot */
+}
+
+
+
+.secondaryBtn {
+  height: 50px;
+  padding: 0 32px;
+  background: rgba(49, 105, 96, 0.06);
+  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  color: #1A1A1E;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+  border: 1.5px solid rgba(49, 105, 96, 0.4);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+    text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.secondaryBtn:hover {
+  background-color: #f5f9f7;
+  opacity: 0.9;
+
+}
+
+
+.lineMask + .lineMask {
+  margin-top: 24px;
+}
+
+.videoWrapperMobile,
+.mobileContent {
+  display: none;
+}
+
+@media (max-width: 412px) {
+  .hero {
+    height: auto;
+    display: block;
+    overflow: visible;
+    padding-top: 20px;
+  }
+
+  .mobileContent {
+    display: block;
+  }
+
+  .content {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 0.98;
+    letter-spacing: 0.01em;
+  }
+
+  .lineMask + .lineMask {
+    margin-top: 10px;
+  }
+
+  .subtitle {
+    margin: 22px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .actions {
+    margin-top: 18px;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    height: 36px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+
+  .primaryArrow {
+    font-size: 16px !important;
+  }
+
+  .videoWrapper {
+    display: none;
+  }
+
+  .videoWrapperMobile {
+    display: block;
+    position: relative;
+    width: calc(100% - 40px);
+    height: 220px;
+    margin: 22px auto 0;
+    border-radius: 0;
+    overflow: hidden;
+    opacity: 1;
+    pointer-events: auto;
+    background: #cbcbcb;
+  }
+}
+
+
+./component/hero/hero
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import Container from "@/components/shared/Container";
+import styles from "./Hero.module.css";
+import VideoBlock from "./VideoBlock";
+import Link from "next/link";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Hero() {
+  const heroRef    = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const videoRef   = useRef<HTMLDivElement | null>(null);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobileView) return;
+    if (!heroRef.current || !videoRef.current || !contentRef.current) return;
+
+    /* ================================
+       VIDEO SIZE (UPDATED)
+    ================================== */
+    const VIDEO_W = 140;
+    const VIDEO_H = 90;
+
+    /* ================================
+       FIXED GAP CONTROL
+       14px spacing on each side
+    ================================== */
+    const SIDE_SPACING = 14;
+    const SPLIT_X = (VIDEO_W + SIDE_SPACING * 2) / 2;
+
+    const ctx = gsap.context(() => {
+
+      /* ──────────────────────────────
+         PHASE 1 — Text reveal
+      ────────────────────────────── */
+      gsap.fromTo(
+        `.${styles.line}`,
+        { y: "100%" },
+        {
+          y: "0%",
+          duration: 1.2,
+          ease: "power4.out",
+          stagger: 0.25,
+        }
+      );
+
+      /* ──────────────────────────────
+         PHASE 2 — Split + Center Reveal
+      ────────────────────────────── */
+      const splitTl = gsap.timeline({ delay: 1.35 });
+
+      splitTl
+
+        // Position video before animation
+        .add(() => {
+          const hero   = heroRef.current!;
+          const leftEl = hero.querySelector<HTMLElement>(`.${styles.textLeft}`)!;
+          const rightEl= hero.querySelector<HTMLElement>(`.${styles.textRight}`)!;
+          const vid    = videoRef.current!;
+
+          const heroRect  = hero.getBoundingClientRect();
+          const leftRect  = leftEl.getBoundingClientRect();
+          const rightRect = rightEl.getBoundingClientRect();
+
+          const pillCX = (leftRect.right + rightRect.left) / 2 - heroRect.left;
+          const pillCY = (leftRect.top + leftRect.bottom) / 2 - heroRect.top;
+
+          gsap.set(vid, {
+            left: pillCX - VIDEO_W / 2,
+            top: pillCY - VIDEO_H / 2,
+            width: VIDEO_W,
+            height: VIDEO_H,
+            opacity: 1,
+            scaleX: 0,
+            transformOrigin: "center center",
+          });
+        }, 0)
+
+        // Split left text
+        .to(`.${styles.textLeft}`, {
+          x: -SPLIT_X,
+          duration: 0.85,
+          ease: "power3.inOut",
+        }, 0)
+
+        // Split right text
+        .to(`.${styles.textRight}`, {
+          x: SPLIT_X,
+          duration: 0.85,
+          ease: "power3.inOut",
+        }, 0)
+
+        // Reveal video from center
+        .to(videoRef.current, {
+          scaleX: 1,
+          duration: 0.85,
+          ease: "power3.inOut",
+        }, 0);
+
+      /* ──────────────────────────────
+         PHASE 3 — Scroll Expansion
+      ────────────────────────────── */
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "+=250%",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      scrollTl
+        .to(contentRef.current, {
+          y: -200,
+          opacity: 0,
+          ease: "none",
+        }, 0)
+
+        .to(videoRef.current, {
+          left: 0,
+          top: () => (window.innerHeight - 540) / 2,
+          width: () => window.innerWidth,
+          height: 540,
+          ease: "none",
+        }, 0);
+
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, [isMobileView]);
+
+  return (
+    <section ref={heroRef} className={styles.hero}>
+      {isMobileView ? (
+        <>
+          <Container>
+            <div ref={contentRef} className={`${styles.content} ${styles.mobileContent}`}>
+
+              <h1 className={styles.title}>
+
+                {/* Line 1 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.textFrom}>FROM</span>{" "}
+                    <span className={styles.textComplex}>COMPLEX</span>
+                  </span>
+                </span>
+
+                {/* Line 2 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.splitWrapper}>
+                      <span className={styles.textLeft}>IDEAS TO</span>
+                      <span className={styles.textRight}>CLEAR</span>
+                    </span>
+                  </span>
+                </span>
+
+                {/* Line 3 */}
+                <span className={styles.lineMask}>
+                  <span className={styles.line}>
+                    <span className={styles.textDirection}>DIRECTION</span>
+                  </span>
+                </span>
+
+              </h1>
+
+              <p className={styles.subtitle}>
+                Unclear ideas lead to wasted time and wrong decisions.
+                <br />
+                We help teams define what to build and move forward with confidence.
+              </p>
+
+              <div className={styles.actions}>
+                <Link href="/contactForm" className={styles.primaryBtn}>
+                  <span>Clarify your product</span>
+                  <ArrowForwardIcon className={styles.primaryArrow} />
+                </Link>
+
+                <Link href="/process" className={styles.secondaryBtn}>
+                  See how we work
+                </Link>
+              </div>
+            </div>
+          </Container>
+
+          <div ref={videoRef} className={`${styles.videoWrapper} ${styles.videoWrapperMobile}`}>
+            <VideoBlock />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* VIDEO */}
+          <div ref={videoRef} className={styles.videoWrapper}>
+            <VideoBlock />
+          </div>
+
+          <Container>
+            <div ref={contentRef} className={styles.content}>
+
+              <h1 className={styles.title}>
+
+            {/* Line 1 */}
+            <span className={styles.lineMask}>
+              <span className={styles.line}>
+                <span className={styles.textFrom}>FROM</span>{" "}
+                <span className={styles.textComplex}>COMPLEX</span>
+              </span>
+            </span>
+
+            {/* Line 2 */}
+            <span className={styles.lineMask}>
+              <span className={styles.line}>
+                <span className={styles.splitWrapper}>
+                  <span className={styles.textLeft}>IDEAS TO</span>
+                  <span className={styles.textRight}>CLEAR</span>
+                </span>
+              </span>
+            </span>
+
+            {/* Line 3 */}
+            <span className={styles.lineMask}>
+              <span className={styles.line}>
+                <span className={styles.textDirection}>DIRECTION</span>
+              </span>
+            </span>
+
+          </h1>
+
+          <p className={styles.subtitle}>
+            Unclear ideas lead to wasted time and wrong decisions.
+            <br />
+            We help teams define what to build and move forward with confidence.
+          </p>
+
+              <div className={styles.actions}>
+                <Link href="/contactForm" className={styles.primaryBtn}>
+                  <span>Clarify your product</span>
+                  <ArrowForwardIcon className={styles.primaryArrow} />
+                </Link>
+
+                <Link href="/process" className={styles.secondaryBtn}>
+                  See how we work
+                </Link>
+              </div>
+            </div>
+          </Container>
+        </>
+      )}
+    </section>
+  );
+}
+
+./component/hero/heroBackground
+
+export default function HeroBackground() {
+  return <div className="heroBackground" />;
+}
+
+./component/hero/termsHeroBackground
+
+import styles from "@/app/terms/terms.module.css";
+
+export default function TermsHeroBackground() {
+  return (
+    <div className={styles.termsHeroBackground} />
+  );
+}
+
+./component/hero/videoBlock
+
+
+"use client";
+
+import styles from "./Hero.module.css";
+
+export default function VideoBlock() {
+  return (
+    <div className={styles.videoBlock}>
+      <video
+        className={styles.video}
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+  );
+}
+
+
+./component/services/serviceCard
+
+"use client";
+
+import Link from "next/link";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import styles from "./Services.module.css";
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  className?: string;
+  /** slug of the service detail page, e.g. "ux-strategy" */
+  slug: string;
+}
+
+export default function ServiceCard({
+  title,
+  description,
+  image,
+  tags,
+  className,
+  slug,
+}: Props) {
+  return (
+
+    <Link
+  href={`/services/${slug}`}
+  className={`${styles.card} ${className ?? ""}`}
+  style={{ backgroundImage: `url(${image})` }}
+  aria-label={`Learn more about ${title}`}
+>
+  <div className={styles.overlay} />
+
+  <div className={styles.content}>
+    <div className={styles.header}>
+      <h3 className={styles.title}>{title}</h3>
+
+      <div className={styles.arrowBtn}>
+        <ArrowOutwardIcon className={styles.arrowIcon} />
+      </div>
+    </div>
+
+    <p className={styles.description}>{description}</p>
+
+    <div className={styles.tags}>
+      {tags.map((tag, i) => (
+        <span key={i} className={styles.tag}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</Link>
+
+  );
+}
+
+
+./component/services/servicedata
+// ─────────────────────────────────────────────────────────────
+// serviceData.ts
+// Single source of truth for all service page content.
+// Used by ServicePageLayout and ServiceCard (via Services.tsx).
+// ─────────────────────────────────────────────────────────────
+
+export interface FocusItem {
+  heading: string;
+  description: string;
+}
+
+export interface ServicePageData {
+  /** slug matches the URL segment, e.g. "ux-strategy" */
+  slug: string;
+  /** Label shown in the tab bar */
+  tabLabel: string;
+  /** Hero title */
+  title: string;
+  /** One or two intro paragraphs */
+  intro: string[];
+  /** "What We Focus On" items */
+  focusItems: FocusItem[];
+  /** "The Outcome" paragraphs */
+  outcome: string[];
+  /** Image used on the Services section card */
+  cardImage: string;
+  /** Short description shown on the Services section card */
+  cardDescription: string;
+  /** Tags shown on the Services section card */
+  cardTags: string[];
+}
+
+// ─────────────────────────────────────────────────────────────
+// All 5 services
+// ─────────────────────────────────────────────────────────────
+
+export const services: ServicePageData[] = [
+  {
+    slug: "ux-strategy",
+    tabLabel: "UX Strategy",
+    title: "UX Strategy & Product Direction",
+    intro: [
+      "Before design or development begins, the most important question is: Are we building the right thing — in the right way — for the right users?",
+      "Our UX strategy service helps teams define a clear product direction by aligning business goals, user needs, market realities, and technical constraints. This foundation reduces risk, prevents costly rework, and ensures every decision supports meaningful outcomes.",
+    ],
+    focusItems: [
+      {
+        heading: "Business Goals",
+        description:
+          "Understanding what success looks like for your organisation — revenue, growth, efficiency, or market positioning — so the product supports real business outcomes.",
+      },
+      {
+        heading: "Heuristic Analysis",
+        description:
+          "Evaluating existing products or concepts against proven usability principles to identify friction, confusion, and opportunities for improvement.",
+      },
+      {
+        heading: "Emerging Trends",
+        description:
+          "Analysing industry shifts, user expectations, and technological changes to ensure the product remains relevant and future-ready.",
+      },
+      {
+        heading: "User Needs",
+        description:
+          "Identifying who your users are, what they're trying to accomplish, and where they struggle so solutions solve real problems, not assumptions.",
+      },
+      {
+        heading: "UI/UX Auditing",
+        description:
+          "A structured review of current interfaces and experiences to uncover usability issues, inconsistencies, and areas that impact engagement or conversion.",
+      },
+      {
+        heading: "AI Readiness & Experience Strategy",
+        description:
+          "Assessing how intelligent features can enhance the product experience and determining where AI adds real value without adding complexity.",
+      },
+      {
+        heading: "Technical & Operational Constraints",
+        description:
+          "Understanding system limitations, resources, timelines, and workflows to ensure the strategy is practical and executable.",
+      },
+    ],
+    outcome: [
+      "You leave with a clear direction for what to build, why it matters, and how to move forward with confidence.",
+      "This stage creates alignment across teams and prevents expensive course corrections later.",
+    ],
+    cardImage: "/images/services/Image_1.png",
+    cardDescription:
+      "We help teams define the right product direction and reduce early-stage risk.",
+    cardTags: [
+      "Business goals",
+      "Heuristic Analysis",
+      "Emerging Trends",
+      "User needs",
+      "UI/UX Auditing",
+      "AI Readiness & Experience Strategy",
+      "Technical and operational constraints",
+    ],
+  },
+
+  {
+    slug: "brand-experience",
+    tabLabel: "Brand Experience",
+    title: "Brand Experience & Identity",
+    intro: [
+      "Your brand is more than a logo — it's how people recognise you, trust you, and remember you across every interaction.",
+      "We design cohesive brand experiences that communicate who you are, what you stand for, and why customers should choose you. By aligning strategy, visuals, and tone, we help brands feel clear, consistent, and credible across digital products and touchpoints.",
+    ],
+    focusItems: [
+      {
+        heading: "Branding Strategy & Positioning",
+        description:
+          "Defining your brand's purpose, audience, personality, and market position so you stand out with clarity not noise.",
+      },
+      {
+        heading: "Typography, Color & Iconography",
+        description:
+          "Creating a visual language that is distinctive, accessible, and consistent across platforms, ensuring instant recognition and usability.",
+      },
+      {
+        heading: "Illustration & Motion Design",
+        description:
+          "Designing custom visuals and motion that add personality, explain complex ideas, and make interactions more engaging and memorable.",
+      },
+      {
+        heading: "Brand Clarity & Trust Design",
+        description:
+          "Shaping how your brand communicates through layout, tone, and visual consistency — building credibility and reducing confusion for users.",
+      },
+    ],
+    outcome: [
+      "A unified brand system that looks professional, feels intentional, and supports long-term growth.",
+      "Your team gains clear guidelines and reusable assets that keep every touchpoint consistent from marketing to product experience.",
+    ],
+    cardImage: "/images/services/Image_2.png",
+    cardDescription:
+      "Build a brand that feels clear, consistent, and credible across digital touchpoints.",
+    cardTags: [
+      "Branding Strategy & Positioning",
+      "Typography, Color, & Iconography",
+      "Illustration and motion Design",
+      "Brand Clarity & Trust Design",
+    ],
+  },
+
+  {
+    slug: "product-design",
+    tabLabel: "Product Design",
+    title: "Product Design (UX & UI)",
+    intro: [
+      "Great products don't happen by accident — they're designed intentionally around how people think, behave, and interact.",
+      "We design end-to-end product experiences that are intuitive, efficient, and aligned with your business goals. From early concepts to validated solutions, our process ensures the product feels natural to use and ready to scale.",
+    ],
+    focusItems: [
+      {
+        heading: "User Experience Design",
+        description:
+          "Structuring flows, journeys, and information so users can accomplish tasks easily and confidently.",
+      },
+      {
+        heading: "Interface Design",
+        description:
+          "Crafting clean, consistent visual interfaces that are accessible, scalable, and aligned with your brand.",
+      },
+      {
+        heading: "Interaction Design",
+        description:
+          "Defining how the product responds to user actions — ensuring interactions feel smooth, predictable, and meaningful.",
+      },
+      {
+        heading: "AI-Assisted Experience Design",
+        description:
+          "Designing intelligent features that enhance usability and decision-making without adding complexity.",
+      },
+      {
+        heading: "Design Systems",
+        description:
+          "Building reusable components and guidelines that ensure consistency and speed across current and future development.",
+      },
+      {
+        heading: "Prototyping & Usability Testing",
+        description:
+          "Creating interactive prototypes to validate ideas early and uncover usability issues before development begins.",
+      },
+      {
+        heading: "Iterative Testing",
+        description:
+          "Continuously refining the experience based on feedback and real usage insights.",
+      },
+    ],
+    outcome: [
+      "A product that feels intuitive from the first interaction and continues to perform as it grows.",
+    ],
+    cardImage: "/images/services/Image_3.png",
+    cardDescription:
+      "Design usable, scalable products grounded in real user needs.",
+    cardTags: [
+      "User Experience Design",
+      "Interface Design",
+      "Interaction Design",
+      "AI-Assisted Experience Design",
+      "Design Systems",
+      "Prototyping and usability testing",
+      "Iterative Testing",
+    ],
+  },
+
+  {
+    slug: "product-development",
+    tabLabel: "Product Development",
+    title: "Product Development & Implementation",
+    intro: [
+      "Design only delivers value when it becomes a reliable, working product. We translate ideas and designs into scalable, high-performance software built for real-world use.",
+      "Our engineering approach prioritises stability, maintainability, and future growth so your product can evolve without constant rebuilds.",
+    ],
+    focusItems: [
+      {
+        heading: "Web & Application Development",
+        description:
+          "Building responsive, reliable digital products across web and mobile platforms.",
+      },
+      {
+        heading: "SaaS Platform Implementation",
+        description:
+          "Developing scalable platforms that support subscription models, complex workflows, and long-term growth.",
+      },
+      {
+        heading: "Frontend & Backend Engineering",
+        description:
+          "Creating seamless user interfaces supported by robust server-side architecture and data handling.",
+      },
+      {
+        heading: "System Integration & APIs",
+        description:
+          "Connecting third-party services, tools, and internal systems for smooth data flow and functionality.",
+      },
+      {
+        heading: "Performance & Scalability Planning",
+        description:
+          "Ensuring the product remains fast, stable, and capable of handling growth.",
+      },
+      {
+        heading: "AI Integration & Product Automation",
+        description:
+          "Implementing intelligent features and automation to improve efficiency and user experience.",
+      },
+    ],
+    outcome: [
+      "A dependable, production-ready product that performs well today and scales confidently tomorrow.",
+    ],
+    cardImage: "/images/services/Image_4.png",
+    cardDescription:
+      "Build reliable, scalable products from validated designs.",
+    cardTags: [
+      "Web and application development",
+      "SaaS platform implementation",
+      "Frontend and backend engineering",
+      "System integration and APIs",
+      "Performance and scalability planning",
+      "AI Integration & Product Automation",
+    ],
+  },
+
+  {
+    slug: "go-live-support",
+    tabLabel: "Go-Live Support",
+    title: "Go-Live Support & Continuous Improvement",
+    intro: [
+      "Launching a product isn't the finish line — it's the beginning of real learning.",
+      "We support your product beyond launch to ensure stability, performance, and continuous improvement as users interact with it in the real world.",
+    ],
+    focusItems: [
+      {
+        heading: "Performance & Stability Monitoring",
+        description:
+          "Tracking system health to ensure reliable operation under real usage conditions.",
+      },
+      {
+        heading: "Ongoing Support & Optimization",
+        description:
+          "Improving performance, usability, and efficiency as needs evolve.",
+      },
+      {
+        heading: "Bug Fixes & Issue Resolution",
+        description:
+          "Identifying and resolving problems quickly to minimise disruption.",
+      },
+      {
+        heading: "Security Updates & Maintenance",
+        description: "Keeping systems protected and up to date.",
+      },
+      {
+        heading: "Iterative Design & UX Improvements",
+        description:
+          "Refining the experience based on real feedback and usage patterns.",
+      },
+      {
+        heading: "Product Insights & Optimization",
+        description:
+          "Using data and observations to guide meaningful enhancements.",
+      },
+    ],
+    outcome: [
+      "A product that stays reliable, relevant, and competitive long after launch.",
+    ],
+    cardImage: "/images/services/Image_5.png",
+    cardDescription:
+      "Ongoing support and improvements after launch.",
+    cardTags: [
+      "Performance and Stability Monitoring",
+      "Ongoing Support and Optimization",
+      "Bug Fixes & Issue Resolution",
+      "Security Updates and Maintenance",
+      "Iterative design and UX improvements",
+      "Product Insights & Optimization",
+    ],
+  },
+];
+
+/** Helper — find a service by slug */
+export function getServiceBySlug(slug: string): ServicePageData | undefined {
+  return services.find((s) => s.slug === slug);
+}
+
+./component/services/servicepagemodule
+
+/* ============================================================
+   ServicePage.module.css
+   Shared styles for all 5 service detail pages.
+   ============================================================ */
+
+/* ── PAGE WRAPPER ── */
+.page {
+  background-color: #ffffff;
+}
+
+/* ── HERO ── */
+.hero {
+  overflow: hidden;
+  padding: 8px;
+  margin: 0px;
+}
+
+.heroBackground {
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  width: 100%;
+  height: 75vh;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("/gradients/hero-gradient.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.7; /* added */
+}
+
+.heroBackground::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 60%,
+    #ffffff 100%
+  );
+}
+
+/* ── TAB NAV ── */
+.tabNav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+/* Outer pill container */
+.tabList {
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+  backdrop-filter: blur(6px);
+}
+
+/* Individual tab */
+.tabBtn {
+  height: 36px;
+  padding: 0 20px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #4E4E54;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Active tab */
+.tabActive {
+  background-color: #316960;
+  color: #ffffff;
+}
+
+.tabActive:hover {
+  background-color: #244f49;
+}
+
+/* ── HERO CONTENT ── */
+.heroContent {
+  width: 100%;
+  max-width: 890px;
+  padding: 0px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: 2%;
+  color: #1A1A1E;
+  padding: 0px;
+  margin:0 0 24px 0 ;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.introParagraph {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+  margin-bottom: 14px;
+  max-width: 890px;
+}
+
+.introParagraph strong {
+  color: #1a1a1e;
+  font-weight: 600;
+}
+
+/* ── CONTENT SECTION ── */
+.contentSection {
+  padding: 64px 275px 120px;
+}
+
+.container {
+  width: 100%;
+  max-width: 890px; /* updated */
+  margin: 0 auto;
+}
+
+/* ── FOCUS ON ── */
+.focusHeading {
+  font-family: var(--font-body);
+  font-size: 24px; /* updated */
+  font-weight: 600;
+  color: #316960;
+  margin-bottom: 24px; /* updated */
+  letter-spacing: 0.01em;
+}
+
+/* ── FOCUS ITEM ── */
+.focusItem {
+  margin-bottom: 40px; /* updated */
+}
+
+.focusItemHeading {
+  font-family: var(--font-heading);
+  font-size: 18px; /* updated */
+  font-weight: 600;
+  color: #1A1A1E;
+  padding: 0px;
+  margin-bottom: 12px; 
+  -webkit-font-smoothing: antialiased; /* added */
+  text-rendering: optimizeLegibility; /* added */
+}
+
+.focusItemDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  padding: 0px;
+  margin: 0px; 
+  line-height: 1.75; /* updated */
+  color: #4E4E54;
+}
+
+/* ── THE OUTCOME ── */
+.outcomeHeading {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  color: #316960;
+  margin-top: 56px; /* updated */
+  margin-bottom: 24px; /* updated */
+}
+
+.outcomeParagraph {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: #4E4E54;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1280px) {
+  .hero,
+  .contentSection {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+}
+
+@media (max-width: 900px) {
+  .tabList {
+    flex-wrap: wrap;
+    border-radius: 16px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .contentSection {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .introParagraph {
+    font-size: 15px;
+  }
+}
+
+./component/services/servicespagelayout
+"use client";
+
+import Link from "next/link";
+import styles from "./ServicePage.module.css";
+import { services, ServicePageData } from "./serviceData";
+import TermsHeroBackground from "@/components/hero/TermsHeroBackground";
+import CTA from "@/components/cta/CTA";
+import Footer from "@/components/footer/Footer";
+import Navigation from "@/components/navigation/Navigation";
+
+// ─────────────────────────────────────────────────────────────
+// Props
+// ─────────────────────────────────────────────────────────────
+
+interface ServicePageLayoutProps {
+  data: ServicePageData;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Helper — parse bold text wrapped in **…** in intro strings
+// ─────────────────────────────────────────────────────────────
+
+function ParsedParagraph({ text }: { text: string }) {
+  // splits on **bold** markers
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  return (
+    <p className={styles.introParagraph}>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+      )}
+    </p>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// Component
+// ─────────────────────────────────────────────────────────────
+
+export default function ServicePageLayout({ data }: ServicePageLayoutProps) {
+  return (
+    <main className={styles.page}>
+      <Navigation />
+
+      {/* ── HERO ── */}
+      <section className={styles.hero}>
+        <TermsHeroBackground  />
+
+        {/* Tab navigation */}
+        <nav className={styles.tabNav} aria-label="Service pages">
+          <div className={styles.tabList}>
+            {services.map((service) => (
+              <Link
+                key={service.slug}
+                href={`/services/${service.slug}`}
+                className={`${styles.tabBtn} ${
+                  service.slug === data.slug ? styles.tabActive : ""
+                }`}
+              >
+                {service.tabLabel}
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        {/* Hero content */}
+        <div className={styles.heroContent}>
+          <h1 className={styles.title}>{data.title}</h1>
+
+          {data.intro.map((paragraph, i) => (
+            <ParsedParagraph key={i} text={paragraph} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── CONTENT ── */}
+      <section className={styles.contentSection}>
+        <div className={styles.container}>
+
+          {/* What We Focus On */}
+          <p className={styles.focusHeading}>What We Focus On</p>
+
+          {data.focusItems.map((item, i) => (
+            <div key={i} className={styles.focusItem}>
+              <h3 className={styles.focusItemHeading}>{item.heading}</h3>
+              <p className={styles.focusItemDescription}>{item.description}</p>
+            </div>
+          ))}
+
+          {/* The Outcome */}
+          <p className={styles.outcomeHeading}>The Outcome</p>
+
+          {data.outcome.map((paragraph, i) => (
+            <p key={i} className={styles.outcomeParagraph}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      <CTA />
+      <Footer />
+    </main>
+  );
+}
+
+./component/services/services.module.css
+
+/* =========================
+   SERVICES SECTION
+========================= */
+
+.services {
+  background: #ffffff; /* starts white */
+  padding: 96px 0;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.6s ease;
+}
+
+/* Dark state */
+.services.dark {
+  background: #050505;
+}
+
+.services.light {
+  background: #ffffff !important;
+}
+
+.services.servicesVariant {
+  padding-top: 0px;
+}
+
+/* =========================
+   INTRO / HEADING
+========================= */
+
+.intro {
+  max-width: 890px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Line reveal wrapper */
+.revealLine {
+  display: block;
+  overflow: hidden;
+}
+
+.revealInner {
+  display: inline-block;
+  transform: translateY(100%);
+}
+
+/* Eyebrow */
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #111;
+}
+
+/* Heading */
+.heading {
+  margin: 4px 0 0 0;
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+  color: #111;
+}
+
+/* Description */
+.description1 {
+  margin: 40px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Services page heading variant */
+.servicesHeading {
+  max-width: 890px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 52px;
+  letter-spacing: 0.02em;
+  color: #2a2a2a;
+}
+
+/* Dark mode text */
+.services.dark .eyebrow,
+.services.dark .heading,
+.services.dark .description1,
+.services.dark .servicesHeading {
+  color: #FAFAFF;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabsWrapper {
+  margin-top: 44px; /* ✅ Exact 64px gap */
+  display: flex;
+  justify-content: center;
+}
+
+.tabsContainer {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.services.light .tabsContainer {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Individual tab */
+.tab {
+  height: 32px;
+  padding: 0 24px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.services.light .tab {
+  color: #121214;
+}
+
+/* Active tab */
+.active {
+  background-color: #fafaff;
+  color: #050505;
+}
+
+.services.light .active {
+  background: #121214;
+  color: #ffffff;
+}
+
+/* =========================
+   PIN SECTION
+========================= */
+
+.pinSection {
+  position: relative;
+  padding-top: 40px; /* ✅ No extra spacing */
+}
+
+.cards {
+  position: relative;
+  height: 600px;
+  margin-top: 24px; /* gap below tabs */
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+  position: absolute;
+  width: 1120px;
+  height: 540px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #B5B5B5;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 9px rgba(255, 255, 255, 0.1),
+    0 2px 5px rgba(255, 255, 255, 0.06);
+
+  /* height: 600px; */
+  /* margin-top: 24px; */
+  overflow: hidden;      /* ← clips cards waiting below */
+  border-radius: 16px;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.arrowIcon {
+  font-size: 22px !important;
+  transition: transform 0.3s ease;
+}
+
+/* Rotate arrow when hovering the whole card */
+.card:hover .arrowIcon {
+  transform: rotate(45deg); /* or 0deg depending on default */
+}
+
+
+/* =========================
+   CARD CONTENT
+========================= */
+
+.content {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 40px;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #FAFAFF;
+}
+
+.arrowBtn {
+  height: 40px;
+  width: 62px;
+  border-radius: 20px;
+  border: none;
+  background-color: #2f6f63;
+  color: #FAFAFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.arrowIcon {
+  font-size: 22px !important;
+}
+
+.description {
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: #e8e8ed;
+}
+
+/* =========================
+   TAGS
+========================= */
+
+.tags {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tag {
+  height: 40px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 40px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #FAFAFF;
+}
+
+@media (max-width: 412px) {
+  .services {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .services {
+    padding-top: 52px;
+    padding-bottom: 72px;
+  }
+
+  .intro {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .heading {
+    margin-top: 8px;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+
+  .description1 {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+
+  .pinSection {
+    padding-top: 18px;
+  }
+
+  .cards {
+    height: auto;
+    margin-top: 0;
+    overflow: visible;
+  }
+
+  .mobileCards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobileCard {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    min-height: 190px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+  }
+
+  .mobileCard .content {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .mobileCard .header {
+    gap: 10px;
+  }
+
+  .mobileCard .title {
+    font-size: 20px;
+    line-height: 1.25;
+  }
+
+  .mobileCard .arrowBtn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobileCard .description {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .mobileCard .tags {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .mobileCard .tag {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 11px;
+    border-radius: 28px;
+  }
+}
+
+./component/services/services
+
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+import styles from "./Services.module.css";
+import ServiceCard from "./ServiceCard";
+import { services } from "./serviceData";
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+interface ServicesProps {
+  enableDarkMode?: boolean;
+  variant?: "home" | "services";
+}
+
+// ─────────────────────────────────────────────────────────────
+// Constants — tweak these to adjust feel
+// ─────────────────────────────────────────────────────────────
+const TRANSITION  = 2.5;    // timeline units for the slide animation
+const HOLD        = 2;    // timeline units of still-time per card
+const PX_PER_UNIT = 150;  // real scroll px per 1 timeline unit
+
+// How far below the container cards are hidden before animating in.
+// Must be >= card height (540px) so overflow:hidden clips them fully.
+const CARD_OFFSET_PX = 600;
+// ─────────────────────────────────────────────────────────────
+
+// Timeline unit where card[i]'s transition STARTS
+function transitionStart(i: number): number {
+  if (i === 0) return 0;
+  return HOLD + (i - 1) * (TRANSITION + HOLD);
+}
+
+// Timeline unit where card[i]'s transition ENDS (hold begins)
+function settleUnit(i: number): number {
+  if (i === 0) return 0;
+  return transitionStart(i) + TRANSITION;
+}
+
+// Total timeline length
+function totalUnits(count: number): number {
+  // First HOLD + (count-1) × (TRANSITION + HOLD) − final HOLD (no hold after last card)
+  return HOLD + (count - 1) * (TRANSITION + HOLD) - HOLD;
+}
+
+export default function Services({
+  enableDarkMode = true,
+  variant = "home",
+}: ServicesProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const pinRef     = useRef<HTMLDivElement | null>(null);
+  const stRef      = useRef<ScrollTrigger | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobileView(window.innerWidth <= 412);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (!sectionRef.current || !pinRef.current) return;
+
+    if (isMobileView) {
+      if (enableDarkMode) {
+        sectionRef.current.classList.add(styles.dark);
+      }
+      return;
+    }
+
+    const count      = services.length;
+    const total      = totalUnits(count);
+    const totalScroll = total * PX_PER_UNIT;
+
+    const ctx = gsap.context(() => {
+
+      // ── TEXT REVEAL ────────────────────────────────────────
+      const lines = gsap.utils.toArray(`.${styles.revealInner}`);
+      gsap.set(lines, { y: "100%" });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
+          onEnter:     () => { if (enableDarkMode) sectionRef.current!.classList.add(styles.dark); },
+          onLeaveBack: () => { if (enableDarkMode) sectionRef.current!.classList.remove(styles.dark); },
+        },
+      }).to(lines, { y: "0%", stagger: 0.15, duration: 0.8, ease: "power3.out" });
+
+      // ── CARDS ──────────────────────────────────────────────
+      const cards = gsap.utils.toArray<HTMLElement>(
+        pinRef.current!.querySelectorAll(`.${styles.card}`)
+      );
+
+      // Push all cards except first completely below the clipped container
+      gsap.set(cards.slice(1), { y: CARD_OFFSET_PX, opacity: 1 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinRef.current,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: `+=${totalScroll}`,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const t = self.progress * total;
+
+            // Active = highest card whose transition is at least 50% done
+            let idx = 0;
+            for (let i = count - 1; i >= 1; i--) {
+              if (t >= transitionStart(i) + TRANSITION * 0.5) {
+                idx = i;
+                break;
+              }
+            }
+            setActiveIndex(idx);
+          },
+        },
+      });
+
+      stRef.current = tl.scrollTrigger!;
+
+      // ── Build timeline ────────────────────────────────────
+      // Card 0 is already visible — just hold so user can read it
+      tl.to({}, { duration: HOLD });
+
+      for (let i = 1; i < count; i++) {
+        const incoming = cards[i];
+        const outgoing = cards[i - 1];
+
+        // Incoming slides up from below the clipped boundary
+        tl.fromTo(
+          incoming,
+          { y: CARD_OFFSET_PX, opacity: 1 },
+          { y: 0, opacity: 1, duration: TRANSITION, ease: "power2.inOut" }
+        );
+
+        // Outgoing scales back simultaneously
+        tl.to(
+          outgoing,
+          { scale: 0.94, y: -16, opacity: 0.88, duration: TRANSITION, ease: "power2.inOut" },
+          "<"
+        );
+
+        // Hold on this card (no hold after the last card)
+        if (i < count - 1) {
+          tl.to({}, { duration: HOLD });
+        }
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [enableDarkMode, isMobileView]);
+
+  // ── Tab click ─────────────────────────────────────────────
+  // Directly set window.scrollY — no GSAP animation that fights scrub
+  const handleTabClick = (targetIdx: number) => {
+    if (isMobileView) return;
+    const st = stRef.current;
+    if (!st) return;
+
+    const count = services.length;
+    const total = totalUnits(count);
+
+    // Scroll to the settle point of the target card (start of its hold window)
+    const unit     = settleUnit(targetIdx);
+    const progress = Math.min(unit / total, 0.999);
+    const scrollY  = st.start + (st.end - st.start) * progress;
+
+    // Use native scrollTo — bypasses GSAP scrub lag entirely for instant tab jumps
+    window.scrollTo({ top: scrollY, behavior: "smooth" });
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`${styles.services}
+        ${variant === "services" ? styles.servicesVariant : ""}
+        ${enableDarkMode ? "" : styles.light}
+        ${variant === "home" ? "nav-dark" : ""}`}
+    >
+      {/* ── INTRO ── */}
+      <div className={styles.intro}>
+        {variant === "services" ? (
+          <h2 className={`${styles.servicesHeading} ${styles.revealLine}`}>
+            <span className={styles.revealInner}>
+              Our services support teams at different
+              <br />
+              stages of building a product all focused on
+              <br />
+              reducing uncertainty and helping teams
+              <br />
+              make confident decisions.
+            </span>
+          </h2>
+        ) : (
+          <>
+            <span className={`${styles.eyebrow} ${styles.revealLine}`}>
+              <span className={styles.revealInner}>
+                OUR ROLE IS TO BRING STRUCTURE TO THAT MOMENT
+              </span>
+            </span>
+            <h2 className={`${styles.heading} ${styles.revealLine}`}>
+              <span className={styles.revealInner}>
+                Big ideas don't start clear. They start confusing.
+              </span>
+            </h2>
+            <p className={`${styles.description1} ${styles.revealLine}`}>
+              <span className={styles.revealInner}>
+                Most products don't fail because of bad execution. They fail
+                because teams start building before they're clear on the
+                problem. That early confusion isn't a weakness — it's where the
+                real work begins.
+              </span>
+            </p>
+          </>
+        )}
+      </div>
+
+      {/* ── PIN SECTION ── */}
+      <div ref={pinRef} className={styles.pinSection}>
+        {!isMobileView && (
+          <div className={styles.tabsWrapper}>
+            <div className={styles.tabsContainer}>
+              {services.map((service, i) => (
+                <button
+                  key={service.slug}
+                  onClick={() => handleTabClick(i)}
+                  className={`${styles.tab} ${activeIndex === i ? styles.active : ""}`}
+                >
+                  {service.tabLabel}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* overflow:hidden clips cards that are waiting below */}
+        <div className={`${styles.cards} ${isMobileView ? styles.mobileCards : ""}`}>
+          {services.map((service) => (
+            <ServiceCard
+              key={service.slug}
+              className={isMobileView ? styles.mobileCard : styles.card}
+              slug={service.slug}
+              title={service.title}
+              description={service.cardDescription}
+              image={service.cardImage}
+              tags={service.cardTags}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+./component/work
+
+import Link from "next/link";
+import styles from "./WorkSection.module.css";
+
+type Props = {
+  image: string;
+  title: string;
+  description: string;
+  slug?: string;
+};
+
+export default function WorkCard({ image, title, description, slug }: Props) {
+  const action = slug ? (
+    <Link href={`/casestudies/${slug}`} className={styles.workCardButton}>
+      View Case Study
+    </Link>
+  ) : (
+    <button className={styles.workCardButton}>
+      View Case Study
+    </button>
+  );
+
+  return (
+    <article className={styles.workCard}>
+      <img
+        src={image}
+        alt={title}
+        className={styles.workCardImage}
+      />
+
+      <div className={styles.workCardContent}>
+        <h3 className={styles.workCardTitle}>{title}</h3>
+
+        <p className={styles.workCardDescription}>
+          {description}
+        </p>
+
+        {action}
+      </div>
+    </article>
+  );
+}
+
+
+./component/work/worksection.module.css
+
+/* =========================
+   SECTION
+   ========================= */
+
+.work {
+  padding: 120px 0; /* 👈 slightly more breathing space */
+  background: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* =========================
+   WORK SECTION – INTRO
+   ========================= */
+
+.workIntro {
+  max-width: 890px;
+  margin: 0 auto 96px; /* 👈 increased gap before cards */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 64px; /* 👈 slightly more balanced spacing */
+  align-items: start;
+}
+
+/* =========================
+   HEADING
+   ========================= */
+
+.workHeading {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: #121214;
+}
+
+/* “Our” – italic */
+.headingItalic {
+  font-style: italic;
+  font-weight: 400;
+  color: #316960;
+}
+
+/* “Latest” – medium */
+.headingNormal {
+  font-weight: 500;
+}
+
+/* “Work” – stronger */
+.headingBold {
+  font-weight: 500;
+}
+
+/* =========================
+   DESCRIPTION
+   ========================= */
+
+.workDescription {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: #4E4E54;
+}
+
+.workDescription p + p {
+  margin-top: 24px;
+}
+
+/* =========================
+   WORK CARDS SECTION - CAROUSEL
+   ========================= */
+
+.carouselSection {
+  position: relative;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+  width: 100%;
+}
+
+/* =========================
+   NAVIGATION ARROWS
+   ========================= */
+
+.navigationArrows {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 890px;
+  padding-right: 0;
+}
+
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   CARD
+   ========================= */
+
+.workCard {
+  display: grid;
+  grid-template-columns: 488px 402px;
+  gap: 0;
+  width: 890px;
+  height: 440px;
+  background: #ffffff;
+
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+  border-radius: 8px;
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.02),
+    0 0 6px rgba(18, 18, 20, 0.06);
+
+  overflow: hidden;
+}
+
+/* =========================
+   IMAGE
+   ========================= */
+
+.workCardImage {
+  width: 488px;
+  height: 440px;
+  overflow: hidden;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workCardImageTag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.workCardContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.workCardTag {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2%;
+  color: #1E4944;
+  margin: 0;
+  display: inline-block;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.workCardTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 32px;
+  margin: 0;
+  margin-top: 12px;
+  font-weight: 700;
+  letter-spacing: 2%;
+  color: #121214;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.workCardDescription {
+  margin: 12px 0 0 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2%;
+  line-height: 1.6;
+  color: #4E4E54;
+  flex-shrink: 0;
+}
+
+.workCardButton {
+  margin-top: auto;
+  height: 40px;
+  padding: 0 24px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(49, 105, 96, 0.1);
+  border: 1px solid #316960;
+  border-radius: 999px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: #316960;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.workCardButton:hover,
+.workCardButton:focus {
+  text-decoration: none;
+  background: rgba(49, 105, 96, 0.2);
+}
+
+/* =========================
+   CTA
+   ========================= */
+
+.cta {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.primaryBtn {
+  height: 44px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: #2f6f63;
+  color: #ffffff;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   PERFORMANCE
+   ========================= */
+
+.workHeading,
+.workDescription,
+.workCard {
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 412px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .work {
+    padding: 64px 0;
+  }
+
+  .workIntro {
+    margin: 0 0 28px;
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+
+  .workHeading {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .workDescription {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .workDescription p + p {
+    margin-top: 12px;
+  }
+
+  .navigationArrows {
+    max-width: 100%;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .workCard {
+    width: 100%;
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .workCardImage,
+  .workCardImageTag {
+    width: 100%;
+    height: 180px;
+  }
+
+  .workCardContent {
+    padding: 16px;
+  }
+
+  .workCardTag {
+    font-size: 12px;
+  }
+
+  .workCardTitle {
+    margin-top: 8px;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .workCardDescription {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .workCardButton {
+    margin-top: 16px;
+    height: 34px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .cta {
+    margin-top: 20px;
+  }
+
+  .primaryBtn {
+    height: 36px;
+    padding: 0 20px;
+    font-size: 13px;
+  }
+}
+
+
+./component/work/worksection
+
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import styles from "./WorkSection.module.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Sample case study data with full structure
+const caseStudiesData = [
+  {
+    slug: "go-ride",
+    tag: "Mobility",
+    title: "A real time data analytical dashboard",
+    description: "Design integrated AI based end to end platform",
+    image: "/images/work/work-1.jpg",
+  },
+  {
+    slug: "go-ride",
+    tag: "EdTech",
+    title: "A real time data analytical dashboard",
+    description: "Design integrated AI based end to end platform",
+    image: "/images/work/work-2.jpg",
+  },
+  {
+    slug: "go-ride",
+    tag: "FinTech",
+    title: "A real time data analytical dashboard",
+    description: "Design integrated AI based end to end platform",
+    image: "/images/work/work-3.jpg",
+  },
+];
+
+export default function WorkSection() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const descriptionRef = useRef<HTMLDivElement | null>(null);
+  const cardImageRef = useRef<HTMLDivElement | null>(null);
+  const cardContentRef = useRef<HTMLDivElement | null>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const currentCase = caseStudiesData[currentIndex];
+  const isFirstCard = currentIndex === 0;
+  const isLastCard = currentIndex === caseStudiesData.length - 1;
+
+  const handlePrevious = () => {
+    if (isAnimating || isFirstCard) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => prev - 1);
+    animateSlide("right");
+  };
+
+  const handleNext = () => {
+    if (isAnimating || isLastCard) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => prev + 1);
+    animateSlide("left");
+  };
+
+  const animateSlide = (direction: "left" | "right") => {
+    const fromX = direction === "left" ? 100 : -100;
+
+    // Fade out current
+    gsap.to([cardImageRef.current, cardContentRef.current], {
+      opacity: 0,
+      x: -fromX * 10,
+      duration: 0.4,
+      ease: "power2.inOut",
+    });
+
+    // Fade in new after brief delay
+    setTimeout(() => {
+      gsap.fromTo(
+        [cardImageRef.current, cardContentRef.current],
+        {
+          opacity: 0,
+          x: fromX * 10,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          onComplete: () => {
+            setIsAnimating(false);
+          },
+        }
+      );
+    }, 100);
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // =========================
+      // INTRO TIMELINE (Heading → Description)
+      // =========================
+      const introTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reset",
+        },
+      });
+
+      introTl.fromTo(
+        headingRef.current,
+        {
+          y: 80,
+          opacity: 0,
+          clipPath: "inset(0 0 100% 0)",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 1,
+          ease: "power3.out",
+        }
+      );
+
+      introTl.fromTo(
+        descriptionRef.current,
+        {
+          y: 50,
+          opacity: 0,
+          clipPath: "inset(0 0 100% 0)",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
+
+      // Initial card animation
+      gsap.fromTo(
+        [cardImageRef.current, cardContentRef.current],
+        {
+          y: 140,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%",
+            toggleActions: "play none none reset",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section className={styles.work} ref={sectionRef}>
+      <div className={styles.container}>
+        <div className={styles.workIntro}>
+          <h2 className={styles.workHeading} ref={headingRef}>
+            <span className={styles.headingItalic}>Our</span>{" "}
+            <span className={styles.headingNormal}>Latest</span>
+            <br />
+            <span className={styles.headingBold}>Work</span>
+          </h2>
+
+          <div className={styles.workDescription} ref={descriptionRef}>
+            <p>
+              Explore projects where strategy, design, and execution come together to
+              solve real problems.
+            </p>
+
+            <p>
+              We have partnered with teams to bring structure to complex ideas, improve
+              usability, and build digital products that users understand and businesses
+              can grow with.
+            </p>
+          </div>
+        </div>
+
+        {/* Carousel Section */}
+        <div className={styles.carouselSection}>
+          {/* Navigation Arrows - Above Card */}
+          <div className={styles.navigationArrows}>
+            <IconButton
+              onClick={handlePrevious}
+              disabled={isFirstCard}
+              className={styles.arrowButton}
+              sx={{
+                width: 40,
+                height: 40,
+                padding: 0,
+                color: "#1E4944",
+                border: `1px solid #1E4944`,
+                transition: "all 0.3s ease",
+                "&:hover:not(:disabled)": {
+                  backgroundColor: "rgba(30, 73, 68, 0.08)",
+                },
+                "&.Mui-disabled": {
+                  opacity: 0.5,
+                  color: "#1E4944",
+                  borderColor: "#1E4944",
+                  cursor: "not-allowed",
+                },
+                opacity: isFirstCard ? 0.5 : 1,
+              }}
+            >
+              <ChevronLeft fontSize="small" />
+            </IconButton>
+
+            <IconButton
+              onClick={handleNext}
+              disabled={isLastCard}
+              className={styles.arrowButton}
+              sx={{
+                width: 40,
+                height: 40,
+                padding: 0,
+                color: "#1E4944",
+                border: `1px solid #1E4944`,
+                transition: "all 0.3s ease",
+                "&:hover:not(:disabled)": {
+                  backgroundColor: "rgba(30, 73, 68, 0.08)",
+                },
+                "&.Mui-disabled": {
+                  opacity: 0.5,
+                  color: "#1E4944",
+                  borderColor: "#1E4944",
+                  cursor: "not-allowed",
+                },
+                opacity: isLastCard ? 0.5 : 1,
+              }}
+            >
+              <ChevronRight fontSize="small" />
+            </IconButton>
+          </div>
+
+          {/* Card Display */}
+          <div className={styles.workCard}>
+            <div className={styles.workCardImage} ref={cardImageRef}>
+              <img
+                src={currentCase.image}
+                alt={currentCase.title}
+                className={styles.workCardImageTag}
+              />
+            </div>
+
+            <div className={styles.workCardContent} ref={cardContentRef}>
+              <span className={styles.workCardTag}>{currentCase.tag}</span>
+              <h3 className={styles.workCardTitle}>{currentCase.title}</h3>
+              <p className={styles.workCardDescription}>
+                {currentCase.description}
+              </p>
+
+              <Link
+                href={`/casestudies/${currentCase.slug}`}
+                className={styles.workCardButton}
+              >
+                View Case Study
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.cta}>
+          <Link href="/works">
+            <button className={styles.primaryBtn}>See our work</button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+./component/industries/industries.module.css
+
+/* =========================
+   SECTION
+   ========================= */
+
+.industries {
+  padding: 96px 0;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+  max-width: 890px;
+  margin: 0 auto 64px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* =========================
+   HEADING (LEFT)
+   ========================= */
+
+.heading {
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  font-size: 64px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: #121214;
+}
+
+/* “Industries” – medium */
+.headingItalic {
+  font-style: italic;
+  font-weight: 400;
+  color: #316960;
+}
+
+/* “We Serve” – medium */
+.headingNormal {
+  font-weight: 500;
+}
+
+/* =========================
+   DESCRIPTION (RIGHT)
+   ========================= */
+
+.description1 {
+  font-family: var(--font-body); /* Open Sans */
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: #4E4E54;
+}
+
+
+/* =========================
+   CARD
+   ========================= */
+
+/* .card {
+  width: 472px;
+  height: 520px;
+
+  background-color: #f1f3f3;
+  border-radius: 12px;
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.04),
+    0 0 6px rgba(18, 18, 20, 0.10);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+} */
+.card {
+  width: 472px;
+  height: 520px;
+
+  background-color: #f1f3f3;
+  border-radius: 12px;
+  border: 1.5px solid rgba(18, 18, 20, 0.12);
+
+  box-shadow:
+    0 1px 4px rgba(18, 18, 20, 0.04),
+    0 0 6px rgba(18, 18, 20, 0.10);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* =========================
+   DETAIL SECTION
+   ========================= */
+
+/* .content {
+  padding: 32px 24px;
+} */
+.content {
+  padding: 32px 24px 0 24px; /* 👈 removed bottom padding */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 👈 controlled spacing */
+  flex: 1;   /* 👈 fills available space cleanly */
+}
+/* Eyebrow */
+/* .label {
+  font-family: var(--font-body); 
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #316960;
+} */
+.label {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #316960;
+  margin: 0;
+}
+/* Heading */
+/* .title {
+  margin-top: 24px;
+  font-family: var(--font-heading); 
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #121214;
+} */
+.title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #121214;
+  margin: 0; /* 👈 removed margin-top */
+}
+/* Description */
+/* .description {
+  margin-top: 12px;
+  font-family: var(--font-body); 
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #4e4e54;
+} */
+.description {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #4e4e54;
+  margin: 0; /* 👈 removed margin-top */
+}
+
+/* =========================
+   IMAGE SECTION
+   ========================= */
+
+/* .imageWrapper {
+  width: 472px;
+  height: 264px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+} */
+.imageWrapper {
+  width: 472px;
+  height: 264px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0; /* 👈 prevents flex distortion */
+}
+
+.image {
+  object-fit: cover;
+}
+/* =========================
+   INTERACTION (SUBTLE)
+   ========================= */
+
+.card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+}
+
+@media (max-width: 412px) {
+  .industries {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .industries {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .header {
+    max-width: 100%;
+    margin: 0 0 20px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .heading {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .description1 {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .track {
+    display: block;
+    transform: none !important;
+  }
+
+  .track > *:not(:first-child) {
+    display: none;
+  }
+
+  .card {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    padding: 16px 16px 0;
+    gap: 8px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+.industries {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 32px;
+  will-change: transform;
+}
+
+./component/industries/industries
+"use client";
+
+import { useEffect, useRef } from "react";
+import styles from "./Industries.module.css";
+import IndustryCard from "./IndustryCard";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+type Industry = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+};
+
+const INDUSTRIES: Industry[] = [
+  {
+    id: "saas",
+    eyebrow: "SaaS & B2B Products",
+    title:
+      "We design scalable SaaS products that improve adoption, retention, and productivity.",
+    description:
+      "Our UX focuses on onboarding, workflows, and dashboards that teams can use efficiently.",
+    image: "/images/industries/image_1.png",
+  },
+  {
+    id: "fintech",
+    eyebrow: "Fintech & Trust-Driven Platforms",
+    title:
+      "We design secure, intuitive financial experiences that build trust and confidence.",
+    description:
+      "From dashboards to transaction flows, we simplify complex financial data into clear user journeys.",
+    image: "/images/industries/image_2.png",
+  },
+  {
+    id: "ai",
+    eyebrow: "AI-Enabled Tools",
+    title:
+      "We design AI products that feel human, transparent, and usable at scale.",
+    description:
+      "We turn complex AI systems into interfaces users can understand and trust.",
+    image: "/images/industries/image_3.png",
+  },
+  {
+    id: "edtech",
+    eyebrow: "EdTech",
+    title:
+      "We create engaging learning experiences that are easy to use and scale.",
+    description:
+      "Our designs help learners stay focused and educators deliver value without friction.",
+    image: "/images/industries/image_4.png",
+  },
+  {
+    id: "healthcare",
+    eyebrow: "Healthcare",
+    title:
+      "We design user-friendly healthcare interfaces that prioritize clarity and accessibility.",
+    description:
+      "From patient portals to admin dashboards, we reduce cognitive load and errors.",
+    image: "/images/industries/image_5.png",
+  },
+  {
+    id: "ecommerce",
+    eyebrow: "E-commerce",
+    title:
+      "We design conversion-focused shopping experiences that feel effortless.",
+    description:
+      "Every interaction is optimized for speed, clarity, and trust.",
+    image: "/images/industries/image_6.png",
+  },
+];
+
+export default function Industries() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+
+    if (!section || !track) return;
+
+    // =========================
+    // HEADING + DESCRIPTION ANIMATION
+    // =========================
+    const introTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: headingRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reset",
+      },
+    });
+
+    introTl.fromTo(
+      headingRef.current,
+      {
+        y: 80,
+        opacity: 0,
+        clipPath: "inset(0 0 100% 0)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        clipPath: "inset(0 0 0% 0)",
+        duration: 1,
+        ease: "power3.out",
+      }
+    );
+
+    introTl.fromTo(
+      descriptionRef.current,
+      {
+        y: 50,
+        opacity: 0,
+        clipPath: "inset(0 0 100% 0)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        clipPath: "inset(0 0 0% 0)",
+        duration: 0.8,
+        ease: "power3.out",
+      },
+      "-=0.4" // 👈 starts slightly before heading finishes
+    );
+
+    // =========================
+    // HORIZONTAL SCROLL LOGIC (UNCHANGED)
+    // =========================
+
+    const containerWidth = 890;
+
+    const getContainerOffset = () => {
+      return (window.innerWidth - containerWidth) / 2;
+    };
+
+    const handleResize = () => {
+      const scrollDistance =
+        track.scrollWidth - containerWidth;
+
+      section.style.height =
+        scrollDistance + window.innerHeight + "px";
+    };
+
+    const handleScroll = () => {
+      const sectionTop = section.offsetTop;
+      const scrollY = window.scrollY;
+
+      const containerOffset = getContainerOffset();
+
+      const scrollDistance =
+        track.scrollWidth - containerWidth;
+
+      const start = sectionTop;
+      const end = sectionTop + scrollDistance;
+
+      const progress = Math.min(
+        Math.max((scrollY - start) / (end - start), 0),
+        1
+      );
+
+      const translateX =
+        containerOffset - scrollDistance * progress;
+
+      track.style.transform = `translate3d(${translateX}px, 0, 0)`;
+    };
+
+    handleResize();
+    handleScroll();
+
+    window.addEventListener("resize", () => {
+      handleResize();
+      handleScroll();
+    });
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <section className={styles.industries} ref={sectionRef}>
+      <div className={styles.header}>
+        <h2 className={styles.heading} ref={headingRef}>
+          <span className={styles.headingItalic}>Industries</span>{" "}
+          <span className={styles.headingNormal}>We Serve</span>
+        </h2>
+
+        <p className={styles.description1} ref={descriptionRef}>
+          We don’t specialise in industries we specialise in product problems.
+          We work most closely in domains where clarity, trust, and usability
+          matter most.
+        </p>
+      </div>
+
+      <div className={styles.sticky}>
+        <div className={styles.track} ref={trackRef}>
+          {INDUSTRIES.map((industry) => (
+            <IndustryCard
+              key={industry.id}
+              eyebrow={industry.eyebrow}
+              title={industry.title}
+              description={industry.description}
+              image={industry.image}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+./component/industries/IndustryCard
+
+import Image from "next/image";
+import styles from "./Industries.module.css";
+
+export interface IndustryCardProps {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+export default function IndustryCard({
+  eyebrow,
+  title,
+  description,
+  image,
+}: IndustryCardProps) {
+  return (
+    <article className={styles.card}>
+      {/* Detail Section */}
+      <div className={styles.content}>
+        <span className={styles.label}>{eyebrow}</span>
+
+        <h3 className={styles.title}>{title}</h3>
+
+        <p className={styles.description}>{description}</p>
+      </div>
+
+      {/* Image Section */}
+      <div className={styles.imageWrapper}>
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className={styles.image}
+          priority={false}
+        />
+      </div>
+    </article>
+  );
+}
+
+
+./components/process/process.module.css
+
+/* ================= SECTION ================= */
+
+.process {
+  padding: 144px 0;
+  transition: background 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+  max-width: 890px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.headerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  margin: 0;
+  display: block;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #316960;
+}
+
+.heading {
+  margin: 4px 0 0 0;
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+  color: #121214;
+}
+
+.description {
+  margin: 40px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: #4e4e54;
+}
+
+/* ================= TIMELINE ================= */
+
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 890px;
+  margin-top: 80px;
+}
+
+.line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(49, 105, 96, 0.2);
+  overflow: hidden;
+}
+
+.lineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #316960;
+  transition: height 0.35s ease;
+}
+
+/* ================= STEP ================= */
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  min-height: 220px;
+
+  /* 🔥 FIX: spacing moved here instead of center */
+  padding-top: 20px;
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.step:not(:last-child) {
+  margin-bottom: 96px;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= SIDES ================= */
+
+.side {
+  display: flex;
+  align-items: flex-start;
+}
+
+.side:first-child {
+  justify-content: flex-end;
+  padding-right: 59px;
+}
+
+.side:last-child {
+  justify-content: flex-start;
+  padding-left: 59px;
+}
+
+.leftText {
+  text-align: right;
+  margin-right: 37px;
+}
+
+.rightText {
+  text-align: left;
+  margin-left: 37px;
+}
+
+/* ================= CONTENT TYPOGRAPHY ================= */
+
+.content h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: #121214;
+}
+
+.content h6 {
+  margin: 16px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: #121214;
+}
+
+.content p {
+  margin: 4px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #4e4e54;
+}
+
+/* ================= CENTER NODE ================= */
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  /* 🔥 IMPORTANT: removed margin-top */
+  margin-top: 0;
+}
+
+.node {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px 4px rgba(49, 105, 96, 0.14);
+}
+
+.node span {
+  width: 18px;
+  height: 18px;
+  background: #a6cec6;
+  border-radius: 50%;
+}
+
+.number {
+  width: 76px;
+  height: 80px;
+  display: block;
+}
+
+/* ================= FOOTER ================= */
+
+.footerNote {
+  margin: 32px 0 0 0; /* slightly tighter */
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #4e4e54;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.footerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 412px) {
+  .process {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .process {
+    padding-top: 84px;
+    padding-bottom: 92px;
+    align-items: stretch;
+  }
+
+  .header {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+  }
+
+  .heading {
+    margin-top: 8px;
+    font-size: 34px;
+    line-height: 1.2;
+  }
+
+  .description {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+
+  .timeline {
+    margin-top: 36px;
+    max-width: 100%;
+  }
+
+  .line {
+    left: 18px;
+    transform: none;
+  }
+
+  .mobileStep {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    column-gap: 16px;
+    align-items: start;
+    min-height: 0;
+    padding-top: 0;
+  }
+
+  .mobileStep:not(:last-child) {
+    margin-bottom: 30px;
+  }
+
+  .number {
+    width: 36px;
+    height: 38px;
+  }
+
+  .mobileContent {
+    text-align: left;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .mobileContentVisible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobileContent h3 {
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .mobileContent h6 {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .mobileContent p {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+  }
+
+  .footerNote {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+
+./components/process/process
+
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import styles from "./Process.module.css";
+
+type Step = {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+};
+
+const STEPS: Step[] = [
+  {
+    id: 1,
+    title: "Clarify the Problem",
+    subtitle: "Make sense of what’s unclear",
+    description:
+      "We align stakeholders, understand users, and define the real problem before solutions or features are discussed.",
+  },
+  {
+    id: 2,
+    title: "Define Direction",
+    subtitle: "Decide what actually matters",
+    description:
+      "We identify priorities, scope, and success criteria so teams know what to focus on and what to ignore.",
+  },
+  {
+    id: 3,
+    title: "Design & Build with Intent",
+    subtitle: "Turn decisions into execution",
+    description:
+      "Design and development happen with clear intent, guided by earlier decisions not guesswork or trends.",
+  },
+  {
+    id: 4,
+    title: "Learn & Improve",
+    subtitle: "Adapt based on real usage",
+    description:
+      "After launch, we observe, learn, and refine helping products evolve as users and needs change.",
+  },
+];
+
+export default function Process() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const timelineRef = useRef<HTMLDivElement | null>(null);
+  const lineRef = useRef<HTMLDivElement | null>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const [fillHeight, setFillHeight] = useState(0);
+  const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+  const [showFooter, setShowFooter] = useState(false);
+  const [showHeader, setShowHeader] = useState(false);
+  const [activeBg, setActiveBg] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+useEffect(() => {
+  const onResize = () => {
+    setIsMobileView(window.innerWidth <= 412);
+  };
+
+  onResize();
+  window.addEventListener("resize", onResize);
+  return () => window.removeEventListener("resize", onResize);
+}, []);
+
+useEffect(() => {
+  const handleScroll = () => {
+    const section = sectionRef.current;
+    const line = lineRef.current;
+    if (!section || !line) return;
+
+    const windowHeight = window.innerHeight;
+    const sectionRect = section.getBoundingClientRect();
+
+    /* ================= HEADER + BG TOGGLE ================= */
+
+    const headerTrigger = sectionRect.top <= windowHeight * 0.8 &&
+                          sectionRect.bottom >= windowHeight * 0.2;
+
+    setShowHeader(headerTrigger);
+    setActiveBg(headerTrigger);
+
+    /* ================= TIMELINE HEIGHT ================= */
+
+    const lastStep = stepRefs.current[STEPS.length - 1];
+    if (lastStep) {
+      const bottom = lastStep.offsetTop + lastStep.offsetHeight;
+      line.style.height = `${bottom}px`;
+    }
+
+    let newFillHeight = 0;
+    const active: number[] = [];
+
+    stepRefs.current.forEach((step, index) => {
+      if (!step) return;
+
+      const rect = step.getBoundingClientRect();
+
+      const inView =
+        rect.top <= windowHeight * 0.7 &&
+        rect.bottom >= windowHeight * 0.2;
+
+      if (inView) {
+        active.push(index);
+        const nodeCenter = step.offsetTop + 40;
+        newFillHeight = nodeCenter;
+      }
+    });
+
+    /* ================= FOOTER REVEAL ================= */
+
+    // const footerInView =
+    //   sectionRect.bottom <= windowHeight * 0.95 &&
+    //   sectionRect.bottom >= windowHeight * 0.2;
+
+    // setShowFooter(footerInView);
+/* ================= FORCE FULL FILL ON LAST STEP ================= */
+
+const lastStepEl = stepRefs.current[STEPS.length - 1];
+let timelineFullyFilled = false;
+
+if (lastStepEl && line) {
+  const lastRect = lastStepEl.getBoundingClientRect();
+
+  const lastStepInView =
+    lastRect.top <= windowHeight * 0.6;
+
+  if (lastStepInView) {
+    newFillHeight = line.offsetHeight; // force full fill
+    timelineFullyFilled = true;
+  }
+}
+
+/* ================= FOOTER REVEAL (AFTER FULL FILL) ================= */
+
+setShowFooter(timelineFullyFilled);
+
+    setVisibleSteps(active);
+    setFillHeight(newFillHeight);
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`${styles.process} ${activeBg ? styles.activeBg : ""}`}
+    >
+      <div
+        className={`${styles.header} ${
+          showHeader ? styles.headerVisible : ""
+        }`}
+      >
+        <span className={styles.eyebrow}>CLARITY, STEP BY STEP</span>
+        <h2 className={styles.heading}>
+          A clear process for making confident product decisions
+        </h2>
+        <p className={styles.description}>
+          We bring clarity at each stage, helping teams make confident decisions
+          from idea to launch.
+        </p>
+      </div>
+
+      <div ref={timelineRef} className={styles.timeline}>
+        <div ref={lineRef} className={styles.line}>
+          <div
+            className={styles.lineFill}
+            style={{ height: `${fillHeight}px` }}
+          />
+        </div>
+
+        {STEPS.map((step, index) => {
+          const isLeft = index % 2 === 0;
+          const isVisible = visibleSteps.includes(index);
+
+          if (isMobileView) {
+            return (
+              <div
+                key={step.id}
+                ref={(el) => {
+                  stepRefs.current[index] = el;
+                }}
+                className={`${styles.step} ${styles.mobileStep} ${
+                  isVisible ? styles.visible : ""
+                }`}
+              >
+                <img
+                  src={`/process/${step.id}.svg`}
+                  className={styles.number}
+                  alt=""
+                />
+
+                <div
+                  className={`${styles.content} ${styles.mobileContent} ${
+                    isVisible ? styles.mobileContentVisible : ""
+                  }`}
+                >
+                  <h3>{step.title}</h3>
+                  <h6>{step.subtitle}</h6>
+                  <p>{step.description}</p>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div
+              key={step.id}
+              ref={(el) => {
+                stepRefs.current[index] = el;
+              }}
+              className={`${styles.step} ${
+                isVisible ? styles.visible : ""
+              }`}
+            >
+              <div className={styles.side}>
+                {isLeft && (
+                  <img
+                    src={`/process/${step.id}.svg`}
+                    className={styles.number}
+                    alt=""
+                  />
+                )}
+                {!isLeft && (
+                  <div className={`${styles.content} ${styles.leftText}`}>
+                    <h3>{step.title}</h3>
+                    <h6>{step.subtitle}</h6>
+                    <p>{step.description}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.center}>
+                <div className={styles.node}>
+                  <span />
+                </div>
+              </div>
+
+              <div className={styles.side}>
+                {!isLeft && (
+                  <img
+                    src={`/process/${step.id}.svg`}
+                    className={styles.number}
+                    alt=""
+                  />
+                )}
+                {isLeft && (
+                  <div className={`${styles.content} ${styles.rightText}`}>
+                    <h3>{step.title}</h3>
+                    <h6>{step.subtitle}</h6>
+                    <p>{step.description}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <p
+        className={`${styles.footerNote} ${
+          showFooter ? styles.footerVisible : ""
+        }`}
+      >
+        Each step reduces uncertainty so progress feels intentional,
+        <br /> not reactive.
+      </p>
+    </section>
+  );
+}
+
+./component/testimonial/testimonial.module.css
+
+.clients {
+  max-width: 890px;
+  margin: 96px auto;
+}
+
+/* =========================
+   Heading
+   ========================= */
+
+.header {
+  max-width: 100%;
+}
+
+.heading {
+  margin: 0px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 62px;
+  color: #121214;
+  line-height: 1.1;
+}
+
+.italic {
+  font-style: italic;
+  color: #316960;
+  font-weight: 400;
+}
+
+.normal {
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* =========================
+   Testimonial
+   ========================= */
+
+.testimonial {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 64px;
+  flex: 0 0 100%;
+}
+
+.content {
+  max-width: 520px;
+  margin: 0px;
+}
+
+.company {
+  margin: 0px;
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  color: #121214;
+}
+
+.review {
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  color: #4E4E54;
+  line-height: 1.6;
+}
+
+.reviewer {
+  margin-top: 64px;
+}
+
+.name {
+  margin: 0px;
+  font-size: 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.5;
+  color: #121214;
+}
+
+.position {
+  margin: 8px 0 0 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4E4E54;
+}
+
+/* =========================
+   Image
+   ========================= */
+
+.imageWrapper {
+  padding-right: 40px;
+}
+
+.imagePlaceholder {
+  width: 262px;
+  height: 290px;
+  object-fit: cover;
+  background: #d9d9d9;
+}
+
+/* =========================
+   Controls
+   ========================= */
+
+.controls {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(49, 105, 96, 0.1);
+  border: 1.5px solid #316960;
+
+  display: flex;              /* ADD THIS */
+  align-items: center;        /* ADD THIS */
+  justify-content: center;    /* ADD THIS */
+
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.arrowIcon {
+  font-size: 18px !important;
+}
+
+.arrow:hover {
+  background: rgba(49, 105, 96, 0.2);
+}
+
+
+/* =========================
+   Scroll Reveal Animation
+   ========================= */
+
+/* .heading,
+.testimonial {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.show .heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.show .testimonial {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.2s;
+} */
+/* =========================
+   Scroll Reveal Animation
+   ========================= */
+
+.heading,
+.testimonial,
+.controls {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Heading reveals when section visible */
+.show .heading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide reveals when triggered */
+.showSlide {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
+/* =========================
+   Slider Layout
+   ========================= */
+
+.slider {
+  overflow: hidden;
+  margin-top: 64px;
+}
+
+.track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s ease;
+}
+
+@media (max-width: 412px) {
+  .clients {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .clients {
+    margin: 72px auto;
+    max-width: 100%;
+  }
+
+  .heading {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .slider {
+    margin-top: 20px;
+  }
+
+  .testimonial {
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 0;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+
+  .company {
+    font-size: 14px;
+  }
+
+  .review {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .reviewer {
+    margin-top: 14px;
+  }
+
+  .name {
+    font-size: 14px;
+  }
+
+  .position {
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .imageWrapper {
+    padding-right: 0;
+  }
+
+  .imagePlaceholder {
+    width: 92px;
+    height: 96px;
+    border-radius: 4px;
+  }
+
+  .controls {
+    margin-top: 12px;
+  }
+}
+
+./component/testimonial/testimonial
+
+
+"use client";
+import { useEffect, useRef, useState } from "react";
+import styles from "./Testimonial.module.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+
+export default function Testimonial() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
+  const [visible, setVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [animateSlide, setAnimateSlide] = useState(false);
+
+  const testimonials = [
+    {
+      company: "Company name",
+      review:
+        "We came in with a lot of ideas but no clear direction. The Nimora team helped us slow down, ask the right questions, and make decisions we felt confident standing behind.",
+      name: "Zeeshan",
+      position: "CEO - SaaS",
+      image:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+    },
+    {
+      company: "Another Company",
+      review:
+        "Working with the team gave us clarity and structure. We were able to execute faster and with confidence.",
+      name: "Ayesha",
+      position: "Founder - Startup",
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+    },
+  ];
+
+  const totalSlides = testimonials.length;
+
+  const triggerSlideAnimation = () => {
+    setAnimateSlide(false);
+    setTimeout(() => {
+      setAnimateSlide(true);
+    }, 50);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    triggerSlideAnimation();
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? totalSlides - 1 : prev - 1
+    );
+    triggerSlideAnimation();
+  };
+
+  /* Auto Slideshow */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalSlides);
+      triggerSlideAnimation();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [totalSlides]);
+
+  /* Scroll Reveal */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          triggerSlideAnimation();
+        } else {
+          setVisible(false);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`${styles.clients} ${visible ? styles.show : ""}`}
+    >
+      <div className={styles.header}>
+        <h2 className={styles.heading}>
+          <span className={styles.italic}> What </span>
+          <span className={styles.normal}> Our Clients </span>
+          <br />
+          <span className={styles.normal}> Say </span>
+        </h2>
+      </div>
+
+      <div className={styles.slider}>
+        <div
+          className={styles.track}
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`,
+          }}
+        >
+          {testimonials.map((item, index) => (
+            <div
+              key={index}
+              className={`${styles.testimonial} ${
+                visible && animateSlide && index === currentIndex
+                  ? styles.showSlide
+                  : ""
+              }`}
+            >
+              <div className={styles.content}>
+                <p className={styles.company}>{item.company}</p>
+
+                <p className={styles.review}>
+                  “{item.review}”
+                </p>
+
+                <div className={styles.reviewer}>
+                  <p className={styles.name}>{item.name}</p>
+                  <p className={styles.position}>{item.position}</p>
+                </div>
+              </div>
+
+              <div className={styles.imageWrapper}>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className={styles.imagePlaceholder}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* <div className={styles.controls}> */}
+<div
+  className={`${styles.controls} ${
+    visible  ? styles.showSlide : ""
+  }`}
+>
+
+
+<button className={styles.arrow} onClick={prevSlide}>
+  <ArrowBackIcon className={styles.arrowIcon} />
+</button>
+
+<button className={styles.arrow} onClick={nextSlide}>
+  <ArrowForwardIcon className={styles.arrowIcon} />
+</button>
+      </div>
+    </section>
+  );
+}
+
+
+./component/cta/CTA.module.css
+
+.ctaSection {
+  max-width: 890px;
+  margin: 144px auto;
+}
+
+.ctaBox {
+  background-color: #1f4b45;
+  border-radius: 4px;
+  padding: 96px 64px;
+  text-align: center;
+}
+
+/* =========================
+   Heading
+   ========================= */
+
+.heading {
+  margin-top: 0px;
+  margin-bottom: 24px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 44px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* =========================
+   Description
+   ========================= */
+
+.description {
+  margin: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #e6ecea;
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+/* =========================
+   Button
+   ========================= */
+
+.ctaButton {
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 32px;
+  text-decoration: none;
+
+  border-radius: 999px;
+  border: 1.5px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.arrowIcon {
+  font-size: 20px !important;
+}
+
+/* =========================
+   Scroll Reveal Animation
+   ========================= */
+
+.hidden {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+@media (max-width: 412px) {
+  .ctaSection {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ctaSection {
+    margin: 72px auto;
+    max-width: 100%;
+  }
+
+  .ctaBox {
+    padding: 44px 20px;
+  }
+
+  .heading {
+    margin-bottom: 12px;
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .description {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .ctaButton {
+    margin-top: 24px;
+    height: 38px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+}
+
+./component/cta/CTA
+
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import styles from "./CTA.module.css";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+export default function CTA() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`${styles.ctaSection} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+    >
+      <div className={styles.ctaBox}>
+        <h2 className={styles.heading}>
+          Get clarity before you build
+        </h2>
+
+        <p className={styles.description}>
+          Whether you’re shaping an idea, refining a product, or planning what’s
+          next we’ll help you make sense of the mess and decide the right way
+          forward.
+        </p>
+
+        <Link href="/contactForm" className={styles.ctaButton}>
+          <span>Get product clarity</span>
+          <ArrowForwardIcon className={styles.arrowIcon} />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+./component/footer/footer.module.css
+
+.footer {
+  background: #f1f3f3;
+  padding: 96px 0 48px;
+}
+
+.container {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+/* ================= Top Layout ================= */
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+/* ================= Logo Section ================= */
+
+.logoSection {
+  max-width: 262px;
+}
+
+.logoRow {
+  display: flex;
+  align-items: flex-start;
+}
+
+.description {
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: #4e4e54;
+}
+
+.cta {
+  margin-top: 24px;
+
+  display: inline-flex;        /* KEY FIX */
+  align-items: center;         /* vertical center */
+  justify-content: center;
+  gap: 8px;                    /* space between text & arrow */
+
+  height: 40px;
+  padding: 0 24px;             /* FIXED horizontal padding */
+  
+  background: #316960;
+  color: #ffffff;
+  border-radius: 45px;
+
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta:hover {
+  background: #274f48;
+}
+
+/* Arrow size tuning */
+.arrow {
+  font-size: 18px !important;
+}
+
+/* ================= Links Section ================= */
+
+.linksSection {
+  display: flex;
+  gap: 40px;
+}
+
+.column h4 {
+  margin: 4px 0;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: #121214;
+}
+
+.column ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.column li {
+  margin-bottom: 6px;
+}
+
+/* ===== Animated Underline Links (NO SHIFT) ===== */
+
+.column a,
+.bottomLinks a {
+  position: relative;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: #4E4E54;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.column a::after,
+.bottomLinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 1px;
+  background: #316960;
+  transition: width 0.3s ease;
+}
+
+.column a:hover,
+.bottomLinks a:hover {
+  color: #316960;
+}
+
+.column a:hover::after,
+.bottomLinks a:hover::after {
+  width: 100%;
+}
+
+/* ================= Company Section ================= */
+
+.socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.socialIcon:hover {
+  background: #316960;
+}
+
+.socialIcon img {
+  transition: filter 0.3s ease;
+}
+
+.socialIcon:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.writeToUs {
+  margin-top: 40px;
+}
+
+.email {
+  position: relative;
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: #4E4E54;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 1px;
+  background: #316960;
+  transition: width 0.3s ease;
+}
+
+.email:hover {
+  color: #316960;
+}
+
+.email:hover::after {
+  width: 100%;
+}
+
+/* ================= Bottom Bar ================= */
+
+.bottomBar {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: #4E4E54;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 412px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .footer {
+    padding: 56px 0 24px;
+  }
+
+  .top {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .logoSection {
+    max-width: 100%;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .cta {
+    height: 34px;
+    padding: 0 14px;
+    font-size: 12px;
+  }
+
+  .linksSection {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .column h4,
+  .column a,
+  .bottomBar,
+  .bottomLinks a,
+  .email {
+    font-size: 12px;
+  }
+
+  .writeToUs {
+    margin-top: 20px;
+  }
+
+  .bottomBar {
+    margin-top: 28px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bottomLinks {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
+
+./component/footer/footer
+
+"use client";
+
+import styles from "./Footer.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+export default function Footer() {
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.top}>
+          <div className={styles.logoSection}>
+            <div className={styles.logoRow}>
+              <Image
+                src="/NIMORA_LOGO.svg"
+                alt="Nimora Studio logo"
+                width={160}
+                height={40}
+                priority
+              />
+            </div>
+
+            <p className={styles.description}>
+              Designing digital experiences that work. We help businesses build
+              clear, scalable products through strategy, design, and engineering.
+            </p>
+
+            {/* ✅ PERFECT CTA */}
+            <Link href="/contactForm" className={styles.cta}>
+              <span>Clarify your product</span>
+              <ArrowForwardIcon className={styles.arrow} />
+            </Link>
+          </div>
+
+          {/* Links Section */}
+          <div className={styles.linksSection}>
+            <div className={styles.column}>
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/process">Process</a></li>
+                <li><a href="/works">Works</a></li>
+                {/* <li><a href="/clients">Clients</a></li> */}
+                <li><a href="/about">About Us</a></li>
+              </ul>
+            </div>
+
+            <div className={styles.column}>
+              <h4>Services</h4>
+              <ul>
+                <li><a href="/services/ux-strategy">UX Strategy</a></li>
+                <li><a href="/services/brand-experience">Brand Experience</a></li>
+                <li><a href="/services/product-design">Product Design</a></li>
+                <li><a href="/services/product-development">Product Development</a></li>
+                <li><a href="/services/go-live-support">Go-Live Support</a></li>
+              </ul>
+            </div>
+
+            <div className={styles.column}>
+              <h4>Company</h4>
+
+              <div className={styles.socials}>
+                <div className={styles.socialIcon}>
+                  <Image src="/Icons/linkedin.svg" alt="LinkedIn" width={18} height={18} />
+                </div>
+                <div className={styles.socialIcon}>
+                  <Image src="/Icons/instagram.svg" alt="Instagram" width={18} height={18} />
+                </div>
+                <div className={styles.socialIcon}>
+                  <Image src="/Icons/x.svg" alt="X" width={18} height={18} />
+                </div>
+                <div className={styles.socialIcon}>
+                  <Image src="/Icons/dribble.svg" alt="Dribbble" width={18} height={18} />
+                </div>
+              </div>
+
+              <div className={styles.writeToUs}>
+                <h4>Write to us</h4>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&to=Info@nimorastudios.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.email}
+                >
+                  Info@nimorastudios.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.bottomBar}>
+          <span>
+            Copyright © 2026, Nimorastudios. All Rights Reserved.
+          </span>
+
+          <div className={styles.bottomLinks}>
+            <a href="/terms">Terms of Use</a>
+            <a href="/policy">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

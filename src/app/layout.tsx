@@ -17,7 +17,11 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Nimora Studio",
+  title: {
+    default: "Nimora Studio",
+    template: "%s | Nimora Studio",
+  },
+  applicationName: "Nimora Studio",
   description:
     "Nimora Studio helps teams turn complex ideas into clear product direction through strategy, design, and execution.",
   icons: {
@@ -52,6 +56,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakarta.variable} ${openSans.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Nimora Studio",
+              url: "https://nimorastudio.com",
+            }),
+          }}
+        />
         <ScrollToTop />
         {children}
       </body>

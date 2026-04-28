@@ -28,7 +28,14 @@ export default function BrandingSection({ data }: Props) {
 
         {/* Visuals */}
         <div className={styles.brandRowFull}>
-          <Image src={data.visuals.singleImage} alt="" width={1200} height={600} />
+          <Image
+            src={data.visuals.singleImage}
+            alt=""
+            width={1120}
+            height={1332}
+            sizes="(max-width: 768px) 100vw, 1120px"
+            quality={75}
+          />
         </div>
       </div>
     </section>

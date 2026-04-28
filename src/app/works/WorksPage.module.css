@@ -84,12 +84,18 @@
 }
 
 .imagePlaceholder {
+  position: relative;
   height: 480px;
   background: #d1d5db;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.cardImage {
+  object-fit: cover;
+}
+
 .grid .imagePlaceholder {
   height: 328px;
 }

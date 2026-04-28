@@ -95,7 +95,14 @@ export default function ProcessSection({ data }: Props) {
 
         {/* IMAGE (1120px centered) */}
         <div className={styles.processImage}>
-          <Image src={data.image} alt="Process" width={1120} height={700} />
+          <Image
+            src={data.image}
+            alt="Process"
+            width={1120}
+            height={700}
+            sizes="(max-width: 768px) 100vw, 1120px"
+            quality={75}
+          />
         </div>
 
         {/* STEPS (890px centered) */}

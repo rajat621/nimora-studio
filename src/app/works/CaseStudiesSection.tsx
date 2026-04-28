@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import styles from "./WorksPage.module.css";
 // GSAP will be dynamically imported in the effect to avoid SSR bundle costs
@@ -41,20 +42,26 @@ const caseStudies: CaseStudy[] = [
 function CaseCard({
   study,
   full,
+  prioritize,
 }: {
   study: CaseStudy;
   full?: boolean;
+  prioritize?: boolean;
 }) {
   const cardBody = (
     <div className={`${styles.card} ${full ? styles.full : ""}`}>
-      <div
-        className={styles.imagePlaceholder}
-        style={{
-          backgroundImage: `url("${encodeURI(study.image)}")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+      <div className={styles.imagePlaceholder}>
+        <Image
+          src={study.image}
+          alt={study.title}
+          fill
+          sizes={full ? "(max-width: 768px) 100vw, 1120px" : "(max-width: 768px) 100vw, 50vw"}
+          quality={75}
+          priority={!!prioritize}
+          fetchPriority={prioritize ? "high" : "auto"}
+          className={styles.cardImage}
+        />
+      </div>
       <div className={styles.cardContent}>
         <h3>{study.title}</h3>
         <p>{study.description}</p>
@@ -142,7 +149,7 @@ export default function CaseStudiesSection() {
 
   return (
     <section ref={sectionRef} className={styles.caseSection}>
-      <CaseCard study={first} full />
+      <CaseCard study={first} full prioritize />
 
       <div className={styles.grid}>
         {gridItems.map((study, index) => (

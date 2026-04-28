@@ -140,6 +140,7 @@ export default function Testimonial() {
                   width={300}
                   height={300}
                   quality={85}
+                  sizes="(max-width: 768px) 140px, 300px"
                 />
               </div>
             </div>

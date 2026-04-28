@@ -327,7 +327,7 @@
    ========================= */
 
 .logoWrapper {
-  background: #FFFFFF;
+  background: #F1F3F3;
   padding-bottom: 96px;
 }
 .logoContainer {
@@ -335,7 +335,7 @@
   margin: 0 auto ;
 }
 .brandingWrapper {
-  background: #F1F3F3;
+  background: transparent;
   padding-bottom: 96px;
 }
 .brandingContainer {
@@ -607,16 +607,6 @@
 }
 
 
-
-.visualsWrapper {
-  background: #FFFFFF;
-}
-
-.visualsContainer {
-  max-width: 1120px;
-  margin: 0 auto;
-}
-
 .visualsText {
   max-width: var(--cs-max-w);
   margin: 0 auto 56px;
@@ -639,6 +629,15 @@
   font-size: 18px;
   line-height: 1.78;
   color: #1A1A1E;
+}
+
+.visualsWrapper {
+  background: transparent;
+  padding-bottom: 96px;
+}
+.visualsContainer {
+  max-width: 1120px; /* fixed width as per design */
+  margin: 0 auto ;
 }
 
 .visualsImage {

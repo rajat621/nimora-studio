@@ -35,7 +35,14 @@ export default function DesignSystemSection({ data }: Props) {
         </div>
 
         <div className={styles.dsImage}>
-          <Image src={data.ideation.image} alt="" width={1000} height={600} />
+          <Image
+            src={data.ideation.image}
+            alt=""
+            width={1000}
+            height={600}
+            sizes="(max-width: 768px) 100vw, 1000px"
+            quality={75}
+          />
         </div>
 
         {/* DESIGN SYSTEM */}
@@ -53,7 +60,14 @@ export default function DesignSystemSection({ data }: Props) {
           <div className={styles.typographyBlock}>
             <h3 style={{ paddingBottom: '24px' }}>{data.typography.title}</h3>
             <div className={styles.typographyImage}>
-              <Image src={data.typography.image} alt="" width={900} height={500} />
+              <Image
+                src={data.typography.image}
+                alt=""
+                width={900}
+                height={500}
+                sizes="(max-width: 768px) 100vw, 900px"
+                quality={75}
+              />
             </div>
           </div>
         </div>
@@ -64,7 +78,14 @@ export default function DesignSystemSection({ data }: Props) {
         <div className={styles.colorBlock}>
           <h3>Color</h3>
           <div className={styles.colorImage}>
-            <Image src={data.colorPaletteImage} alt="" width={800} height={400} />
+            <Image
+              src={data.colorPaletteImage}
+              alt=""
+              width={800}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 800px"
+              quality={75}
+            />
           </div>
         </div>
       </div>

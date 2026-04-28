@@ -37,10 +37,17 @@ export default function VisualsSection({ data }: Props) {
           {data.visualsSection.description}
         </p>
       </div>
-      <div className={styles.brandingWrapper}>
-      <div className={styles.brandingContainer}>
+      <div className={styles.visualsWrapper}>
+      <div className={styles.visualsContainer}>
       <div className={styles.visualsImage}>
-        <Image src={data.visualsSection.image} alt="" width={1200} height={700} />
+        <Image
+          src={data.visualsSection.image}
+          alt=""
+          width={1200}
+          height={700}
+          sizes="(max-width: 768px) 100vw, 1120px"
+          quality={75}
+        />
       </div>
 </div></div>
 

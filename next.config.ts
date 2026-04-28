@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // Allow common quality settings used across the codebase
     qualities: [75, 85],
+    minimumCacheTTL: 2678400,
   },
 
   /* Output & Build */

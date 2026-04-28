@@ -23,7 +23,15 @@ export default function WorkCard({ image, title, description, slug }: Props) {
   return (
     <article className={styles.workCard}>
       <div className={styles.workCardImage}>
-        <Image src={image} alt={title} width={800} height={500} className={styles.workCardImageTag} />
+        <Image
+          src={image}
+          alt={title}
+          width={800}
+          height={500}
+          className={styles.workCardImageTag}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 800px"
+          quality={75}
+        />
       </div>
 
       <div className={styles.workCardContent}>

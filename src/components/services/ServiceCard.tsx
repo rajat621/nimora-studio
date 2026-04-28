@@ -89,7 +89,7 @@
 "use client";
 
 import Link from "next/link";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./Services.module.css";
 
 interface Props {
@@ -125,7 +125,7 @@ export default function ServiceCard({
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.arrowBtn}>
-        <ArrowOutwardIcon className={styles.arrowIcon} />
+        <ArrowUpRight className={styles.arrowIcon} size={18} />
       </div>
     </div>
 

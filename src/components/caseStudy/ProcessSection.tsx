@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./CaseStudy.module.css";
 
 // --- content block types ---
@@ -94,7 +95,7 @@ export default function ProcessSection({ data }: Props) {
 
         {/* IMAGE (1120px centered) */}
         <div className={styles.processImage}>
-          <img src={data.image} alt="Process" />
+          <Image src={data.image} alt="Process" width={1120} height={700} />
         </div>
 
         {/* STEPS (890px centered) */}

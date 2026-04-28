@@ -480,7 +480,7 @@ export const caseStudies = [
 
 
   {
-    slug: "resturent-dashboard",
+    slug: "restaurant-dashboard",
     hero: {
       title:
         "A restaurant dashboard that helps owners track orders, sales, and operations in real time from one screen.",

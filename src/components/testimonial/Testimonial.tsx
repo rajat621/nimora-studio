@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import styles from "./Testimonial.module.css";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 
 export default function Testimonial() {
@@ -133,10 +133,13 @@ export default function Testimonial() {
               </div>
 
               <div className={styles.imageWrapper}>
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
                   className={styles.imagePlaceholder}
+                  width={300}
+                  height={300}
+                  quality={85}
                 />
               </div>
             </div>
@@ -153,11 +156,11 @@ export default function Testimonial() {
 
 
 <button className={styles.arrow} onClick={prevSlide}>
-  <ArrowBackIcon className={styles.arrowIcon} />
+  <ArrowLeft className={styles.arrowIcon} size={20} />
 </button>
 
 <button className={styles.arrow} onClick={nextSlide}>
-  <ArrowForwardIcon className={styles.arrowIcon} />
+  <ArrowRight className={styles.arrowIcon} size={20} />
 </button>
       </div>
     </section>

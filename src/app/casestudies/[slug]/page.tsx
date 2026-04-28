@@ -12,6 +12,7 @@ import CTA from "@/components/cta/CTA";
 import { notFound } from "next/navigation";
 import { caseStudies } from "../../../data/caseStudies";
 import Footer from "@/components/footer/Footer";
+import CaseStudyScrollReset from "@/components/CaseStudyScrollReset";
 
 
 
@@ -28,6 +29,7 @@ export default async function CaseStudyPage({
 
   return (
     <>
+    <CaseStudyScrollReset />
     <Navigation/>
 
           <main>

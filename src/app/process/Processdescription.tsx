@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Process.module.css";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ArrowRight } from "lucide-react";
 
 export default function Processdescription() {
 
@@ -9,7 +10,7 @@ export default function Processdescription() {
     <div className={styles.overlay}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <img
+          <Image
             src="/logo_N.svg"
             width={64}
             height={64}
@@ -30,7 +31,7 @@ export default function Processdescription() {
         <div className={styles.actions}>
           <Link href="/contactForm" className={styles.primaryBtn}>
             Clarify your product
-            <ArrowForwardIcon className={styles.arrowIcon} />
+            <ArrowRight className={styles.arrowIcon} size={20} />
           </Link>
           <Link href="/process" className={styles.secondaryBtn}>
             See how we work

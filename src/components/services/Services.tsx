@@ -332,15 +332,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+// GSAP and plugins are large — load them dynamically inside effects to keep initial bundle small
 
 import styles from "./Services.module.css";
 import ServiceCard from "./ServiceCard";
 import { services } from "./serviceData";
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// Plugins will be registered dynamically inside the effect
 
 interface ServicesProps {
   enableDarkMode?: boolean;
@@ -407,93 +405,100 @@ export default function Services({
       return;
     }
 
-    const count      = services.length;
-    const total      = totalUnits(count);
+    const count = services.length;
+    const total = totalUnits(count);
     const totalScroll = total * PX_PER_UNIT;
 
-    const ctx = gsap.context(() => {
+    let ctx: any = null;
+    let mounted = true;
 
-      // ── TEXT REVEAL ────────────────────────────────────────
-      const lines = gsap.utils.toArray(`.${styles.revealInner}`);
-      gsap.set(lines, { y: "100%" });
+    (async () => {
+      try {
+        const Gmod = (await import("gsap")).default ?? (await import("gsap"));
+        const ST = (await import("gsap/ScrollTrigger")).default ?? (await import("gsap/ScrollTrigger"));
+        const STP = (await import("gsap/ScrollToPlugin")).default ?? (await import("gsap/ScrollToPlugin"));
+        Gmod.registerPlugin(ST, STP);
+        if (!mounted) return;
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
-          onEnter:     () => { if (enableDarkMode) sectionRef.current!.classList.add(styles.dark); },
-          onLeaveBack: () => { if (enableDarkMode) sectionRef.current!.classList.remove(styles.dark); },
-        },
-      }).to(lines, { y: "0%", stagger: 0.15, duration: 0.8, ease: "power3.out" });
+        ctx = Gmod.context(() => {
+          const lines = Gmod.utils.toArray(`.${styles.revealInner}`);
+          Gmod.set(lines, { y: "100%" });
 
-      // ── CARDS ──────────────────────────────────────────────
-      const cards = gsap.utils.toArray<HTMLElement>(
-        pinRef.current!.querySelectorAll(`.${styles.card}`)
-      );
+          Gmod.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 70%",
+              end: "bottom 20%",
+              toggleActions: "play reverse play reverse",
+              onEnter: () => { if (enableDarkMode) sectionRef.current!.classList.add(styles.dark); },
+              onLeaveBack: () => { if (enableDarkMode) sectionRef.current!.classList.remove(styles.dark); },
+            },
+          }).to(lines, { y: "0%", stagger: 0.15, duration: 0.8, ease: "power3.out" });
 
-      // Push all cards except first completely below the clipped container
-      gsap.set(cards.slice(1), { y: CARD_OFFSET_PX, opacity: 1 });
+          const cards = Gmod.utils.toArray<HTMLElement>(
+            pinRef.current!.querySelectorAll(`.${styles.card}`)
+          );
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinRef.current,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: `+=${totalScroll}`,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const t = self.progress * total;
+          Gmod.set(cards.slice(1), { y: CARD_OFFSET_PX, opacity: 1 });
 
-            // Active = highest card whose transition is at least 50% done
-            let idx = 0;
-            for (let i = count - 1; i >= 1; i--) {
-              if (t >= transitionStart(i) + TRANSITION * 0.5) {
-                idx = i;
-                break;
-              }
-            }
-            setActiveIndex(idx);
-          },
-        },
-      });
+          const tl = Gmod.timeline({
+            scrollTrigger: {
+              trigger: pinRef.current,
+              pin: true,
+              scrub: 1,
+              start: "top top",
+              end: `+=${totalScroll}`,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate: (self: any) => {
+                const t = self.progress * total;
 
-      stRef.current = tl.scrollTrigger!;
+                let idx = 0;
+                for (let i = count - 1; i >= 1; i--) {
+                  if (t >= transitionStart(i) + TRANSITION * 0.5) {
+                    idx = i;
+                    break;
+                  }
+                }
+                setActiveIndex(idx);
+              },
+            },
+          });
 
-      // ── Build timeline ────────────────────────────────────
-      // Card 0 is already visible — just hold so user can read it
-      tl.to({}, { duration: HOLD });
+          stRef.current = tl.scrollTrigger!;
 
-      for (let i = 1; i < count; i++) {
-        const incoming = cards[i];
-        const outgoing = cards[i - 1];
-
-        // Incoming slides up from below the clipped boundary
-        tl.fromTo(
-          incoming,
-          { y: CARD_OFFSET_PX, opacity: 1 },
-          { y: 0, opacity: 1, duration: TRANSITION, ease: "power2.inOut" }
-        );
-
-        // Outgoing scales back simultaneously
-        tl.to(
-          outgoing,
-          { scale: 0.94, y: -16, opacity: 0.88, duration: TRANSITION, ease: "power2.inOut" },
-          "<"
-        );
-
-        // Hold on this card (no hold after the last card)
-        if (i < count - 1) {
           tl.to({}, { duration: HOLD });
-        }
+
+          for (let i = 1; i < count; i++) {
+            const incoming = cards[i];
+            const outgoing = cards[i - 1];
+
+            tl.fromTo(
+              incoming,
+              { y: CARD_OFFSET_PX, opacity: 1 },
+              { y: 0, opacity: 1, duration: TRANSITION, ease: "power2.inOut" }
+            );
+
+            tl.to(
+              outgoing,
+              { scale: 0.94, y: -16, opacity: 0.88, duration: TRANSITION, ease: "power2.inOut" },
+              "<"
+            );
+
+            if (i < count - 1) {
+              tl.to({}, { duration: HOLD });
+            }
+          }
+        }, sectionRef);
+      } catch (err) {
+        console.error("GSAP failed to load for Services:", err);
       }
+    })();
 
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => {
+      mounted = false;
+      if (ctx) ctx.revert();
+    };
   }, [enableDarkMode, isMobileView]);
 
   // ── Tab click ─────────────────────────────────────────────

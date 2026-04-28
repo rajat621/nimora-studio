@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./CaseStudy.module.css";
 
 type Props = {
@@ -34,7 +35,7 @@ export default function DesignSystemSection({ data }: Props) {
         </div>
 
         <div className={styles.dsImage}>
-          <img src={data.ideation.image} alt="" />
+          <Image src={data.ideation.image} alt="" width={1000} height={600} />
         </div>
 
         {/* DESIGN SYSTEM */}
@@ -52,7 +53,7 @@ export default function DesignSystemSection({ data }: Props) {
           <div className={styles.typographyBlock}>
             <h3 style={{ paddingBottom: '24px' }}>{data.typography.title}</h3>
             <div className={styles.typographyImage}>
-              <img src={data.typography.image} alt="" />
+              <Image src={data.typography.image} alt="" width={900} height={500} />
             </div>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function DesignSystemSection({ data }: Props) {
         <div className={styles.colorBlock}>
           <h3>Color</h3>
           <div className={styles.colorImage}>
-            <img src={data.colorPaletteImage} alt="" />
+            <Image src={data.colorPaletteImage} alt="" width={800} height={400} />
           </div>
         </div>
       </div>

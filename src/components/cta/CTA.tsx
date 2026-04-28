@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./CTA.module.css";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ArrowRight } from "lucide-react";
 
 export default function CTA() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -50,7 +50,7 @@ export default function CTA() {
 
         <Link href="/contactForm" className={styles.ctaButton}>
           <span>Get product clarity</span>
-          <ArrowForwardIcon className={styles.arrowIcon} />
+          <ArrowRight className={styles.arrowIcon} size={20} />
         </Link>
       </div>
     </section>

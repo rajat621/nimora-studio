@@ -1,15 +1,14 @@
 
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./WorkSection.module.css";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+// Load GSAP dynamically in browser-only effects to keep SSR bundles small
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+// GSAP will be imported dynamically inside effects
 
 // Sample case study data with full structure
 const caseStudiesData = [
@@ -18,28 +17,28 @@ const caseStudiesData = [
     tag: "EduTech",
     title: "Focused time management for academic work.",
     description: "Plan better, avoid overload, meet deadlines consistently.",
-    image: "images/Casestudy/Time Management/coverImage2.png",
+    image: "/images/Casestudy/Time Management/coverImage2.png",
   },
   {
     slug: "go-ride",
     tag: "E-Commerce / Mobility",
     title: "All-in-one app for cycle rentals, routes, and rides.",
     description: "Quick bike access, better utilization, less manual work.",
-    image: "images/Casestudy/GoRide/coverImage1.png",
+    image: "/images/Casestudy/GoRide/coverImage1.png",
   },
   {
     slug: "feasto",
     tag: "Entertainment / Cinema",
     title: "Skip queues order snacks right from your seat.",
     description: "Faster ordering, less waiting, no interval rush.",
-    image: "images/Casestudy/Feasto/coverImage4.png",
+    image: "/images/Casestudy/Feasto/coverImage4.png",
   },
    {
     slug: "resturent-dashboard",
     tag: "Saas / Operations",
     title: "Real-time restaurant operations in one dashboard.",
     description: "Save time, reduce chaos, make faster decisions.",
-    image: "images/Casestudy/Resturent Dashboard/coverImage3.png",
+    image: "/images/Casestudy/Resturent Dashboard/coverImage3.png",
   },
 ];
 
@@ -52,125 +51,147 @@ export default function WorkSection() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const gsapRef = useRef<any | null>(null);
 
-  const currentCase = caseStudiesData[currentIndex];
+  const currentCase = useMemo(() => caseStudiesData[currentIndex], [currentIndex]);
   const isFirstCard = currentIndex === 0;
   const isLastCard = currentIndex === caseStudiesData.length - 1;
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (isAnimating || isFirstCard) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => prev - 1);
     animateSlide("right");
-  };
+  }, [isAnimating, isFirstCard]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isAnimating || isLastCard) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => prev + 1);
     animateSlide("left");
-  };
+  }, [isAnimating, isLastCard]);
 
   const animateSlide = (direction: "left" | "right") => {
     const fromX = direction === "left" ? 100 : -100;
 
-    // Fade out current
-    gsap.to([cardImageRef.current, cardContentRef.current], {
+    // Fade out current (no-op if GSAP not yet loaded)
+    const G = gsapRef.current;
+    if (G) {
+      G.to([cardImageRef.current, cardContentRef.current], {
       opacity: 0,
       x: -fromX * 10,
       duration: 0.4,
       ease: "power2.inOut",
     });
-
-    // Fade in new after brief delay
-    setTimeout(() => {
-      gsap.fromTo(
-        [cardImageRef.current, cardContentRef.current],
-        {
-          opacity: 0,
-          x: fromX * 10,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          onComplete: () => {
-            setIsAnimating(false);
+      // Fade in new after brief delay
+      setTimeout(() => {
+        G.fromTo(
+          [cardImageRef.current, cardContentRef.current],
+          {
+            opacity: 0,
+            x: fromX * 10,
           },
-        }
-      );
-    }, 100);
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            onComplete: () => {
+              setIsAnimating(false);
+            },
+          }
+        );
+      }, 100);
+    } else {
+      // Fallback: quickly reset animation state if GSAP not available
+      setTimeout(() => setIsAnimating(false), 200);
+    }
   };
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // =========================
-      // INTRO TIMELINE (Heading → Description)
-      // =========================
-      const introTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 85%",
-          toggleActions: "play none none reset",
-        },
-      });
+    let ctx: any = null;
+    let mounted = true;
 
-      introTl.fromTo(
-        headingRef.current,
-        {
-          y: 80,
-          opacity: 0,
-          clipPath: "inset(0 0 100% 0)",
-        },
-        {
-          y: 0,
-          opacity: 1,
-          clipPath: "inset(0 0 0% 0)",
-          duration: 1,
-          ease: "power3.out",
-        }
-      );
+    (async () => {
+      try {
+        const Gmod = (await import("gsap")).default ?? (await import("gsap"));
+        const ST = (await import("gsap/ScrollTrigger")).default ?? (await import("gsap/ScrollTrigger"));
+        Gmod.registerPlugin(ST);
+        if (!mounted) return;
+        gsapRef.current = Gmod;
 
-      introTl.fromTo(
-        descriptionRef.current,
-        {
-          y: 50,
-          opacity: 0,
-          clipPath: "inset(0 0 100% 0)",
-        },
-        {
-          y: 0,
-          opacity: 1,
-          clipPath: "inset(0 0 0% 0)",
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      );
+        ctx = Gmod.context(() => {
+          const introTl = Gmod.timeline({
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reset",
+            },
+          });
 
-      // Initial card animation
-      gsap.fromTo(
-        [cardImageRef.current, cardContentRef.current],
-        {
-          y: 140,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 60%",
-            toggleActions: "play none none reset",
-          },
-        }
-      );
-    }, sectionRef);
+          introTl.fromTo(
+            headingRef.current,
+            {
+              y: 80,
+              opacity: 0,
+              clipPath: "inset(0 0 100% 0)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 1,
+              ease: "power3.out",
+            }
+          );
 
-    return () => ctx.revert();
+          introTl.fromTo(
+            descriptionRef.current,
+            {
+              y: 50,
+              opacity: 0,
+              clipPath: "inset(0 0 100% 0)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 0.8,
+              ease: "power3.out",
+            },
+            "-=0.4"
+          );
+
+          // Initial card animation
+          Gmod.fromTo(
+            [cardImageRef.current, cardContentRef.current],
+            {
+              y: 140,
+              opacity: 0,
+            },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 60%",
+                toggleActions: "play none none reset",
+              },
+            }
+          );
+        }, sectionRef);
+      } catch (err) {
+        // animation library failed to load — fail gracefully
+        console.error("GSAP failed to load:", err);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (
@@ -202,66 +223,61 @@ export default function WorkSection() {
         <div className={styles.carouselSection}>
           {/* Navigation Arrows - Above Card */}
           <div className={styles.navigationArrows}>
-            <IconButton
+            <button
               onClick={handlePrevious}
               disabled={isFirstCard}
               className={styles.arrowButton}
-              sx={{
+              style={{
                 width: 40,
                 height: 40,
                 padding: 0,
                 color: "#1E4944",
                 border: `1px solid #1E4944`,
                 transition: "all 0.3s ease",
-                "&:hover:not(:disabled)": {
-                  backgroundColor: "rgba(30, 73, 68, 0.08)",
-                },
-                "&.Mui-disabled": {
-                  opacity: 0.5,
-                  color: "#1E4944",
-                  borderColor: "#1E4944",
-                  cursor: "not-allowed",
-                },
+                backgroundColor: "transparent",
+                cursor: isFirstCard ? "not-allowed" : "pointer",
                 opacity: isFirstCard ? 0.5 : 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <ChevronLeft fontSize="small" />
-            </IconButton>
+              <ChevronLeft size={20} />
+            </button>
 
-            <IconButton
+            <button
               onClick={handleNext}
               disabled={isLastCard}
               className={styles.arrowButton}
-              sx={{
+              style={{
                 width: 40,
                 height: 40,
                 padding: 0,
                 color: "#1E4944",
                 border: `1px solid #1E4944`,
                 transition: "all 0.3s ease",
-                "&:hover:not(:disabled)": {
-                  backgroundColor: "rgba(30, 73, 68, 0.08)",
-                },
-                "&.Mui-disabled": {
-                  opacity: 0.5,
-                  color: "#1E4944",
-                  borderColor: "#1E4944",
-                  cursor: "not-allowed",
-                },
+                backgroundColor: "transparent",
+                cursor: isLastCard ? "not-allowed" : "pointer",
                 opacity: isLastCard ? 0.5 : 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <ChevronRight fontSize="small" />
-            </IconButton>
+              <ChevronRight size={20} />
+            </button>
           </div>
 
           {/* Card Display */}
           <div className={styles.workCard}>
             <div className={styles.workCardImage} ref={cardImageRef}>
-              <img
+              <Image
                 src={currentCase.image}
                 alt={currentCase.title}
                 className={styles.workCardImageTag}
+                width={800}
+                height={500}
+                priority={currentIndex === 0}
               />
             </div>
 

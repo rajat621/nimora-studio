@@ -31,6 +31,7 @@ export default function IndustryCard({
           src={image}
           alt={title}
           fill
+          sizes="(max-width: 768px) 100vw, 33vw"
           className={styles.image}
           priority={false}
         />

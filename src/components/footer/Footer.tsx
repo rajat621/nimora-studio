@@ -4,7 +4,7 @@
 import styles from "./Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ArrowRight } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -30,7 +30,7 @@ export default function Footer() {
             {/* ✅ PERFECT CTA */}
             <Link href="/contactForm" className={styles.cta}>
               <span>Clarify your product</span>
-              <ArrowForwardIcon className={styles.arrow} />
+              <ArrowRight className={styles.arrow} size={20} />
             </Link>
           </div>
 

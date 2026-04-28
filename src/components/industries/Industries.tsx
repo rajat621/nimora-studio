@@ -3,10 +3,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./Industries.module.css";
 import IndustryCard from "./IndustryCard";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+// Load GSAP dynamically inside effect to avoid adding it to SSR bundle
 
 type Industry = {
   id: string;
@@ -82,52 +79,64 @@ export default function Industries() {
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-
     if (!section || !track) return;
 
-    // =========================
-    // HEADING + DESCRIPTION ANIMATION
-    // =========================
-    const introTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: headingRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reset",
-      },
-    });
+    let mounted = true;
+    let ctx: any = null;
 
-    introTl.fromTo(
-      headingRef.current,
-      {
-        y: 80,
-        opacity: 0,
-        clipPath: "inset(0 0 100% 0)",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        clipPath: "inset(0 0 0% 0)",
-        duration: 1,
-        ease: "power3.out",
+    (async () => {
+      try {
+        const Gmod = (await import("gsap")).default ?? (await import("gsap"));
+        const ST = (await import("gsap/ScrollTrigger")).default ?? (await import("gsap/ScrollTrigger"));
+        Gmod.registerPlugin(ST);
+        if (!mounted) return;
+
+        ctx = Gmod.context(() => {
+          const introTl = Gmod.timeline({
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reset",
+            },
+          });
+
+          introTl.fromTo(
+            headingRef.current,
+            {
+              y: 80,
+              opacity: 0,
+              clipPath: "inset(0 0 100% 0)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 1,
+              ease: "power3.out",
+            }
+          );
+
+          introTl.fromTo(
+            descriptionRef.current,
+            {
+              y: 50,
+              opacity: 0,
+              clipPath: "inset(0 0 100% 0)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 0.8,
+              ease: "power3.out",
+            },
+            "-=0.4"
+          );
+        }, sectionRef);
+      } catch (err) {
+        console.error("GSAP failed to load for Industries:", err);
       }
-    );
-
-    introTl.fromTo(
-      descriptionRef.current,
-      {
-        y: 50,
-        opacity: 0,
-        clipPath: "inset(0 0 100% 0)",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        clipPath: "inset(0 0 0% 0)",
-        duration: 0.8,
-        ease: "power3.out",
-      },
-      "-=0.4" // 👈 starts slightly before heading finishes
-    );
+    })();
 
     // =========================
     // HORIZONTAL SCROLL LOGIC (UNCHANGED)
@@ -140,11 +149,8 @@ export default function Industries() {
     };
 
     const handleResize = () => {
-      const scrollDistance =
-        track.scrollWidth - containerWidth;
-
-      section.style.height =
-        scrollDistance + window.innerHeight + "px";
+      const scrollDistance = track.scrollWidth - containerWidth;
+      section.style.height = scrollDistance + window.innerHeight + "px";
     };
 
     const handleScroll = () => {
@@ -153,19 +159,14 @@ export default function Industries() {
 
       const containerOffset = getContainerOffset();
 
-      const scrollDistance =
-        track.scrollWidth - containerWidth;
+      const scrollDistance = track.scrollWidth - containerWidth;
 
       const start = sectionTop;
       const end = sectionTop + scrollDistance;
 
-      const progress = Math.min(
-        Math.max((scrollY - start) / (end - start), 0),
-        1
-      );
+      const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
 
-      const translateX =
-        containerOffset - scrollDistance * progress;
+      const translateX = containerOffset - scrollDistance * progress;
 
       track.style.transform = `translate3d(${translateX}px, 0, 0)`;
     };
@@ -173,15 +174,19 @@ export default function Industries() {
     handleResize();
     handleScroll();
 
-    window.addEventListener("resize", () => {
+    const onResize = () => {
       handleResize();
       handleScroll();
-    });
+    };
 
+    window.addEventListener("resize", onResize);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
+      mounted = false;
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", handleScroll);
+      if (ctx) ctx.revert();
     };
   }, []);
 

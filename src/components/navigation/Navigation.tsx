@@ -1,12 +1,5 @@
-// "use client";
 
-// import Link from "next/link";
-// import Image from "next/image";
-// import styles from "./Navigation.module.css";
-
-// export default function Navigation() {
-//   return (
-//     <header className={styles.nav}>
+"use client";
 //       <div className={styles.inner}>
 //         {/* LEFT — LOGO */}
 //         <Link href="/" className={styles.logo} aria-label="Nimora Studio home">
@@ -123,8 +116,6 @@
 //       </div>
 //     </header>
 //   );
-// }
-
 
 "use client";
 
@@ -133,8 +124,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import styles from "./Navigation.module.css";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import { ArrowRight, Menu } from "lucide-react";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -226,12 +216,12 @@ export default function Navigation() {
         {/* CTA / Mobile menu */}
         {isMobileView ? (
           <button className={styles.mobileMenuButton} aria-label="Open menu">
-            <MenuRoundedIcon className={styles.mobileMenuIcon} />
+            <Menu className={styles.mobileMenuIcon} size={24} />
           </button>
         ) : (
           <Link href="/contactForm" className={styles.cta}>
-            <span>Let’s Talk</span>
-            <ArrowForwardIcon className={styles.ctaArrow} />
+            <span>Let's Talk</span>
+            <ArrowRight className={styles.ctaArrow} size={20} />
           </Link>
         )}
 

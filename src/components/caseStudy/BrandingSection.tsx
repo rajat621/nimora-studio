@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./CaseStudy.module.css";
 
 type Props = {
@@ -27,7 +28,7 @@ export default function BrandingSection({ data }: Props) {
 
         {/* Visuals */}
         <div className={styles.brandRowFull}>
-          <img src={data.visuals.singleImage} alt="" />
+          <Image src={data.visuals.singleImage} alt="" width={1200} height={600} />
         </div>
       </div>
     </section>

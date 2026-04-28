@@ -2,10 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import styles from "./WorksPage.module.css";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+// GSAP will be dynamically imported in the effect to avoid SSR bundle costs
 
 type CaseStudy = {
   title: string;
@@ -39,20 +36,6 @@ const caseStudies: CaseStudy[] = [
     image: "/images/Casestudy/Resturent dashboard/coverImage.png",
     slug: "restaurant-dashboard",
   },
-  // {
-  //   title: "Scaling SaaS onboarding experiences.",
-  //   description:
-  //     "Improved adoption and reduced drop-offs with better UX.",
-  //   image: "/images/industries/image_4.png",
-  //   slug: "go-ride",
-  // },
-  // {
-  //   title: "Enterprise workflow optimization.",
-  //   description:
-  //     "Rebuilt complex systems into simple usable flows.",
-  //   image: "/images/industries/image_5.png",
-  //   slug: "go-ride",
-  // },
 ];
 
 function CaseCard({
@@ -94,40 +77,54 @@ export default function CaseStudiesSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    let ctx: any = null;
+    let mounted = true;
 
-      const cards = gsap.utils.toArray(`.${styles.card}`);
+    (async () => {
+      try {
+        const Gmod = (await import("gsap")).default ?? (await import("gsap"));
+        const ST = (await import("gsap/ScrollTrigger")).default ?? (await import("gsap/ScrollTrigger"));
+        Gmod.registerPlugin(ST);
+        if (!mounted) return;
 
-      // Initial state (wave start position)
-      gsap.set(cards, {
-        y: (i) => 140 + i * 40,
-        opacity: 0,
-      });
+        ctx = Gmod.context(() => {
+          const cards = Gmod.utils.toArray(`.${styles.card}`);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reset",
-        },
-      });
+          Gmod.set(cards, {
+            y: (i: number) => 140 + i * 40,
+            opacity: 0,
+          });
 
-      cards.forEach((card: any, index: number) => {
-        tl.to(
-          card,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1 + index * 0.2,
-            ease: "power3.out",
-          },
-          0
-        );
-      });
+          const tl = Gmod.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reset",
+            },
+          });
 
-    }, sectionRef);
+          cards.forEach((card: any, index: number) => {
+            tl.to(
+              card,
+              {
+                y: 0,
+                opacity: 1,
+                duration: 1 + index * 0.2,
+                ease: "power3.out",
+              },
+              0
+            );
+          });
+        }, sectionRef);
+      } catch (err) {
+        console.error("GSAP failed to load for CaseStudiesSection:", err);
+      }
+    })();
 
-    return () => ctx.revert();
+    return () => {
+      mounted = false;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const first = caseStudies[0];

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./CaseStudy.module.css";
 
 type RoleColumn = {
@@ -36,10 +37,10 @@ export default function VisualsSection({ data }: Props) {
           {data.visualsSection.description}
         </p>
       </div>
-    <div className={styles.brandingWrapper}>
+      <div className={styles.brandingWrapper}>
       <div className={styles.brandingContainer}>
       <div className={styles.visualsImage}>
-        <img src={data.visualsSection.image} alt="" />
+        <Image src={data.visualsSection.image} alt="" width={1200} height={700} />
       </div>
 </div></div>
 

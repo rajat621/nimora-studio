@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+// Load GSAP dynamically inside client-only effects to avoid SSR bloat
 import Container from "@/components/shared/Container";
 import styles from "./Hero.module.css";
 import VideoBlock from "./VideoBlock";
 import Link from "next/link";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+// GSAP will be imported dynamically inside effects
 
 export default function Hero() {
   const heroRef    = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const videoRef   = useRef<HTMLDivElement | null>(null);
   const [isMobileView, setIsMobileView] = useState(false);
+  const gsapRef = useRef<any | null>(null);
 
   useEffect(() => {
     const onResize = () => {
@@ -31,120 +31,121 @@ export default function Hero() {
     if (isMobileView) return;
     if (!heroRef.current || !videoRef.current || !contentRef.current) return;
 
-    /* ================================
-       VIDEO SIZE (UPDATED)
-    ================================== */
-    const VIDEO_W = 140;
-    const VIDEO_H = 90;
+    let ctx: any = null;
+    let mounted = true;
 
-    /* ================================
-       FIXED GAP CONTROL
-       14px spacing on each side
-    ================================== */
-    const SIDE_SPACING = 14;
-    const SPLIT_X = (VIDEO_W + SIDE_SPACING * 2) / 2;
+    (async () => {
+      try {
+        const Gmod = (await import("gsap")).default ?? (await import("gsap"));
+        const ST = (await import("gsap/ScrollTrigger")).default ?? (await import("gsap/ScrollTrigger"));
+        Gmod.registerPlugin(ST);
+        if (!mounted) return;
+        gsapRef.current = Gmod;
 
-    const ctx = gsap.context(() => {
+        const VIDEO_W = 140;
+        const VIDEO_H = 90;
+        const SIDE_SPACING = 14;
+        const SPLIT_X = (VIDEO_W + SIDE_SPACING * 2) / 2;
 
-      /* ──────────────────────────────
-         PHASE 1 — Text reveal
-      ────────────────────────────── */
-      gsap.fromTo(
-        `.${styles.line}`,
-        { y: "100%" },
-        {
-          y: "0%",
-          duration: 1.2,
-          ease: "power4.out",
-          stagger: 0.25,
-        }
-      );
+        ctx = Gmod.context(() => {
+          Gmod.fromTo(
+            `.${styles.line}`,
+            { y: "100%" },
+            {
+              y: "0%",
+              duration: 1.2,
+              ease: "power4.out",
+              stagger: 0.25,
+            }
+          );
 
-      /* ──────────────────────────────
-         PHASE 2 — Split + Center Reveal
-      ────────────────────────────── */
-      const splitTl = gsap.timeline({ delay: 1.35 });
+          const splitTl = Gmod.timeline({ delay: 1.35 });
 
-      splitTl
+          splitTl
+            .add(() => {
+              const hero = heroRef.current!;
+              const leftEl = hero.querySelector<HTMLElement>(`.${styles.textLeft}`)!;
+              const rightEl = hero.querySelector<HTMLElement>(`.${styles.textRight}`)!;
+              const vid = videoRef.current!;
 
-        // Position video before animation
-        .add(() => {
-          const hero   = heroRef.current!;
-          const leftEl = hero.querySelector<HTMLElement>(`.${styles.textLeft}`)!;
-          const rightEl= hero.querySelector<HTMLElement>(`.${styles.textRight}`)!;
-          const vid    = videoRef.current!;
+              const heroRect = hero.getBoundingClientRect();
+              const leftRect = leftEl.getBoundingClientRect();
+              const rightRect = rightEl.getBoundingClientRect();
 
-          const heroRect  = hero.getBoundingClientRect();
-          const leftRect  = leftEl.getBoundingClientRect();
-          const rightRect = rightEl.getBoundingClientRect();
+              const pillCX = (leftRect.right + rightRect.left) / 2 - heroRect.left;
+              const pillCY = (leftRect.top + leftRect.bottom) / 2 - heroRect.top;
 
-          const pillCX = (leftRect.right + rightRect.left) / 2 - heroRect.left;
-          const pillCY = (leftRect.top + leftRect.bottom) / 2 - heroRect.top;
+              Gmod.set(vid, {
+                left: pillCX - VIDEO_W / 2,
+                top: pillCY - VIDEO_H / 2,
+                width: VIDEO_W,
+                height: VIDEO_H,
+                opacity: 1,
+                scaleX: 0,
+                transformOrigin: "center center",
+              });
+            }, 0)
 
-          gsap.set(vid, {
-            left: pillCX - VIDEO_W / 2,
-            top: pillCY - VIDEO_H / 2,
-            width: VIDEO_W,
-            height: VIDEO_H,
-            opacity: 1,
-            scaleX: 0,
-            transformOrigin: "center center",
+            .to(`.${styles.textLeft}`, {
+              x: -SPLIT_X,
+              duration: 0.85,
+              ease: "power3.inOut",
+            }, 0)
+
+            .to(`.${styles.textRight}`, {
+              x: SPLIT_X,
+              duration: 0.85,
+              ease: "power3.inOut",
+            }, 0)
+
+            .to(videoRef.current, {
+              scaleX: 1,
+              duration: 0.85,
+              ease: "power3.inOut",
+            }, 0);
+
+          const scrollTl = Gmod.timeline({
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              end: "+=250%",
+              scrub: 1,
+              pin: true,
+              anticipatePin: 1,
+            },
           });
-        }, 0)
 
-        // Split left text
-        .to(`.${styles.textLeft}`, {
-          x: -SPLIT_X,
-          duration: 0.85,
-          ease: "power3.inOut",
-        }, 0)
+          scrollTl
+            .to(contentRef.current, {
+              y: -200,
+              opacity: 0,
+              ease: "none",
+            }, 0)
 
-        // Split right text
-        .to(`.${styles.textRight}`, {
-          x: SPLIT_X,
-          duration: 0.85,
-          ease: "power3.inOut",
-        }, 0)
+            .to(videoRef.current, {
+              left: 0,
+              top: () => (window.innerHeight - 540) / 2,
+              width: () => window.innerWidth,
+              height: 540,
+              ease: "none",
+            }, 0);
+        }, heroRef);
+      } catch (err) {
+        console.error("GSAP failed to load for Hero:", err);
+      }
+    })();
 
-        // Reveal video from center
-        .to(videoRef.current, {
-          scaleX: 1,
-          duration: 0.85,
-          ease: "power3.inOut",
-        }, 0);
-
-      /* ──────────────────────────────
-         PHASE 3 — Scroll Expansion
-      ────────────────────────────── */
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "+=250%",
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-
-      scrollTl
-        .to(contentRef.current, {
-          y: -200,
-          opacity: 0,
-          ease: "none",
-        }, 0)
-
-        .to(videoRef.current, {
-          left: 0,
-          top: () => (window.innerHeight - 540) / 2,
-          width: () => window.innerWidth,
-          height: 540,
-          ease: "none",
-        }, 0);
-
-    }, heroRef);
-
-    return () => ctx.revert();
+    return () => {
+      mounted = false;
+      if (gsapRef.current && gsapRef.current.context) {
+        try {
+          // revert last context if present
+          gsapRef.current.context(() => {}, heroRef).revert?.();
+        } catch (e) {
+          // ignore
+        }
+      }
+    };
   }, [isMobileView]);
 
   return (
@@ -192,7 +193,7 @@ export default function Hero() {
               <div className={styles.actions}>
                 <Link href="/contactForm" className={styles.primaryBtn}>
                   <span>Clarify your product</span>
-                  <ArrowForwardIcon className={styles.primaryArrow} />
+                  <ArrowRight className={styles.primaryArrow} size={20} />
                 </Link>
 
                 <Link href="/process" className={styles.secondaryBtn}>
@@ -254,7 +255,7 @@ export default function Hero() {
               <div className={styles.actions}>
                 <Link href="/contactForm" className={styles.primaryBtn}>
                   <span>Clarify your product</span>
-                  <ArrowForwardIcon className={styles.primaryArrow} />
+                  <ArrowRight className={styles.primaryArrow} size={20} />
                 </Link>
 
                 <Link href="/process" className={styles.secondaryBtn}>

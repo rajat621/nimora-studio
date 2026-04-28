@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./WorkSection.module.css";
 
 type Props = {
@@ -21,11 +22,9 @@ export default function WorkCard({ image, title, description, slug }: Props) {
 
   return (
     <article className={styles.workCard}>
-      <img
-        src={image}
-        alt={title}
-        className={styles.workCardImage}
-      />
+      <div className={styles.workCardImage}>
+        <Image src={image} alt={title} width={800} height={500} className={styles.workCardImageTag} />
+      </div>
 
       <div className={styles.workCardContent}>
         <h3 className={styles.workCardTitle}>{title}</h3>

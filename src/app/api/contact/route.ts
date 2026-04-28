@@ -4,8 +4,56 @@ import nodemailer from "nodemailer";
 const EMAIL_TO = process.env.EMAIL_TO ?? "rajatraj9470@gmail.com";
 const EMAIL_FROM = process.env.EMAIL_FROM ?? `no-reply@${process.env.VERCEL_URL ?? "example.com"}`;
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB limit
+
+let cachedTransporter: any = null;
+let cachedTestAccount: any = null;
+
 function validateEmail(email: string) {
   return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
+}
+
+async function getTransporter() {
+  if (cachedTransporter) return cachedTransporter;
+
+  const smtpConfigured =
+    !!process.env.SMTP_HOST &&
+    !!process.env.SMTP_PORT &&
+    !!process.env.SMTP_USER &&
+    !!process.env.SMTP_PASS;
+
+    if (smtpConfigured) {
+    cachedTransporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: process.env.SMTP_SECURE === "true" || Number(process.env.SMTP_PORT) === 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      pool: true,
+      maxConnections: 1,
+      keepAlive: true,
+    } as any);
+    return cachedTransporter;
+  }
+
+  // Development fallback (Ethereal) — create once and cache
+  if (!cachedTestAccount) {
+    cachedTestAccount = await nodemailer.createTestAccount();
+  }
+
+  cachedTransporter = nodemailer.createTransport({
+    host: cachedTestAccount.smtp.host,
+    port: cachedTestAccount.smtp.port,
+    secure: cachedTestAccount.smtp.secure,
+    auth: {
+      user: cachedTestAccount.user,
+      pass: cachedTestAccount.pass,
+    },
+  } as any);
+
+  return cachedTransporter;
 }
 
 export async function POST(request: Request) {
@@ -33,51 +81,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const isProduction = process.env.NODE_ENV === "production";
-    let transporter;
-    let testMode = false;
-
-    const smtpConfigured =
-      !!process.env.SMTP_HOST &&
-      !!process.env.SMTP_PORT &&
-      !!process.env.SMTP_USER &&
-      !!process.env.SMTP_PASS;
-
-    if (!smtpConfigured && isProduction) {
+    if (file && file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        {
-          error:
-            "SMTP configuration is missing. Set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS in production.",
-        },
-        { status: 500 }
+        { error: `Attachment exceeds ${MAX_FILE_SIZE / (1024 * 1024)}MB limit.` },
+        { status: 413 }
       );
     }
 
-    if (smtpConfigured) {
-      transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
-        secure:
-          process.env.SMTP_SECURE === "true" || Number(process.env.SMTP_PORT) === 465,
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      });
-    } else {
-      // Development fallback (non-production): Ethereal test SMTP.
-      const testAccount = await nodemailer.createTestAccount();
-      transporter = nodemailer.createTransport({
-        host: testAccount.smtp.host,
-        port: testAccount.smtp.port,
-        secure: testAccount.smtp.secure,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
-      testMode = true;
-    }
+    const transporter = await getTransporter();
 
     const htmlBody = `
       <h2>New Contact Form Submission</h2>
@@ -99,6 +110,7 @@ export async function POST(request: Request) {
     };
 
     if (file && file.size > 0) {
+      // convert to buffer only when attachment is small (we already enforced limit)
       const buffer = Buffer.from(await file.arrayBuffer());
       mailOptions.attachments = [
         {
@@ -115,7 +127,8 @@ export async function POST(request: Request) {
       message: "Email sent successfully.",
     };
 
-    if (testMode) {
+    // If using Ethereal test account, provide preview URL for debugging
+    if (cachedTestAccount) {
       responsePayload.previewUrl = nodemailer.getTestMessageUrl(info) || null;
       responsePayload.debug = "Ethereal test account used (development mode).";
     }

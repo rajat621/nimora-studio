@@ -66,6 +66,7 @@
 // }
 
 
+import Image from "next/image";
 import styles from "./CaseStudy.module.css";
 
 type Props = {
@@ -88,7 +89,7 @@ export default function IntroSection({ data }: Props) {
       <div className={styles.introContainer}>
 
         <div className={styles.visualBlock}>
-          <img src={data.visualImage} alt="Project Intro" />
+          <Image src={data.visualImage} alt="Project Intro" width={1200} height={700} />
         </div>
 
         <div className={styles.introDescription}>

@@ -54,8 +54,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${openSans.variable}`}>
-      <body>
+    <html
+      lang="en"
+      className={`${plusJakarta.variable} ${openSans.variable}`}
+    >
+      <head>
+        {/* WebSite Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -63,10 +67,28 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Nimora Studio",
+              alternateName: "Nimora",
               url: "https://nimorastudio.com",
             }),
           }}
         />
+
+        {/* Organization Schema (VERY IMPORTANT) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Nimora Studio",
+              url: "https://nimorastudio.com",
+              logo: "https://nimorastudio.com/logo_N.svg",
+            }),
+          }}
+        />
+      </head>
+
+      <body>
         <ScrollToTop />
         {children}
       </body>

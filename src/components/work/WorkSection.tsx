@@ -34,7 +34,7 @@ const caseStudiesData = [
     image: "/images/Casestudy/Feasto/coverImage4.png",
   },
    {
-    slug: "resturent-dashboard",
+    slug: "restaurant-dashboard",
     tag: "Saas / Operations",
     title: "Real-time restaurant operations in one dashboard.",
     description: "Save time, reduce chaos, make faster decisions.",
@@ -278,6 +278,8 @@ export default function WorkSection() {
                 width={800}
                 height={500}
                 priority={currentIndex === 0}
+                fetchPriority={currentIndex === 0 ? "high" : "auto"}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 800px"
               />
             </div>
 

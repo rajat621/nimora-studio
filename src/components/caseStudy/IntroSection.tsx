@@ -89,7 +89,15 @@ export default function IntroSection({ data }: Props) {
       <div className={styles.introContainer}>
 
         <div className={styles.visualBlock}>
-          <Image src={data.visualImage} alt="Project Intro" width={1200} height={700} />
+          <Image
+            src={data.visualImage}
+            alt="Project Intro"
+            width={1200}
+            height={700}
+            priority
+            fetchPriority="high"
+            sizes="(max-width: 768px) 100vw, 1120px"
+          />
         </div>
 
         <div className={styles.introDescription}>

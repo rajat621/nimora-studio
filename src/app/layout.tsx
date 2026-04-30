@@ -17,6 +17,11 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
+    robots: {
+    index: true,
+    follow: true,
+    noai: true,
+  },
   title: {
     default: "Nimora Studio",
     template: "%s | Nimora Studio",
